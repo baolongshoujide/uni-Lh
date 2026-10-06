@@ -8,6 +8,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     //
     LhSwiper: typeof import('./components/LhSwiper.vue')['default']
+    LhGuess: typeof import('./components/LhGuess.vue')['default']
   }
 }
 export {}

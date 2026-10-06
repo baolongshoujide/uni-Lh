@@ -18,14 +18,20 @@ onLoad(() => {
 
 <template>
   <CustomNavbar></CustomNavbar>
-  <LhSwiper :list="bannerList"></LhSwiper>
-  <CategoryPanel></CategoryPanel>
-  <HotPanel></HotPanel>
+  <scroll-view scroll-y style="flex: 1">
+    <LhSwiper :list="bannerList"></LhSwiper>
+    <CategoryPanel></CategoryPanel>
+    <HotPanel></HotPanel>
+    <LhGuess></LhGuess>
+  </scroll-view>
 </template>
 
 <style lang="scss">
 //
 page {
   background-color: #f7f7f7;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 </style>
