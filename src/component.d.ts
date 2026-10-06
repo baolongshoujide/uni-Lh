@@ -4,6 +4,7 @@
  * declare module 'vue'
  */
 import 'vue'
+import type LhGuess from './components/LhGuess.vue'
 declare module 'vue' {
   export interface GlobalComponents {
     //
@@ -12,3 +13,5 @@ declare module 'vue' {
   }
 }
 export {}
+
+export type LhGuessInstance = InstanceType<typeof LhGuess>
