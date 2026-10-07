@@ -1,14 +1,8 @@
 <script setup lang="ts">
-import { getHomeCategoryAPI } from '@/services/home'
 import type { CategoryItem } from '@/types/home'
-import { ref } from 'vue'
-
-const categoryList = ref<CategoryItem[]>([])
-const getHomeCategoryList = async () => {
-  const res = await getHomeCategoryAPI()
-  categoryList.value = res.result
-}
-getHomeCategoryList()
+defineProps<{
+  list: CategoryItem[]
+}>()
 </script>
 
 <template>
@@ -17,7 +11,7 @@ getHomeCategoryList()
       class="category-item"
       hover-class="none"
       url="/pages/index/index"
-      v-for="item in categoryList"
+      v-for="item in list"
       :key="item.id"
     >
       <image class="icon" :src="item.icon"></image>

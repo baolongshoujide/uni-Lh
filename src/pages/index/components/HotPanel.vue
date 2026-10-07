@@ -1,20 +1,14 @@
 <script setup lang="ts">
-import { getHomeHotAPI } from '@/services/home'
 import type { HotItem } from '@/types/home'
-import { ref } from 'vue'
-
-const HotList = ref<HotItem[]>([])
-const getHomeHot = async () => {
-  const res = await getHomeHotAPI()
-  HotList.value = res.result
-}
-getHomeHot()
+defineProps<{
+  list: HotItem[]
+}>()
 </script>
 
 <template>
   <!-- 推荐专区 -->
   <view class="panel hot">
-    <view class="item" v-for="item in HotList" :key="item.id">
+    <view class="item" v-for="item in list" :key="item.id">
       <view class="title">
         <text class="title-text">{{ item.title }}</text>
         <text class="title-desc">{{ item.alt }}</text>

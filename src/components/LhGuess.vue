@@ -26,9 +26,16 @@ const getGuesslike = async () => {
     finish.value = true
   }
 }
+
+const resetDate = () => {
+  pageParams.page = 1
+  guessLike.value = []
+  finish.value = false
+}
 getGuesslike()
 defineExpose({
   getGuesslike,
+  resetDate,
 })
 </script>
 
