@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { getHotRecommendAPI } from '@/services/hot'
+import type { HotResult } from '@/types/hot'
+import { onLoad } from '@dcloudio/uni-app'
+import { ref } from 'vue'
 // 热门推荐页 标题和url
 const hotMap = [
   { type: '1', title: '特惠推荐', url: '/hot/preference' },
@@ -9,46 +13,106 @@ const hotMap = [
 const query = defineProps<{
   type: string
 }>()
-console.log(query)
+// 动态控制导航名
 const currhotMap = hotMap.find((item) => item.type === query.type)
 uni.setNavigationBarTitle({ title: currhotMap!.title })
+
+// 获取数据
+const hotList = ref<HotResult>()
+const getHotRecommendList = async () => {
+  const res = await getHotRecommendAPI(currhotMap!.url, {
+    subType: '',
+    pageSize: 10,
+    page: 33,
+  })
+  console.log(res)
+  hotList.value = res.result
+}
+
+const isFinish = ref(false)
+const scrolltolower = async () => {
+  // 当前选中的选项卡
+  const OnTab = hotList.value?.subTypes[activeIndex.value]
+  if (OnTab!.goodsItems!.page < OnTab!.goodsItems!.pages) {
+    OnTab!.goodsItems.page++
+  } else {
+    isFinish.value = true
+    return uni.showToast({
+      icon: 'none',
+      title: '已经到底了~',
+      duration: 2000,
+    })
+  }
+
+  console.log(OnTab)
+  const res = await getHotRecommendAPI(currhotMap!.url, {
+    subType: OnTab!.id,
+    pageSize: OnTab?.goodsItems.pageSize,
+    page: OnTab?.goodsItems.page,
+  })
+  console.log(res)
+  // 接收获取过来的第二页的数据
+  const newList = res.result.subTypes[activeIndex.value].goodsItems.items
+  // 将第二页数据加入到原数据中
+  OnTab?.goodsItems.items.push(...newList)
+}
+const activeIndex = ref(0)
+onLoad(() => {
+  getHotRecommendList()
+  uni.showModal({
+    title: '提示',
+    content:
+      '为方便检验商品全部展示的效果。\n此页面数据从第330条数据开始。\nps：部分商品没有330条数据，可能会出报错。',
+    showCancel: false,
+    confirmText: '我知道了',
+  })
+})
 </script>
 
 <template>
   <view class="viewport">
     <!-- 推荐封面图 -->
     <view class="cover">
-      <image
-        src="http://yjy-xiaotuxian-dev.oss-cn-beijing.aliyuncs.com/picture/2021-05-20/84abb5b1-8344-49ae-afc1-9cb932f3d593.jpg"
-      ></image>
+      <image :src="hotList?.bannerPicture"></image>
     </view>
     <!-- 推荐选项 -->
     <view class="tabs">
-      <text class="text active">抢先尝鲜</text>
-      <text class="text">新品预告</text>
+      <text
+        class="text"
+        :class="{ active: index === activeIndex }"
+        @tap="activeIndex = index"
+        v-for="(item, index) in hotList?.subTypes"
+        :key="item.id"
+        >{{ item.title }}</text
+      >
     </view>
+
     <!-- 推荐列表 -->
-    <scroll-view scroll-y class="scroll-view">
+    <scroll-view
+      v-for="(item, index) in hotList?.subTypes"
+      :key="item.id"
+      v-show="index === activeIndex"
+      @scrolltolower="scrolltolower"
+      scroll-y
+      class="scroll-view"
+    >
       <view class="goods">
         <navigator
           hover-class="none"
           class="navigator"
-          v-for="goods in 10"
-          :key="goods"
-          :url="`/pages/goods/goods?id=`"
+          v-for="goods in item.goodsItems.items"
+          :key="goods.id"
+          :url="`/pages/goods/goods?id=${goods.id}`"
         >
-          <image
-            class="thumb"
-            src="https://yanxuan-item.nosdn.127.net/5e7864647286c7447eeee7f0025f8c11.png"
-          ></image>
-          <view class="name ellipsis">不含酒精，使用安心爽肤清洁湿巾</view>
+          <image class="thumb" :src="goods.picture"></image>
+          <view class="name ellipsis">{{ goods.name }}</view>
           <view class="price">
             <text class="symbol">¥</text>
-            <text class="number">29.90</text>
+            <text class="number">{{ goods.price }}</text>
           </view>
         </navigator>
       </view>
-      <view class="loading-text">正在加载...</view>
+      <view class="loading-text">{{ isFinish ? '已经到底了~' : '正在加载……' }}</view>
     </scroll-view>
   </view>
 </template>
