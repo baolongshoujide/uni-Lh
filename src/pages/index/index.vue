@@ -7,7 +7,7 @@ import HotPanel from './components/HotPanel.vue'
 import { getHomeBannerAPI, getHomeHotAPI, getHomeCategoryAPI } from '@/services/home'
 import type { BannerItem, HotItem, CategoryItem } from '@/types/home'
 import type { LhGuessInstance } from '@/component'
-
+import PageSkeleton from '@/components/PageSkeleton.vue'
 // 轮播图数据
 const bannerList = ref<BannerItem[]>([])
 const getHomeBannerList = async () => {
@@ -34,10 +34,12 @@ const Onscrolltolower = () => {
   guessRef.value?.getGuesslike()
 }
 
-onLoad(() => {
-  getHomeBannerList()
-  getHomeCategoryList()
-  getHomeHot()
+const isLoading = ref(false)
+onLoad(async () => {
+  isLoading.value = true
+
+  await Promise.all([getHomeBannerList(), getHomeCategoryList(), getHomeHot()])
+  isLoading.value = false
 })
 
 // 下拉刷新
@@ -66,10 +68,13 @@ const Onrefresherrefresh = async () => {
     scroll-y
     style="flex: 1"
   >
-    <LhSwiper :list="bannerList"></LhSwiper>
-    <CategoryPanel :list="categoryList"></CategoryPanel>
-    <HotPanel :list="HotList"></HotPanel>
-    <LhGuess ref="guessRef"></LhGuess>
+    <PageSkeleton v-if="isLoading"></PageSkeleton>
+    <template v-else>
+      <LhSwiper :list="bannerList"></LhSwiper>
+      <CategoryPanel :list="categoryList"></CategoryPanel>
+      <HotPanel :list="HotList"></HotPanel>
+      <LhGuess ref="guessRef"></LhGuess>
+    </template>
   </scroll-view>
 </template>
 
