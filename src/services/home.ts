@@ -14,6 +14,6 @@ export const getHomeHotAPI = () => {
   return http.get<HotItem[]>('/home/hot/mutli')
 }
 
-export const getHomeGuessLikeAPI = (data: PageParams) => {
+export const getHomeGuessLikeAPI = (data?: PageParams) => {
   return http.get<PageResult<GuessItem>>('/home/goods/guessLike', data)
 }

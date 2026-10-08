@@ -5,6 +5,7 @@ import type { BannerItem } from '@/types/home'
 import { onLoad } from '@dcloudio/uni-app'
 import { getCategoryTopAPI } from '@/services/category'
 import type { CategoryTopItem } from '@/types/category'
+import PageSkeleton from './components/PageSkeleton.vue'
 
 const bannerList = ref<BannerItem[]>([])
 const getBannerList = async () => {
@@ -19,15 +20,17 @@ const getCategoryTopList = async () => {
 }
 
 const activeIndex = ref(0)
+const isPageSkeleton = ref(true)
 
-onLoad(() => {
-  getBannerList()
-  getCategoryTopList()
+onLoad(async () => {
+  await Promise.all([getBannerList(), getCategoryTopList()])
+  isPageSkeleton.value = false
 })
 </script>
 
 <template>
-  <view class="viewport">
+  <PageSkeleton v-if="isPageSkeleton"></PageSkeleton>
+  <view class="viewport" v-else>
     <!-- 搜索框 -->
     <view class="search">
       <view class="input">

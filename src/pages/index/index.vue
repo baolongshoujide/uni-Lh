@@ -37,7 +37,6 @@ const Onscrolltolower = () => {
 const isLoading = ref(false)
 onLoad(async () => {
   isLoading.value = true
-
   await Promise.all([getHomeBannerList(), getHomeCategoryList(), getHomeHot()])
   isLoading.value = false
 })
