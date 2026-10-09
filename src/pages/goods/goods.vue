@@ -4,15 +4,40 @@ import type { GoodsResult } from '@/types/goods'
 import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
 const { safeAreaInsets } = uni.getSystemInfoSync()
+import AddressPanel from './compontens/AddressPanel.vue'
+import ServicePanel from './compontens/Service.Panel.vue'
 
 const query = defineProps<{
   id: string
 }>()
-console.log(query)
+// 获取数据
 const goodsList = ref<GoodsResult>()
 const getGoodsList = async () => {
-  const res = await getGoodsAPI(query.id)
+  const res = await getGoodsAPI(query.id || '1369155859933827074')
   goodsList.value = res.result
+}
+// 控制轮播图底部的数字显示
+const currentIndex = ref(0)
+const Onchange: UniHelper.SwiperOnChange = (ev) => {
+  currentIndex.value = ev.detail!.current
+}
+// 轮播图预览
+const OnImage = (i: string) => {
+  uni.previewImage({
+    current: i,
+    urls: goodsList.value!.mainPictures,
+  })
+}
+// 弹出层
+const popup = ref<{
+  open: (type?: UniHelper.UniPopupType) => void
+  close: () => void
+}>()
+// 弹出层渲染条件
+const popupName = ref<'address' | 'service'>()
+const openPopup = (name: typeof popupName.value) => {
+  popupName.value = name
+  popup.value?.open()
 }
 onLoad(() => {
   getGoodsList()
@@ -25,15 +50,15 @@ onLoad(() => {
     <view class="goods">
       <!-- 商品主图 -->
       <view class="preview">
-        <swiper circular>
+        <swiper @change="Onchange" circular>
           <swiper-item v-for="item in goodsList?.mainPictures" :key="item">
-            <image mode="aspectFill" :src="item" />
+            <image @tap="OnImage(item)" mode="aspectFill" :src="item" />
           </swiper-item>
         </swiper>
         <view class="indicator">
-          <text class="current">1</text>
+          <text class="current">{{ currentIndex + 1 }}</text>
           <text class="split">/</text>
-          <text class="total">5</text>
+          <text class="total">{{ goodsList?.mainPictures.length }}</text>
         </view>
       </view>
 
@@ -53,11 +78,11 @@ onLoad(() => {
           <text class="label">选择</text>
           <text class="text ellipsis"> 请选择商品规格 </text>
         </view>
-        <view class="item arrow">
+        <view class="item arrow" @tap="openPopup('address')">
           <text class="label">送至</text>
           <text class="text ellipsis"> 请选择收获地址 </text>
         </view>
-        <view class="item arrow">
+        <view class="item arrow" @tap="openPopup('service')">
           <text class="label">服务</text>
           <text class="text ellipsis"> 无忧退 快速退款 免费包邮 </text>
         </view>
@@ -127,6 +152,10 @@ onLoad(() => {
       <view class="buynow"> 立即购买 </view>
     </view>
   </view>
+  <uni-popup ref="popup" text="white" background-color="black" type="bottom">
+    <AddressPanel v-if="popupName === 'address'" @close="popup?.close"></AddressPanel>
+    <ServicePanel v-if="popupName === 'service'" @close="popup?.close"></ServicePanel>
+  </uni-popup>
 </template>
 
 <style lang="scss">
