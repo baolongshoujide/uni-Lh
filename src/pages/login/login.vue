@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { getLoginWxMinAPI, getLoginWxMinSimpleAPI } from '@/services/login'
-import type { LoginResult } from '@/services/member'
+import type { LoginResult } from '@/types/member'
 import { useMemberStore } from '@/stores'
 import { onLoad } from '@dcloudio/uni-app'
 

@@ -1,5 +1,5 @@
 import { http } from '@/utils/http'
-import type { LoginResult } from './member'
+import type { LoginResult } from '@/types/member'
 
 type LoginParams = {
   code: string
