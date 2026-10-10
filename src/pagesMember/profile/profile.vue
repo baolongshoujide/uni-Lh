@@ -1,14 +1,90 @@
 <script setup lang="ts">
-import { getMemberProfileAPI } from '@/services/profile'
+import { getMemberProfileAPI, putMemberProfileAPI } from '@/services/profile'
+import { useMemberStore } from '@/stores'
 import type { ProfileDetail } from '@/types/member'
 import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
+import type { Gender } from '@/types/member'
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
-const memberProfile = ref<ProfileDetail>()
+// 获取本地存储数据
+const memberStore = useMemberStore()
+// 将从接口中读取的信息放到表单里
+const memberProfile = ref({} as ProfileDetail)
 const getMemberProfile = async () => {
   const res = await getMemberProfileAPI()
   memberProfile.value = res.result
+}
+// 修改头像
+const onAvatorChange = () => {
+  uni.chooseMedia({
+    count: 1,
+    mediaType: ['image'],
+    success: (res) => {
+      const { tempFilePath } = res.tempFiles[0]
+      uni.uploadFile({
+        url: 'http://pcapi-xiaotuxian-front-devtest.itheima.net/member/profile/avatar',
+        name: 'file',
+        filePath: tempFilePath,
+        success: (a) => {
+          if (a.statusCode === 200) {
+            const avator = JSON.parse(a.data).result.avator
+            memberProfile.value!.avatar = avator
+            memberStore.profile!.avatar = avator
+            uni.showToast({
+              title: '更新成功',
+              icon: 'success',
+              mask: true,
+            })
+          } else {
+            uni.showToast({
+              title: '功能未上线，敬请期待~',
+              icon: 'none',
+              duration: 3000,
+            })
+          }
+        },
+      })
+    },
+  })
+}
+// 修改单选框
+const OnGenderChange: UniHelper.RadioGroupOnChange = (ev) => {
+  console.log(ev.detail.value)
+  memberProfile.value.gender = ev.detail.value as Gender
+}
+// 修改生日
+const OnBirthdayChange: UniHelper.DatePickerOnChange = (ev) => {
+  memberProfile.value.birthday = ev.detail.value
+}
+// 修改地址
+let fullLocationCode: [string, string, string] = ['', ' ', '']
+const OnFullLocationChange: UniHelper.RegionPickerOnChange = (ev) => {
+  console.log(ev.detail)
+  memberProfile.value.fullLocation = ev.detail.value.join(' ')
+  fullLocationCode = ev.detail.code!
+}
+// 提交按钮
+const OnSubmit = async () => {
+  const { nickname, gender, birthday, profession } = memberProfile.value
+  const res = await putMemberProfileAPI({
+    nickname,
+    gender,
+    birthday,
+    provinceCode: fullLocationCode[0],
+    cityCode: fullLocationCode[1],
+    countyCode: fullLocationCode[2],
+    profession,
+  })
+  memberStore.profile!.nickname = res.result.nickname
+  uni.showToast({
+    icon: 'none',
+    title: '修改成功',
+    duration: 2000,
+  })
+  setTimeout(() => {
+    uni.navigateBack()
+  }, 500)
 }
 
 onLoad(() => {
@@ -24,7 +100,7 @@ onLoad(() => {
       <view class="title">个人信息</view>
     </view>
     <!-- 头像 -->
-    <view class="avatar">
+    <view class="avatar" @tap="onAvatorChange">
       <view class="avatar-content">
         <image class="image" :src="memberProfile?.avatar" mode="aspectFill" />
         <text class="text">点击修改头像</text>
@@ -44,12 +120,12 @@ onLoad(() => {
             class="input"
             type="text"
             placeholder="请填写昵称"
-            :value="memberProfile?.nickname"
+            v-model="memberProfile.nickname"
           />
         </view>
         <view class="form-item">
           <text class="label">性别</text>
-          <radio-group>
+          <radio-group @change="OnGenderChange">
             <label class="radio">
               <radio value="男" color="#27ba9b" :checked="memberProfile?.gender === '男'" />
               男
@@ -63,6 +139,7 @@ onLoad(() => {
         <view class="form-item">
           <text class="label">生日</text>
           <picker
+            @change="OnBirthdayChange"
             class="picker"
             mode="date"
             start="1900-01-01"
@@ -75,7 +152,12 @@ onLoad(() => {
         </view>
         <view class="form-item">
           <text class="label">城市</text>
-          <picker class="picker" mode="region" :value="memberProfile?.fullLocation!.split(' ')">
+          <picker
+            @change="OnFullLocationChange"
+            class="picker"
+            mode="region"
+            :value="memberProfile.fullLocation?.split(' ')"
+          >
             <view v-if="memberProfile?.fullLocation">{{ memberProfile?.fullLocation }}</view>
             <view class="placeholder" v-else>请选择城市</view>
           </picker>
@@ -86,12 +168,12 @@ onLoad(() => {
             class="input"
             type="text"
             placeholder="请填写职业"
-            :value="memberProfile?.profession"
+            v-model="memberProfile.profession"
           />
         </view>
       </view>
       <!-- 提交按钮 -->
-      <button class="form-button">保 存</button>
+      <button @tap="OnSubmit" class="form-button">保 存</button>
     </view>
   </view>
 </template>

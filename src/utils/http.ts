@@ -110,4 +110,21 @@ export const http = {
       data,
     })
   },
+  // PUT请求（更新）
+  put<T>(url: string, data?: any) {
+    return request<T>({
+      url,
+      method: 'PUT',
+      data,
+    })
+  },
+
+  // DELETE请求（删除）
+  delete<T>(url: string, data?: any) {
+    return request<T>({
+      url,
+      method: 'DELETE',
+      data,
+    })
+  },
 }
