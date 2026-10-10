@@ -6,7 +6,7 @@ import { ref } from 'vue'
 
 const guessLike = ref<GuessItem[]>([])
 const pageParams: Required<PageParams> = {
-  page: 33,
+  page: 1,
   pageSize: 10,
 }
 const finish = ref(false)

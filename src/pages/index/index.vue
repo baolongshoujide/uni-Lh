@@ -6,8 +6,8 @@ import CategoryPanel from './components/CategoryPanel.vue'
 import HotPanel from './components/HotPanel.vue'
 import { getHomeBannerAPI, getHomeHotAPI, getHomeCategoryAPI } from '@/services/home'
 import type { BannerItem, HotItem, CategoryItem } from '@/types/home'
-import type { LhGuessInstance } from '@/component'
 import PageSkeleton from '@/components/PageSkeleton.vue'
+import { useGuessList } from '@/composables/index.ts'
 // 轮播图数据
 const bannerList = ref<BannerItem[]>([])
 const getHomeBannerList = async () => {
@@ -29,10 +29,7 @@ const getHomeHot = async () => {
 }
 
 // 滚动到底时调用 猜你喜欢 获取数据的方法
-const guessRef = ref<LhGuessInstance>()
-const Onscrolltolower = () => {
-  guessRef.value?.getGuesslike()
-}
+const { guessRef, OnScrolltolower } = useGuessList()
 
 const isLoading = ref(false)
 onLoad(async () => {
@@ -63,7 +60,7 @@ const Onrefresherrefresh = async () => {
     refresher-enabled
     @refresherrefresh="Onrefresherrefresh"
     :refresher-triggered="isriggered"
-    @scrolltolower="Onscrolltolower"
+    @scrolltolower="OnScrolltolower"
     scroll-y
     style="flex: 1"
   >

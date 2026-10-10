@@ -59,13 +59,6 @@ const scrolltolower = async () => {
 const activeIndex = ref(0)
 onLoad(() => {
   getHotRecommendList()
-  uni.showModal({
-    title: '提示',
-    content:
-      '为方便检验商品全部展示的效果。\n此页面数据从第330条数据开始。\nps：部分商品没有330条数据，可能会出报错。',
-    showCancel: false,
-    confirmText: '我知道了',
-  })
 })
 </script>
 
