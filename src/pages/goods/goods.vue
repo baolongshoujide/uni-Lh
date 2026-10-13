@@ -6,7 +6,11 @@ import { computed, ref } from 'vue'
 const { safeAreaInsets } = uni.getSystemInfoSync()
 import AddressPanel from './compontens/AddressPanel.vue'
 import ServicePanel from './compontens/Service.Panel.vue'
-import type { SkuPopupInstanceType } from '@/components/vk-data-goods-sku-popup/vk-data-goods-sku-popup.js'
+import type {
+  SkuPopupEvent,
+  SkuPopupInstanceType,
+} from '@/components/vk-data-goods-sku-popup/vk-data-goods-sku-popup.js'
+import { addCartAPI } from '@/services/cart.ts'
 
 const query = defineProps<{
   id: string
@@ -85,6 +89,16 @@ const selectArr = computed(() => {
   return skuPopupRef?.value?.selectArr?.join(' ').trim() || '请选择商品规格'
 })
 
+const OnAddCart = async (ev: SkuPopupEvent) => {
+  console.log(ev)
+  const res = await addCartAPI({
+    skuId: ev._id,
+    count: ev.buy_num,
+  })
+  uni.showToast({ title: '添加成功' })
+  isShowSku.value = false
+}
+
 onLoad(() => {
   getGoodsList()
 })
@@ -105,6 +119,7 @@ onLoad(() => {
       borderColor: '#4bba99',
       background: '#e9f6f5,',
     }"
+    @add-cart="OnAddCart"
   ></vk-data-goods-sku-popup>
   <scroll-view scroll-y class="viewport">
     <!-- 基本信息 -->
