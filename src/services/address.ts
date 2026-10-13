@@ -16,3 +16,6 @@ export const getMemberAddressAPI = () => {
 export const getMemberAddressIdAPI = (id: string) => {
   return http.get<AddressItem>(`/member/address/${id}`)
 }
+export const deleteMemberAddressIdAPI = (id: string) => {
+  return http.delete(`/member/address/${id}`)
+}
