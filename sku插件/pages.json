@@ -1,0 +1,41 @@
+{
+	"pages": [
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "sku选择器组件示例"
+			}
+		},
+		{
+			"path": "pages/index/index-static",
+			"style": {
+				"navigationBarTitleText": "sku选择器组件 - 静态数据版"
+			}
+		},
+		{
+			"path": "pages/index/index-dynamic",
+			"style": {
+				"navigationBarTitleText": "sku选择器组件 - 动态数据版"
+			}
+		},
+		{
+			"path": "pages/index/index-setup",
+			"style": {
+				"navigationBarTitleText": "sku选择器组件 - setup组合式版"
+			}
+		}
+	]
+	// #ifdef MP-ALIPAY
+  ,"globalStyle": {
+    "navigationBarTitleText": "商品sku选择器组件示例"
+  }
+  // #endif
+  // #ifndef MP-ALIPAY
+  ,"globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "商品sku选择器组件示例",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  }
+  // #endif
+}

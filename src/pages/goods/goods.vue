@@ -15,6 +15,29 @@ const goodsList = ref<GoodsResult>()
 const getGoodsList = async () => {
   const res = await getGoodsAPI(query.id || '1369155859933827074')
   goodsList.value = res.result
+  localdata.value = {
+    _id: res.result.id,
+    name: res.result.name,
+    goods_thumb: res.result.mainPictures[0],
+    spec_list: res.result.specs.map((item) => {
+      return {
+        name: item.name,
+        list: item.values,
+      }
+    }),
+    sku_list: res.result.skus.map((item) => {
+      return {
+        _id: item.id,
+        goods_id: res.result.id,
+        goods_name: res.result.name,
+        Image: item.picture,
+        // 组件要求，价格需要乘以100才能计算
+        price: item.price * 100,
+        sku_name_arr: item.specs.map((v) => v.valueName),
+        stock: item.inventory,
+      }
+    }),
+  }
 }
 // 控制轮播图底部的数字显示
 const currentIndex = ref(0)
@@ -39,12 +62,18 @@ const openPopup = (name: typeof popupName.value) => {
   popupName.value = name
   popup.value?.open()
 }
+
+const isShowSku = ref(false)
+const localdata = ref({})
+
 onLoad(() => {
   getGoodsList()
 })
 </script>
 
 <template>
+  <!-- SKU弹窗组件 -->
+  <vk-data-goods-sku-popup :localdata="localdata" v-model="isShowSku"></vk-data-goods-sku-popup>
   <scroll-view scroll-y class="viewport">
     <!-- 基本信息 -->
     <view class="goods">
@@ -74,7 +103,7 @@ onLoad(() => {
 
       <!-- 操作面板 -->
       <view class="action">
-        <view class="item arrow">
+        <view class="item arrow" @tap="isShowSku = true">
           <text class="label">选择</text>
           <text class="text ellipsis"> 请选择商品规格 </text>
         </view>
