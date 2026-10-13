@@ -2,10 +2,11 @@
 import { getGoodsAPI } from '@/services/goods'
 import type { GoodsResult } from '@/types/goods'
 import { onLoad } from '@dcloudio/uni-app'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 const { safeAreaInsets } = uni.getSystemInfoSync()
 import AddressPanel from './compontens/AddressPanel.vue'
 import ServicePanel from './compontens/Service.Panel.vue'
+import type { SkuPopupInstanceType } from '@/components/vk-data-goods-sku-popup/vk-data-goods-sku-popup.js'
 
 const query = defineProps<{
   id: string
@@ -78,6 +79,11 @@ const OpenSkuPopup = (x: SkuModel) => {
   isShowSku.value = true
   mode.value = x
 }
+const skuPopupRef = ref<SkuPopupInstanceType>()
+const selectArr = computed(() => {
+  // 利用实例的selectArr方法获取数据，再拼接成字符串。去掉头尾的空格，没有值的话显示后面文字
+  return skuPopupRef?.value?.selectArr?.join(' ').trim() || '请选择商品规格'
+})
 
 onLoad(() => {
   getGoodsList()
@@ -86,12 +92,19 @@ onLoad(() => {
 
 <template>
   <!-- SKU弹窗组件.两个很长的一个是修改购物车的背景颜色，一个是立即购买的背景颜色 -->
+  <!-- 最后那个是设置按钮颜色，主要是贴合主题，必须动态 -->
   <vk-data-goods-sku-popup
     :localdata="localdata"
     v-model="isShowSku"
     :mode="mode"
+    ref="skuPopupRef"
     add-cart-background-color="#faa96b"
     buy-now-background-color="#3dba9a"
+    :actived-style="{
+      color: '#4bba99',
+      borderColor: '#4bba99',
+      background: '#e9f6f5,',
+    }"
   ></vk-data-goods-sku-popup>
   <scroll-view scroll-y class="viewport">
     <!-- 基本信息 -->
@@ -124,7 +137,7 @@ onLoad(() => {
       <view class="action">
         <view class="item arrow" @tap="OpenSkuPopup(SkuModel.Both)">
           <text class="label">选择</text>
-          <text class="text ellipsis"> 请选择商品规格 </text>
+          <text class="text ellipsis"> {{ selectArr }} </text>
         </view>
         <view class="item arrow" @tap="openPopup('address')">
           <text class="label">送至</text>
