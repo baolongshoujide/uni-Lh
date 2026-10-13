@@ -62,9 +62,22 @@ const openPopup = (name: typeof popupName.value) => {
   popupName.value = name
   popup.value?.open()
 }
-
+// sku组件是否展示
 const isShowSku = ref(false)
+// sku绑定数据
 const localdata = ref({})
+
+enum SkuModel {
+  Both = 1,
+  Cart = 2,
+  Buy = 3,
+}
+const mode = ref<SkuModel>(SkuModel.Buy)
+// 打开弹窗时动态修改参数
+const OpenSkuPopup = (x: SkuModel) => {
+  isShowSku.value = true
+  mode.value = x
+}
 
 onLoad(() => {
   getGoodsList()
@@ -72,8 +85,14 @@ onLoad(() => {
 </script>
 
 <template>
-  <!-- SKU弹窗组件 -->
-  <vk-data-goods-sku-popup :localdata="localdata" v-model="isShowSku"></vk-data-goods-sku-popup>
+  <!-- SKU弹窗组件.两个很长的一个是修改购物车的背景颜色，一个是立即购买的背景颜色 -->
+  <vk-data-goods-sku-popup
+    :localdata="localdata"
+    v-model="isShowSku"
+    :mode="mode"
+    add-cart-background-color="#faa96b"
+    buy-now-background-color="#3dba9a"
+  ></vk-data-goods-sku-popup>
   <scroll-view scroll-y class="viewport">
     <!-- 基本信息 -->
     <view class="goods">
@@ -103,7 +122,7 @@ onLoad(() => {
 
       <!-- 操作面板 -->
       <view class="action">
-        <view class="item arrow" @tap="isShowSku = true">
+        <view class="item arrow" @tap="OpenSkuPopup(SkuModel.Both)">
           <text class="label">选择</text>
           <text class="text ellipsis"> 请选择商品规格 </text>
         </view>
@@ -177,8 +196,8 @@ onLoad(() => {
       </navigator>
     </view>
     <view class="buttons">
-      <view class="addcart"> 加入购物车 </view>
-      <view class="buynow"> 立即购买 </view>
+      <view @tap="OpenSkuPopup(SkuModel.Cart)" class="addcart"> 加入购物车 </view>
+      <view @tap="OpenSkuPopup(3)" class="buynow"> 立即购买 </view>
     </view>
   </view>
   <uni-popup ref="popup" text="white" background-color="black" type="bottom">
