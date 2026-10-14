@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { deleteCartAPI, getCartAPI } from '@/services/cart'
+import { deleteCartAPI, getCartAPI, putCartAPI, putCartSelectAPI } from '@/services/cart'
 import { useMemberStore } from '@/stores'
 import type { CartItem } from '@/types/cart'
 import { onShow } from '@dcloudio/uni-app'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 const memberStore = useMemberStore()
 
@@ -26,7 +26,28 @@ const onDelete = async (id: string) => {
     },
   })
 }
+let timeOut: ReturnType<typeof setTimeout> | undefined
+const onChangeCount = (ev: any) => {
+  clearTimeout(timeOut)
+  timeOut = setTimeout(async () => {
+    const res = await putCartAPI(ev.index, { count: ev.value })
+  }, 1000)
+}
 
+const onChangeSelect = async (item: CartItem) => {
+  item.selected = !item.selected
+  console.log(item.selected)
+  await putCartAPI(item.skuId, { selected: item.selected })
+}
+const isSelectedAll = computed(() => {
+  return cartList.value?.every((item) => item.selected)
+})
+
+const onChangeSelectAll = async () => {
+  const selectAll = !isSelectedAll.value
+  cartList.value?.forEach((item) => (item.selected = selectAll))
+  await putCartSelectAPI({ selected: selectAll })
+}
 onShow(() => {
   if (memberStore.profile) {
     getCartList()
@@ -52,7 +73,11 @@ onShow(() => {
             <!-- 商品信息 -->
             <view class="goods">
               <!-- 选中状态 -->
-              <text class="checkbox" :class="{ checked: item.selected }"></text>
+              <text
+                @tap="onChangeSelect(item)"
+                class="checkbox"
+                :class="{ checked: item.selected }"
+              ></text>
               <navigator
                 :url="`/pages/goods/goods?id=${item.id}`"
                 hover-class="none"
@@ -66,10 +91,15 @@ onShow(() => {
                 </view>
               </navigator>
               <!-- 商品数量 -->
+              {{ item.count }}
               <view class="count">
-                <text class="text">-</text>
-                <input class="input" type="number" value="1" />
-                <text class="text">+</text>
+                <vk-data-input-number-box
+                  v-model="item.count"
+                  :min="1"
+                  :max="item.stock"
+                  :index="item.skuId"
+                  @change="onChangeCount"
+                ></vk-data-input-number-box>
               </view>
             </view>
             <!-- 右侧删除按钮 -->
@@ -91,7 +121,7 @@ onShow(() => {
       </view>
       <!-- 吸底工具栏 -->
       <view class="toolbar">
-        <text class="all" :class="{ checked: true }">全选</text>
+        <text @tap="onChangeSelectAll" class="all" :class="{ checked: isSelectedAll }">全选</text>
         <text class="text">合计:</text>
         <text class="amount">100</text>
         <view class="button-grounp">
@@ -107,7 +137,7 @@ onShow(() => {
       </navigator>
     </view>
     <!-- 猜你喜欢 -->
-    <XtxGuess ref="guessRef"></XtxGuess>
+    <LhGuess ref="guessRef"></LhGuess>
     <!-- 底部占位空盒子 -->
     <view class="toolbar-height"></view>
   </scroll-view>

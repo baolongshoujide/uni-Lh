@@ -5,12 +5,14 @@
  */
 import 'vue'
 import type LhGuess from './components/LhGuess.vue'
+import type { InputNumberBox } from './components/vk-data-input-number-box/vk-data-input-number-box'
 // 定义这个组件的类型
 declare module 'vue' {
   export interface GlobalComponents {
     //
     LhSwiper: typeof import('./components/LhSwiper.vue')['default']
     LhGuess: typeof import('./components/LhGuess.vue')['default']
+    'vk-data-input-number-box': InputNumberBox
   }
 }
 export {}
