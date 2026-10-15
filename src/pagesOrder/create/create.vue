@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getMenberOrderPreAPI } from '@/services/order'
+import { getMenberOrderPreAPI, getMenberOrderPreNowAPI } from '@/services/order'
 import { useAddressStore } from '@/stores/modules/address'
 import type { AddressItem } from '@/types/address'
 import type { OrderPreResult } from '@/types/order'
@@ -25,15 +25,31 @@ const onChangeDelivery: UniHelper.SelectorPickerOnChange = (ev) => {
   activeIndex.value = ev.detail.value
 }
 
+const query = defineProps<{
+  skuId: string
+  count: string
+}>()
 const orderPre = ref<OrderPreResult>()
 const getMemberOrderPre = async () => {
-  const res = await getMenberOrderPreAPI()
-  orderPre.value = res.result
+  if (query.count && query.skuId) {
+    const res = await getMenberOrderPreNowAPI({
+      skuId: query.skuId,
+      count: query.count,
+    })
+    orderPre.value = res.result
+  } else {
+    const res = await getMenberOrderPreAPI()
+    orderPre.value = res.result
+  }
 }
 
 const addressStore = useAddressStore()
 const address = computed(() => {
   return addressStore.address || orderPre.value?.userAddresses.find((v) => v.isDefault)
+})
+
+const priceAll = computed(() => {
+  return orderPre.value?.summary?.totalPayPrice! + orderPre.value?.summary.postFee!
 })
 
 onLoad(() => {
@@ -127,7 +143,7 @@ onLoad(() => {
   <!-- 吸底工具栏 -->
   <view class="toolbar" :style="{ paddingBottom: safeAreaInsets?.bottom + 'px' }">
     <view class="total-pay symbol">
-      <text class="number">99.00</text>
+      <text class="number">{{ priceAll.toFixed(2) }}</text>
     </view>
     <view class="button" :class="{ disabled: true }"> 提交订单 </view>
   </view>

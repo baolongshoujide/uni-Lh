@@ -1,7 +1,33 @@
 <script setup lang="ts">
+import { getMemberAddressAPI } from '@/services/address'
+import { useAddressStore } from '@/stores/modules/address'
+import type { AddressItem } from '@/types/address'
+import { ref, watch } from 'vue'
+
 const emit = defineEmits<{
   (event: 'close'): void
 }>()
+const addressList = ref<AddressItem[]>([])
+const getAddressList = async () => {
+  const res = await getMemberAddressAPI()
+  addressList.value = res.result
+}
+
+const addressStore = useAddressStore()
+const addressChange = (item: AddressItem) => {
+  addressStore.addressChange(item)
+}
+
+const query = defineProps<{
+  refValue: number
+}>()
+watch(
+  () => query.refValue,
+  () => {
+    getAddressList()
+  },
+)
+getAddressList()
 </script>
 
 <template>
@@ -11,25 +37,32 @@ const emit = defineEmits<{
     <!-- 标题 -->
     <view class="title">配送至</view>
     <!-- 内容 -->
-    <view class="content">
-      <view class="item">
-        <view class="user">李明 13824686868</view>
-        <view class="address">北京市顺义区后沙峪地区安平北街6号院</view>
-        <text class="icon icon-checked"></text>
-      </view>
-      <view class="item">
-        <view class="user">王东 13824686868</view>
-        <view class="address">北京市顺义区后沙峪地区安平北街6号院</view>
-        <text class="icon icon-ring"></text>
-      </view>
-      <view class="item">
-        <view class="user">张三 13824686868</view>
-        <view class="address">北京市朝阳区孙河安平北街6号院</view>
-        <text class="icon icon-ring"></text>
+    <view class="content" @tap="emit('close')">
+      <view @tap="addressChange(item)" class="item" v-for="item in addressList" :key="item.id">
+        <view class="user">{{ item.receiver }} {{ item.contact }}</view>
+        <view class="address">{{ item.fullLocation }}{{ item.address }}</view>
+        <text
+          class="icon"
+          :class="{
+            'icon-checked': addressStore.address?.id === item.id,
+          }"
+        ></text>
+        <navigator
+          class="edit"
+          hover-class="none"
+          @tap.stop="() => {}"
+          :url="`/pagesMember/address-form/address-form?id=${item.id}`"
+        >
+          修改
+        </navigator>
       </view>
     </view>
     <view class="footer">
-      <view class="button primary"> 新建地址 </view>
+      <view class="button primary">
+        <navigator hover-class="none" url="/pagesMember/address-form/address-form">
+          新建地址
+        </navigator>
+      </view>
       <view v-if="false" class="button primary">确定</view>
     </view>
   </view>
@@ -65,7 +98,7 @@ const emit = defineEmits<{
   overflow: auto;
   padding: 20rpx;
   .item {
-    padding: 30rpx 50rpx 30rpx 60rpx;
+    padding: 30rpx 110rpx 30rpx 60rpx;
     background-size: 40rpx;
     background-repeat: no-repeat;
     background-position: 0 center;
@@ -85,6 +118,14 @@ const emit = defineEmits<{
   }
   .icon-ring {
     color: #444;
+  }
+  .edit {
+    position: absolute;
+    top: 50%;
+    right: 50rpx;
+    transform: translateY(-50%);
+    color: #27ba9b;
+    font-size: 26rpx;
   }
   .user {
     font-size: 28rpx;

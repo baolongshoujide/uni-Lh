@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { getGoodsAPI } from '@/services/goods'
 import type { GoodsResult } from '@/types/goods'
-import { onLoad } from '@dcloudio/uni-app'
+import { onLoad, onShow } from '@dcloudio/uni-app'
 import { computed, ref } from 'vue'
 const { safeAreaInsets } = uni.getSystemInfoSync()
 import AddressPanel from './compontens/AddressPanel.vue'
@@ -11,6 +11,8 @@ import type {
   SkuPopupInstanceType,
 } from '@/components/vk-data-goods-sku-popup/vk-data-goods-sku-popup.js'
 import { addCartAPI } from '@/services/cart.ts'
+import { getMenberOrderPreNowAPI } from '@/services/order.ts'
+import { useAddressStore } from '@/stores/modules/address.ts'
 
 const query = defineProps<{
   id: string
@@ -99,8 +101,23 @@ const OnAddCart = async (ev: SkuPopupEvent) => {
   isShowSku.value = false
 }
 
+const addressPanelRef = ref()
+const addressStore = useAddressStore()
+const OnBuyNow = async (ev: SkuPopupEvent) => {
+  uni.navigateTo({
+    url: `/pagesOrder/create/create?skuId=${ev._id}&count=${ev.buy_num}&addressId=${
+      addressStore.address || ''
+    }`,
+  })
+  console.log(ev)
+}
+
 onLoad(() => {
   getGoodsList()
+})
+const refValue = ref(0)
+onShow(() => {
+  refValue.value++
 })
 </script>
 
@@ -120,6 +137,7 @@ onLoad(() => {
       background: '#e9f6f5,',
     }"
     @add-cart="OnAddCart"
+    @buy-now="OnBuyNow"
   ></vk-data-goods-sku-popup>
   <scroll-view scroll-y class="viewport">
     <!-- 基本信息 -->
@@ -156,7 +174,10 @@ onLoad(() => {
         </view>
         <view class="item arrow" @tap="openPopup('address')">
           <text class="label">送至</text>
-          <text class="text ellipsis"> 请选择收获地址 </text>
+          <text class="text ellipsis" v-if="addressStore.address">
+            {{ addressStore.address.fullLocation }}
+          </text>
+          <text class="text ellipsis" v-else> 请选择收获地址 </text>
         </view>
         <view class="item arrow" @tap="openPopup('service')">
           <text class="label">服务</text>
@@ -228,8 +249,13 @@ onLoad(() => {
       <view @tap="OpenSkuPopup(3)" class="buynow"> 立即购买 </view>
     </view>
   </view>
-  <uni-popup ref="popup" text="white" background-color="black" type="bottom">
-    <AddressPanel v-if="popupName === 'address'" @close="popup?.close"></AddressPanel>
+  <uni-popup ref="popup" text="white" background-color="#fff" type="bottom">
+    <AddressPanel
+      :refValue="refValue"
+      ref="addressPanelRef"
+      v-if="popupName === 'address'"
+      @close="popup?.close"
+    ></AddressPanel>
     <ServicePanel v-if="popupName === 'service'" @close="popup?.close"></ServicePanel>
   </uni-popup>
 </template>
