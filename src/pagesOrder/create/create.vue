@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getMenberOrderPreAPI, getMenberOrderPreNowAPI } from '@/services/order'
+import { getMenberOrderPreAPI, getMenberOrderPreNowAPI, postMemberOrderAPI } from '@/services/order'
 import { useAddressStore } from '@/stores/modules/address'
 import type { AddressItem } from '@/types/address'
 import type { OrderPreResult } from '@/types/order'
@@ -51,6 +51,23 @@ const address = computed(() => {
 const priceAll = computed(() => {
   return orderPre.value?.summary?.totalPayPrice! + orderPre.value?.summary.postFee!
 })
+
+const OnSubmit = async () => {
+  if (!address.value) {
+    return uni.showToast({ title: '请选择地址', icon: 'none' })
+  }
+  console.log(orderPre.value!.goods.map((item) => ({ count: item.count, skuId: item.skuId })))
+  const res = await postMemberOrderAPI({
+    addressId: address.value!.id,
+    buyerMessage: buyerMessage.value,
+    deliveryTimeType: activeDelivery.value.type,
+    goods: orderPre.value!.goods.map((item) => ({ count: item.count, skuId: item.skuId })),
+    payChannel: 2,
+    payType: 1,
+  })
+  uni.redirectTo({ url: `/pagesOrder/detail/detail?=${res.result.id}` })
+}
+uni.showModal({ content: '温馨提示，绿色小锅数据有误，您可以尝试一下其他商品' })
 
 onLoad(() => {
   getMemberOrderPre()
@@ -145,7 +162,7 @@ onLoad(() => {
     <view class="total-pay symbol">
       <text class="number">{{ priceAll.toFixed(2) }}</text>
     </view>
-    <view class="button" :class="{ disabled: true }"> 提交订单 </view>
+    <view class="button" :class="{ disabled: !address?.id }" @tap="OnSubmit">提交订单</view>
   </view>
 </template>
 

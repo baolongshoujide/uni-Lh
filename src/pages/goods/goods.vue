@@ -101,7 +101,6 @@ const OnAddCart = async (ev: SkuPopupEvent) => {
   isShowSku.value = false
 }
 
-const addressPanelRef = ref()
 const addressStore = useAddressStore()
 const OnBuyNow = async (ev: SkuPopupEvent) => {
   uni.navigateTo({
@@ -252,7 +251,6 @@ onShow(() => {
   <uni-popup ref="popup" text="white" background-color="#fff" type="bottom">
     <AddressPanel
       :refValue="refValue"
-      ref="addressPanelRef"
       v-if="popupName === 'address'"
       @close="popup?.close"
     ></AddressPanel>
