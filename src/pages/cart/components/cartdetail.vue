@@ -73,6 +73,11 @@ const gotoPay = () => {
       showCancel: true,
       confirmText: '立即结算',
       cancelText: '再逛逛吧',
+      success: (success) => {
+        if (success.confirm) {
+          uni.navigateTo({ url: '/pagesOrder/create/create' })
+        }
+      },
     })
   }
   if (selectedNum.value === 0) {
@@ -123,7 +128,6 @@ onShow(() => {
                 </view>
               </navigator>
               <!-- 商品数量 -->
-              {{ item.count }}
               <view class="count">
                 <vk-data-input-number-box
                   v-model="item.count"

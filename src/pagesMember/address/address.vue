@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { deleteMemberAddressIdAPI, getMemberAddressAPI } from '@/services/address'
+import { useAddressStore } from '@/stores/modules/address'
 import type { AddressItem } from '@/types/address'
 import { onShow } from '@dcloudio/uni-app'
 import { ref } from 'vue'
@@ -29,6 +30,12 @@ const OnDelete = async (id: string) => {
     },
   })
 }
+
+const OnAddressChange = (item: AddressItem) => {
+  const addressStore = useAddressStore()
+  addressStore.addressChange(item)
+  uni.navigateBack()
+}
 onShow(() => {
   getMemberAdress()
 })
@@ -42,7 +49,7 @@ onShow(() => {
         <uni-swipe-action class="address-list">
           <!-- 收货地址项 -->
           <uni-swipe-action-item class="item" v-for="item in addressList" :key="item.id">
-            <view class="item-content">
+            <view class="item-content" @tap="OnAddressChange(item)">
               <view class="user">
                 {{ item.receiver }}
                 <text class="contact">{{ item.contact }}</text>
@@ -52,6 +59,7 @@ onShow(() => {
               <navigator
                 class="edit"
                 hover-class="none"
+                @tap.stop="() => {}"
                 :url="`/pagesMember/address-form/address-form?id=${item.id}`"
               >
                 修改
