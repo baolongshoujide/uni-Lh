@@ -28,13 +28,16 @@ const onChangeDelivery: UniHelper.SelectorPickerOnChange = (ev) => {
 const query = defineProps<{
   skuId: string
   count: string
+  addressId: string
 }>()
+
 const orderPre = ref<OrderPreResult>()
 const getMemberOrderPre = async () => {
   if (query.count && query.skuId) {
     const res = await getMenberOrderPreNowAPI({
       skuId: query.skuId,
       count: query.count,
+      addressId: query.addressId,
     })
     orderPre.value = res.result
   } else {
@@ -67,7 +70,7 @@ const OnSubmit = async () => {
   })
   uni.redirectTo({ url: `/pagesOrder/detail/detail?=${res.result.id}` })
 }
-uni.showModal({ content: '温馨提示，绿色小锅数据有误，您可以尝试一下其他商品' })
+uni.showModal({ content: '温馨提示，绿色小锅商品数据有误，您可以尝试一下其他商品' })
 
 onLoad(() => {
   getMemberOrderPre()

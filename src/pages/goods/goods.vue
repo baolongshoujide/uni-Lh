@@ -20,7 +20,7 @@ const query = defineProps<{
 // 获取数据
 const goodsList = ref<GoodsResult>()
 const getGoodsList = async () => {
-  const res = await getGoodsAPI(query.id || '1369155859933827074')
+  const res = await getGoodsAPI(query.id || '4001877')
   goodsList.value = res.result
   localdata.value = {
     _id: res.result.id,
@@ -103,9 +103,10 @@ const OnAddCart = async (ev: SkuPopupEvent) => {
 
 const addressStore = useAddressStore()
 const OnBuyNow = async (ev: SkuPopupEvent) => {
+  console.log(goodsList.value?.userAddresses.find((v) => v.isDefault))
   uni.navigateTo({
     url: `/pagesOrder/create/create?skuId=${ev._id}&count=${ev.buy_num}&addressId=${
-      addressStore.address || ''
+      addressStore.address?.id || goodsList.value?.userAddresses.find((v) => v.isDefault)?.id
     }`,
   })
   console.log(ev)
