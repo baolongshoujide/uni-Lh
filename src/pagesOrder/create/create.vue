@@ -77,7 +77,7 @@ const OnSubmit = async () => {
   })
   uni.redirectTo({ url: `/pagesOrder/detail/detail?id=${res.result.id}` })
 }
-uni.showModal({ content: '温馨提示，绿色小锅商品数据有误，您可以尝试一下其他商品' })
+uni.showModal({ title: '温馨提示', content: '绿色小锅商品数据有误，您可以尝试一下其他商品' })
 
 onLoad(() => {
   getMemberOrderPre()

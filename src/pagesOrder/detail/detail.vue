@@ -6,6 +6,7 @@ import type { OrderResult } from '@/types/order'
 import { onLoad, onReady } from '@dcloudio/uni-app'
 import { ref } from 'vue'
 import PageSkeleton from './components/PageSkeleton.vue'
+import { getPayMockAPI, getPayWxPayMinPayAPI } from '@/services/pay.ts'
 
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
@@ -50,6 +51,22 @@ const OnBuyTwo = () => {
     url: `/pagesOrder/create/create?orderId=${query.id}`,
   })
 }
+const onTimeUp = () => {
+  order.value!.orderState = OrderState.YiQuXiao
+}
+
+const onOrderPay = async () => {
+  console.log('DEV:', import.meta.env.DEV)
+  if (import.meta.env.DEV) {
+    await getPayMockAPI({ orderId: query.id })
+    uni.redirectTo({ url: `/pagesOrder/payment/payment?id=${query.id}` })
+  } else {
+    const res = await getPayWxPayMinPayAPI({ orderId: query.id })
+    wx.requestPayment(res.result)
+    uni.redirectTo({ url: `/pagesOrder/payment/payment?id=${query.id}` })
+  }
+}
+
 onReady(() => {
   pageInstance.animate(
     '.navbar', // 选择器
@@ -101,20 +118,28 @@ onLoad(() => {
     <template v-if="order">
       <!-- 订单状态 -->
       <view class="overview" :style="{ paddingTop: safeAreaInsets!.top + 20 + 'px' }">
-        <!-- 待付款状态:展示去支付按钮和倒计时   order?.orderState === OrderState?.DaiFuKuan-->
-        <template v-if="false">
+        <!-- 待付款状态:展示去支付按钮和倒计时   -->
+        <template v-if="order?.orderState === OrderState?.DaiFuKuan">
           <view class="status icon-clock">等待付款</view>
           <view class="tips">
             <text class="money">应付金额: ¥ 99.00</text>
             <text class="time">支付剩余</text>
-            00 时 29 分 59 秒
+            <uni-countdown
+              color="#fff"
+              splitor-color="#fff"
+              :show-day="false"
+              :show-hour="false"
+              :show-colon="false"
+              :second="order?.countdown"
+              @timeup="onTimeUp"
+            />
           </view>
-          <view class="button">去支付</view>
+          <view class="button" @tap="onOrderPay">去支付</view>
         </template>
         <!-- 其他订单状态:展示再次购买按钮 -->
         <template v-else>
-          <!-- 订单状态文字  order.orderState -->
-          <view class="status"> {{ orderStateList[6].text }} </view>
+          <!-- 订单状态文字   -->
+          <view class="status"> {{ orderStateList[order.orderState].text }} </view>
           <view class="button-group">
             <navigator class="button" @tap="OnBuyTwo" hover-class="none"> 再次购买 </navigator>
             <!-- 待发货状态：模拟发货,开发期间使用,用于修改订单状态为已发货 -->
@@ -206,7 +231,7 @@ onLoad(() => {
       <view class="toolbar" :style="{ paddingBottom: safeAreaInsets?.bottom + 'px' }">
         <!-- 待付款状态:展示支付按钮 -->
         <template v-if="true">
-          <view class="button primary"> 去支付 </view>
+          <view class="button primary" @tap="onOrderPay"> 去支付 </view>
           <view class="button" @tap="popup?.open?.()"> 取消订单 </view>
         </template>
         <!-- 其他订单状态:按需展示按钮 -->
