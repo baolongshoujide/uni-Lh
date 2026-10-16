@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { useGuessList } from '@/composables'
-import { onReady } from '@dcloudio/uni-app'
+import { OrderState, orderStateList } from '@/services/constants'
+import { getMemberOrderIdAPI } from '@/services/order'
+import type { OrderResult } from '@/types/order'
+import { onLoad, onReady } from '@dcloudio/uni-app'
 import { ref } from 'vue'
+import PageSkeleton from './components/PageSkeleton.vue'
 
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
@@ -29,10 +33,23 @@ const onCopy = (id: string) => {
 const query = defineProps<{
   id: string
 }>()
+console.log(query.id)
+
+const order = ref<OrderResult>()
+const getMemberOrderId = async () => {
+  const res = await getMemberOrderIdAPI(query.id)
+  order.value = res.result
+}
 
 const pages = getCurrentPages()
 const pageInstance = pages.at(-1) as any
 console.log(pageInstance)
+
+const OnBuyTwo = () => {
+  uni.redirectTo({
+    url: `/pagesOrder/create/create?orderId=${query.id}`,
+  })
+}
 onReady(() => {
   pageInstance.animate(
     '.navbar', // 选择器
@@ -60,6 +77,9 @@ onReady(() => {
     endScrollOffset: 50,
   })
 })
+onLoad(() => {
+  getMemberOrderId()
+})
 </script>
 
 <template>
@@ -78,11 +98,11 @@ onReady(() => {
   </view>
   <!--  -->
   <scroll-view scroll-y class="viewport" id="scroller" @scrolltolower="OnScrolltolower">
-    <template v-if="true">
+    <template v-if="order">
       <!-- 订单状态 -->
       <view class="overview" :style="{ paddingTop: safeAreaInsets!.top + 20 + 'px' }">
-        <!-- 待付款状态:展示去支付按钮和倒计时 -->
-        <template v-if="true">
+        <!-- 待付款状态:展示去支付按钮和倒计时   order?.orderState === OrderState?.DaiFuKuan-->
+        <template v-if="false">
           <view class="status icon-clock">等待付款</view>
           <view class="tips">
             <text class="money">应付金额: ¥ 99.00</text>
@@ -93,16 +113,10 @@ onReady(() => {
         </template>
         <!-- 其他订单状态:展示再次购买按钮 -->
         <template v-else>
-          <!-- 订单状态文字 -->
-          <view class="status"> 待付款 </view>
+          <!-- 订单状态文字  order.orderState -->
+          <view class="status"> {{ orderStateList[6].text }} </view>
           <view class="button-group">
-            <navigator
-              class="button"
-              :url="`/pagesOrder/create/create?orderId=${query.id}`"
-              hover-class="none"
-            >
-              再次购买
-            </navigator>
+            <navigator class="button" @tap="OnBuyTwo" hover-class="none"> 再次购买 </navigator>
             <!-- 待发货状态：模拟发货,开发期间使用,用于修改订单状态为已发货 -->
             <view v-if="false" class="button"> 模拟发货 </view>
           </view>
@@ -215,7 +229,7 @@ onReady(() => {
     </template>
     <template v-else>
       <!-- 骨架屏组件 -->
-      <PageSkeleton />
+      <PageSkeleton></PageSkeleton>
     </template>
   </scroll-view>
   <!-- 取消订单弹窗 -->

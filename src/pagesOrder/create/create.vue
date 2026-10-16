@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { getMenberOrderPreAPI, getMenberOrderPreNowAPI, postMemberOrderAPI } from '@/services/order'
+import {
+  getMemberOrderRepurchaseIdAPI,
+  getMenberOrderPreAPI,
+  getMenberOrderPreNowAPI,
+  postMemberOrderAPI,
+} from '@/services/order'
 import { useAddressStore } from '@/stores/modules/address'
 import type { AddressItem } from '@/types/address'
 import type { OrderPreResult } from '@/types/order'
@@ -26,10 +31,13 @@ const onChangeDelivery: UniHelper.SelectorPickerOnChange = (ev) => {
 }
 
 const query = defineProps<{
-  skuId: string
-  count: string
-  addressId: string
+  skuId?: string
+  count?: string
+  addressId?: string
+  orderId?: string
 }>()
+
+console.log(query.orderId)
 
 const orderPre = ref<OrderPreResult>()
 const getMemberOrderPre = async () => {
@@ -40,6 +48,9 @@ const getMemberOrderPre = async () => {
       addressId: query.addressId,
     })
     orderPre.value = res.result
+  } else if (query.orderId) {
+    const res = await getMemberOrderRepurchaseIdAPI(query.orderId)
+    orderPre.value = res.result
   } else {
     const res = await getMenberOrderPreAPI()
     orderPre.value = res.result
@@ -49,10 +60,6 @@ const getMemberOrderPre = async () => {
 const addressStore = useAddressStore()
 const address = computed(() => {
   return addressStore.address || orderPre.value?.userAddresses.find((v) => v.isDefault)
-})
-
-const priceAll = computed(() => {
-  return orderPre.value?.summary?.totalPayPrice! + orderPre.value?.summary.postFee!
 })
 
 const OnSubmit = async () => {
@@ -68,7 +75,7 @@ const OnSubmit = async () => {
     payChannel: 2,
     payType: 1,
   })
-  uni.redirectTo({ url: `/pagesOrder/detail/detail?=${res.result.id}` })
+  uni.redirectTo({ url: `/pagesOrder/detail/detail?id=${res.result.id}` })
 }
 uni.showModal({ content: '温馨提示，绿色小锅商品数据有误，您可以尝试一下其他商品' })
 
@@ -151,7 +158,7 @@ onLoad(() => {
     <view class="settlement">
       <view class="item">
         <text class="text">商品总价: </text>
-        <text class="number symbol">{{ orderPre?.summary.totalPayPrice.toFixed(2) }}</text>
+        <text class="number symbol">{{ orderPre?.summary.totalPrice.toFixed(2) }}</text>
       </view>
       <view class="item">
         <text class="text">运费: </text>
@@ -163,7 +170,7 @@ onLoad(() => {
   <!-- 吸底工具栏 -->
   <view class="toolbar" :style="{ paddingBottom: safeAreaInsets?.bottom + 'px' }">
     <view class="total-pay symbol">
-      <text class="number">{{ priceAll.toFixed(2) }}</text>
+      <text class="number">{{ orderPre?.summary.totalPayPrice.toFixed(2) }}</text>
     </view>
     <view class="button" :class="{ disabled: !address?.id }" @tap="OnSubmit">提交订单</view>
   </view>
