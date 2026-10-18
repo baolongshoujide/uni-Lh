@@ -34,3 +34,7 @@ export const getMemberOrderRepurchaseIdAPI = (id: string) => {
 export const getMemberOrderIdLogisticsAPI = (id: string) => {
   return http.get<OrderLogisticResult>(`/member/order/${id}/logistics`)
 }
+
+export const deleteMemberOrderAPI = (data: { ids: string[] }) => {
+  return http.delete('/member/order', data)
+}
