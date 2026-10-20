@@ -125,7 +125,6 @@ onLoad(() => {
           :checked="form.isDefault === 1"
         />
       </view>
-      {{ form }}
     </uni-forms>
   </view>
   <!-- 提交按钮 -->

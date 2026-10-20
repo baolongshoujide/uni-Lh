@@ -66,7 +66,7 @@ const httpInterceptor = {
     }
 
     // 请求超时时间
-    options.timeout = 10000
+    options.timeout = 50000
 
     // 请求头
     options.header = {

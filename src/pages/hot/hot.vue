@@ -23,7 +23,7 @@ const getHotRecommendList = async () => {
   const res = await getHotRecommendAPI(currhotMap!.url, {
     subType: '',
     pageSize: 10,
-    page: 33,
+    page: 1,
   })
   console.log(res)
   hotList.value = res.result

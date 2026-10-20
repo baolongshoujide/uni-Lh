@@ -1,6 +1,8 @@
 import type { GoodsResult } from '@/types/goods'
 import type {
   OrderCreateParams,
+  OrderListParams,
+  OrderListResult,
   OrderLogisticResult,
   OrderPreResult,
   OrderResult,
@@ -37,4 +39,12 @@ export const getMemberOrderIdLogisticsAPI = (id: string) => {
 
 export const deleteMemberOrderAPI = (data: { ids: string[] }) => {
   return http.delete('/member/order', data)
+}
+
+export const getMemberOrderAPI = (data?: OrderListParams) => {
+  return http.get<OrderListResult>('/member/order', data)
+}
+
+export const putMemberOrderIdCancelAPI = (id: string, data: { cancelReason: string }) => {
+  return http.put(`/member/order/${id}/cancel`, data)
 }

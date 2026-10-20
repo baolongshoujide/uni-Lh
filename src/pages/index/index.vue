@@ -41,7 +41,6 @@ onLoad(async () => {
 // 下拉刷新
 const isriggered = ref(false)
 const Onrefresherrefresh = async () => {
-  console.log('自定义监听事件')
   isriggered.value = true
   guessRef.value?.resetDate()
   await Promise.all([

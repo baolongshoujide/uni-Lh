@@ -25,3 +25,43 @@ export type CategoryChildItem = {
   /** 二级分类图片 */
   picture: string
 }
+
+export interface EmptyObject {
+  /**
+   * 联想词Id集合
+   */
+  associatedIds?: string[]
+  /**
+   * 品牌id
+   */
+  brandId?: string
+  /**
+   * 分类id
+   */
+  categoryId?: string
+  /**
+   * 所输入的关键词
+   */
+  keyword?: string
+  /**
+   * 只显示特惠
+   */
+  onlyDiscount?: boolean
+  /**
+   * 页码
+   */
+  page?: number
+  /**
+   * 页尺寸
+   */
+  pageSize?: number
+  /**
+   * 排序字段，取值范围：[publishTime,orderNum,price,evaluateNum]
+   */
+  sortField?: string
+  /**
+   * 排序规则，asc为正序，desc为倒序，默认为desc
+   */
+  sortMethod?: string
+  [property: string]: any
+}

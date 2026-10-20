@@ -5,6 +5,7 @@ import {
   deleteMemberOrderAPI,
   getMemberOrderIdAPI,
   getMemberOrderIdLogisticsAPI,
+  putMemberOrderIdCancelAPI,
 } from '@/services/order'
 import type { LogisticItem, OrderResult } from '@/types/order'
 import { onLoad, onReady } from '@dcloudio/uni-app'
@@ -133,6 +134,19 @@ const onOrderDelete = () => {
   })
 }
 
+const onOrderCancel = () => {
+  uni.showModal({
+    content: '是否取消订单',
+    success: async (success) => {
+      if (success.confirm) {
+        const res = await putMemberOrderIdCancelAPI(query.id, { cancelReason: reason.value })
+        uni.showToast({ title: '取消成功' })
+        uni.redirectTo({ url: '/pagesOrder/list/list' })
+      }
+    },
+  })
+}
+
 onReady(() => {
   pageInstance.animate(
     '.navbar', // 选择器
@@ -207,7 +221,7 @@ onLoad(() => {
           <!-- 订单状态文字   -->
           <view class="status"> {{ orderStateList[order.orderState].text }} </view>
           <view class="button-group">
-            <navigator class="button" @tap="OnBuyTwo" hover-class="none"> 再次购买 </navigator>
+            <view class="button" @tap="OnBuyTwo" hover-class="none"> 再次购买 </view>
             <!-- 待发货状态：模拟发货,开发期间使用,用于修改订单状态为已发货 -->
             <view
               v-if="isDev && order?.orderState === OrderState?.DaiFaHuo"
@@ -220,7 +234,7 @@ onLoad(() => {
               v-if="order?.orderState === OrderState?.DaiShouHuo"
               class="button"
               @tap="onOrderConfirm"
-              >确认收货</view
+              >模拟收货</view
             >
           </view>
         </template>
@@ -299,7 +313,7 @@ onLoad(() => {
       </view>
 
       <!-- 猜你喜欢 -->
-      <XtxGuess ref="guessRef" />
+      <LhGuess ref="guessRef" />
 
       <!-- 底部操作栏 -->
       <view class="toolbar-height" :style="{ paddingBottom: safeAreaInsets?.bottom + 'px' }"></view>
@@ -311,13 +325,7 @@ onLoad(() => {
         </template>
         <!-- 其他订单状态:按需展示按钮 -->
         <template v-else>
-          <navigator
-            class="button secondary"
-            :url="`/pagesOrder/create/create?orderId=${query.id}`"
-            hover-class="none"
-          >
-            再次购买
-          </navigator>
+          <view class="button secondary" @tap="OnBuyTwo" hover-class="none"> 再次购买 </view>
           <!-- 待收货状态: 展示确认收货 -->
           <view
             class="button primary"
@@ -357,7 +365,7 @@ onLoad(() => {
       </view>
       <view class="footer">
         <view class="button" @tap="popup?.close?.()">取消</view>
-        <view class="button primary">确认</view>
+        <view class="button primary" @tap="onOrderCancel">确认</view>
       </view>
     </view>
   </uni-popup>

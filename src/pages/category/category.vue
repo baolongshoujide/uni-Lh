@@ -1,11 +1,102 @@
 <script setup lang="ts">
 import { getHomeBannerAPI } from '@/services/home'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import type { BannerItem } from '@/types/home'
 import { onLoad } from '@dcloudio/uni-app'
 import { getCategoryTopAPI } from '@/services/category'
 import type { CategoryTopItem } from '@/types/category'
 import PageSkeleton from './components/PageSkeleton.vue'
+import { useGoodsStore } from '@/stores/modules/goods'
+
+const goodsStore = useGoodsStore()
+const search = ref('')
+// 和主页共用搜索记录。
+const searchHistoryKey = 'category-search-history'
+const savedSearchHistory = uni.getStorageSync(searchHistoryKey)
+const searchList = ref<string[]>(Array.isArray(savedSearchHistory) ? savedSearchHistory : [])
+const isSearchFocused = ref(false)
+let searchBlurTimer: ReturnType<typeof setTimeout> | undefined
+let preserveSearchAfterBlur = false
+const searchResults = computed(() => goodsStore.searchGoods(search.value))
+
+// 保存关键词到本地历史记录，最多保留 10 条。
+const addSearchHistory = (value: string) => {
+  const keyword = value.trim()
+  if (!keyword) return
+
+  const history = [keyword, ...searchList.value.filter((item) => item !== keyword)].slice(0, 10)
+  searchList.value = history
+  uni.setStorageSync(searchHistoryKey, history)
+}
+
+const onSearchFocus = () => {
+  if (searchBlurTimer) clearTimeout(searchBlurTimer)
+  isSearchFocused.value = true
+  // 从商品 store 加载商品，供当前搜索框本地匹配。
+  goodsStore.loadAllGoods()
+}
+
+// 唯一匹配项回车直接打开；多个匹配项保留列表供选择。
+const finishSearch = () => {
+  const results = goodsStore.searchGoods(search.value)
+  addSearchHistory(search.value)
+
+  if (goodsStore.isLoading && results.length === 0) {
+    isSearchFocused.value = true
+    preserveSearchAfterBlur = true
+    uni.hideKeyboard()
+    setTimeout(() => {
+      preserveSearchAfterBlur = false
+    }, 300)
+  } else if (results.length === 1) {
+    openSearchResult(results[0].id)
+  } else if (results.length > 1) {
+    isSearchFocused.value = true
+    preserveSearchAfterBlur = true
+    uni.hideKeyboard()
+    setTimeout(() => {
+      preserveSearchAfterBlur = false
+    }, 300)
+  } else {
+    uni.hideKeyboard()
+    search.value = ''
+    isSearchFocused.value = false
+  }
+}
+
+// 点击匹配商品后打开它的详情页。
+const openSearchResult = (id: string) => {
+  addSearchHistory(search.value)
+  isSearchFocused.value = false
+  uni.hideKeyboard()
+  uni.navigateTo({ url: `/pages/goods/goods?id=${id}` })
+}
+
+const selectSearchHistory = (keyword: string) => {
+  if (searchBlurTimer) clearTimeout(searchBlurTimer)
+  search.value = keyword
+  isSearchFocused.value = true
+  uni.hideKeyboard()
+}
+
+// 清除本地搜索记录。
+const clearSearchHistory = () => {
+  searchList.value = []
+  uni.removeStorageSync(searchHistoryKey)
+}
+
+const onSearchBlur = () => {
+  // 回车隐藏键盘后，如果有多个结果，暂时保留关键词和结果面板。
+  if (preserveSearchAfterBlur) {
+    preserveSearchAfterBlur = false
+    return
+  }
+  addSearchHistory(search.value)
+  searchBlurTimer = setTimeout(() => {
+    search.value = ''
+    isSearchFocused.value = false
+  }, 180)
+}
 
 const bannerList = ref<BannerItem[]>([])
 const getBannerList = async () => {
@@ -33,8 +124,54 @@ onLoad(async () => {
   <view class="viewport" v-else>
     <!-- 搜索框 -->
     <view class="search">
-      <view class="input">
-        <text class="icon-search">女靴</text>
+      <view class="search-box">
+        <text class="icon-search"></text>
+        <input
+          class="search-input"
+          type="text"
+          v-model="search"
+          placeholder="女靴"
+          placeholder-class="search-placeholder"
+          confirm-type="search"
+          @focus="onSearchFocus"
+          @blur="onSearchBlur"
+          @confirm="finishSearch"
+        />
+      </view>
+      <view class="search-history" v-if="isSearchFocused">
+        <view class="history-header">
+          <text class="history-title">{{ search.trim() ? '搜索结果' : '搜索记录' }}</text>
+          <text v-if="searchList.length" class="history-clear" @tap="clearSearchHistory">清空</text>
+        </view>
+        <!-- 输入关键词时显示本地匹配商品，点商品名称进入详情。 -->
+        <view v-if="search.trim() && searchResults.length" class="history-items search-results">
+          <text
+            class="history-item search-result"
+            v-for="item in searchResults"
+            :key="item.id"
+            @tap="openSearchResult(item.id)"
+            >{{ item.name }}</text
+          >
+        </view>
+        <!-- 输入框为空时显示历史搜索词。 -->
+        <view v-else-if="!search.trim() && searchList.length" class="history-items">
+          <text
+            class="history-item"
+            v-for="item in searchList"
+            :key="item"
+            @tap="selectSearchHistory(item)"
+            >{{ item }}</text
+          >
+        </view>
+        <view v-else class="history-empty">
+          {{
+            search.trim()
+              ? goodsStore.isLoading
+                ? '正在搜索商品…'
+                : '没有找到相关商品'
+              : '暂无搜索记录'
+          }}
+        </view>
       </view>
     </view>
     <!-- 分类 -->
@@ -94,24 +231,91 @@ page {
   flex-direction: column;
 }
 .search {
-  padding: 0 30rpx 20rpx;
+  position: relative;
+  padding: 16rpx 30rpx 20rpx;
   background-color: #fff;
-  .input {
+  z-index: 100;
+  .search-box {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    height: 64rpx;
-    padding-left: 26rpx;
-    color: #8b8b8b;
-    font-size: 28rpx;
-    border-radius: 32rpx;
-    background-color: #f3f4f4;
+    height: 72rpx;
+    padding: 0 24rpx;
+    border-radius: 36rpx;
+    background-color: #f5f5f5;
+  }
+  .icon-search {
+    flex: none;
+    margin-right: 14rpx;
+    color: #999;
+    font-size: 30rpx;
+  }
+  .search-input {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    color: #333;
+    font-size: 26rpx;
   }
 }
-.icon-search {
-  &::before {
-    margin-right: 10rpx;
-  }
+.search-history {
+  position: absolute;
+  top: 100%;
+  left: 30rpx;
+  right: 30rpx;
+  padding: 22rpx 24rpx 24rpx;
+  border-radius: 0 0 16rpx 16rpx;
+  background-color: #fff;
+  box-shadow: 0 12rpx 24rpx rgba(0, 0, 0, 0.1);
+  z-index: 99;
+}
+.history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18rpx;
+}
+.history-title {
+  color: #333;
+  font-size: 26rpx;
+  font-weight: 600;
+}
+.history-clear {
+  color: #999;
+  font-size: 24rpx;
+}
+.history-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14rpx;
+}
+.search-results {
+  flex-direction: column;
+  gap: 8rpx;
+}
+.history-item {
+  max-width: 100%;
+  padding: 10rpx 20rpx;
+  overflow: hidden;
+  border-radius: 24rpx;
+  background-color: #f5f5f5;
+  color: #666;
+  font-size: 24rpx;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.search-result {
+  box-sizing: border-box;
+  width: 100%;
+  border-radius: 8rpx;
+}
+.history-empty {
+  padding: 12rpx 0;
+  color: #999;
+  font-size: 24rpx;
+}
+.search-placeholder {
+  color: #999;
+  font-size: 26rpx;
 }
 /* 分类 */
 .categories {
