@@ -62,7 +62,7 @@ defineExpose({
   <view class="loading-text"> {{ finish ? '已经到底了~' : '正在加载...' }} </view>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 :host {
   display: block;
 }

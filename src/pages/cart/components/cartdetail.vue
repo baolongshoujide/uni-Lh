@@ -124,19 +124,21 @@ onShow(() => {
                 <view class="meta">
                   <view class="name ellipsis">{{ item.name }}</view>
                   <view class="attrsText ellipsis">{{ item.attrsText }}</view>
-                  <view class="price">{{ item.nowPrice }}</view>
+                  <view class="purchase-row">
+                    <view class="price">{{ item.nowPrice }}</view>
+                    <vk-data-input-number-box
+                      v-model="item.count"
+                      :min="1"
+                      :max="item.stock"
+                      :index="item.skuId"
+                      :input-width="64"
+                      :input-height="52"
+                      :size="24"
+                      @change="onChangeCount"
+                    ></vk-data-input-number-box>
+                  </view>
                 </view>
               </navigator>
-              <!-- 商品数量 -->
-              <view class="count">
-                <vk-data-input-number-box
-                  v-model="item.count"
-                  :min="1"
-                  :max="item.stock"
-                  :index="item.skuId"
-                  @change="onChangeCount"
-                ></vk-data-input-number-box>
-              </view>
             </view>
             <!-- 右侧删除按钮 -->
             <template #right>
@@ -234,8 +236,14 @@ onShow(() => {
 
     .navigator {
       display: flex;
+      flex: 1;
+      min-width: 0;
     }
-
+    .navigator-wrap {
+      display: flex;
+      flex: 1;
+      min-width: 0;
+    }
     .checkbox {
       position: absolute;
       top: 0;
@@ -263,13 +271,16 @@ onShow(() => {
     .picture {
       width: 170rpx;
       height: 170rpx;
+      flex: none;
+      border-radius: 6rpx;
     }
 
     .meta {
       flex: 1;
+      min-width: 0;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: flex-start;
       margin-left: 20rpx;
     }
 
@@ -284,50 +295,32 @@ onShow(() => {
       padding: 0 15rpx;
       font-size: 24rpx;
       align-self: flex-start;
+      margin-top: 12rpx;
       border-radius: 4rpx;
       color: #96a8c2;
       background-color: rgba(8, 12, 24, 0.75);
     }
 
-    .price {
-      line-height: 1;
-      font-size: 26rpx;
-      color: #e8f2ff;
-      margin-bottom: 2rpx;
-      color: #ff3344;
-
-      &::before {
-        content: '￥';
-        font-size: 80%;
-      }
-    }
-
-    // 商品数量
-    .count {
-      position: absolute;
-      bottom: 20rpx;
-      right: 5rpx;
-
+    .purchase-row {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      width: 220rpx;
-      height: 48rpx;
+      justify-content: space-between;
+      min-width: 0;
+      gap: 8rpx;
+      margin-top: auto;
+      padding-top: 16rpx;
 
-      .text {
-        height: 100%;
-        padding: 0 20rpx;
-        font-size: 32rpx;
-        color: #e8f2ff;
-      }
+      .price {
+        line-height: 1;
+        font-size: 30rpx;
+        font-weight: 600;
+        color: #ff5b67;
+        white-space: nowrap;
 
-      .input {
-        height: 100%;
-        text-align: center;
-        border-radius: 4rpx;
-        font-size: 24rpx;
-        color: #e8f2ff;
-        background-color: rgba(8, 12, 24, 0.75);
+        &::before {
+          content: '￥';
+          font-size: 75%;
+        }
       }
     }
   }

@@ -159,7 +159,7 @@ const onSearchBlur = () => {
   </view>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 /* 自定义导航条 */
 .navbar {
   z-index: 1000;

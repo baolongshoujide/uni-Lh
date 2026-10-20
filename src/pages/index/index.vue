@@ -73,9 +73,9 @@ const Onrefresherrefresh = async () => {
   </scroll-view>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 //
-page {
+:global(page) {
   background-color: #080c18;
   height: 100%;
   display: flex;

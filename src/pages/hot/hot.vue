@@ -65,8 +65,8 @@ onLoad(() => {
 <template>
   <view class="viewport">
     <!-- 推荐封面图 -->
-    <view class="cover">
-      <image :src="hotList?.bannerPicture"></image>
+    <view class="hot-cover">
+      <image mode="aspectFill" :src="hotList?.bannerPicture"></image>
     </view>
     <!-- 推荐选项 -->
     <view class="tabs">
@@ -110,8 +110,8 @@ onLoad(() => {
   </view>
 </template>
 
-<style lang="scss">
-page {
+<style lang="scss" scoped>
+:global(page) {
   height: 100%;
   background-color: #080c18;
 }
@@ -122,14 +122,20 @@ page {
   padding: 180rpx 0 0;
   position: relative;
 }
-.cover {
-  width: 750rpx;
+.hot-cover {
   height: 225rpx;
   border-radius: 0 0 40rpx 40rpx;
   overflow: hidden;
   position: absolute;
   left: 0;
+  right: 0;
   top: 0;
+
+  image {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
 }
 .scroll-view {
   flex: 1;

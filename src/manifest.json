@@ -48,6 +48,11 @@
   },
   /* 快应用特有相关 */
   "quickapp": {},
+  "h5": {
+    "router": {
+      "base": "./"
+    }
+  },
   /* 小程序特有相关 */
   "mp-weixin": {
     "appid": "wxd4ac2d31f201dca2",

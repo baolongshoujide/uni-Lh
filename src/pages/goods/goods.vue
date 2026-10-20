@@ -4,6 +4,7 @@ import type { GoodsResult } from '@/types/goods'
 import { onLoad, onShow } from '@dcloudio/uni-app'
 import { computed, ref } from 'vue'
 const { safeAreaInsets } = uni.getSystemInfoSync()
+const previewHeightRpx = ref(750)
 import AddressPanel from './compontens/AddressPanel.vue'
 import ServicePanel from './compontens/Service.Panel.vue'
 import type {
@@ -49,6 +50,12 @@ const getGoodsList = async () => {
 const currentIndex = ref(0)
 const Onchange: UniHelper.SwiperOnChange = (ev) => {
   currentIndex.value = ev.detail!.current
+}
+const onPreviewImageLoad = (ev: { detail: { width: number; height: number } }) => {
+  const { width, height } = ev.detail
+  if (width > 0 && height > 0) {
+    previewHeightRpx.value = (750 * height) / width
+  }
 }
 // 轮播图预览
 const OnImage = (i: string) => {
@@ -105,7 +112,7 @@ const OnBuyNow = async (ev: SkuPopupEvent) => {
   console.log(goodsList.value?.userAddresses.find((v) => v.isDefault))
   uni.navigateTo({
     url: `/pagesOrder/create/create?skuId=${ev._id}&count=${ev.buy_num}&addressId=${
-      addressStore.address?.id || goodsList.value?.userAddresses.find((v) => v.isDefault)?.id
+      addressStore.address?.id || goodsList.value?.userAddresses!.find((v) => v.isDefault)?.id
     }`,
   })
   console.log(ev)
@@ -143,10 +150,16 @@ onShow(() => {
     <!-- 基本信息 -->
     <view class="goods">
       <!-- 商品主图 -->
-      <view class="preview">
-        <swiper @change="Onchange" circular>
-          <swiper-item v-for="item in goodsList?.mainPictures" :key="item">
-            <image @tap="OnImage(item)" mode="aspectFill" :src="item" />
+      <view class="preview" :style="{ height: `${previewHeightRpx}rpx` }">
+        <swiper @change="Onchange" circular :style="{ height: `${previewHeightRpx}rpx` }">
+          <swiper-item v-for="(item, index) in goodsList?.mainPictures" :key="item">
+            <image
+              class="preview-image"
+              @load="index === 0 ? onPreviewImageLoad : undefined"
+              @tap="OnImage(item)"
+              mode="aspectFit"
+              :src="item"
+            />
           </swiper-item>
         </swiper>
         <view class="indicator">
@@ -201,6 +214,7 @@ onShow(() => {
         </view>
         <!-- 图片详情 -->
         <image
+          class="detail-image"
           mode="widthFix"
           v-for="item in goodsList?.details?.pictures"
           :key="item"
@@ -237,9 +251,6 @@ onShow(() => {
   <view class="toolbar" :style="{ paddingBottom: safeAreaInsets?.bottom + 'px' }">
     <view class="icons">
       <button class="icons-button"><text class="icon-heart"></text>收藏</button>
-      <button class="icons-button" open-type="contact">
-        <text class="icon-handset"></text>客服
-      </button>
       <navigator class="icons-button" url="/pages/cart/cart2" open-type="navigate">
         <text class="icon-cart"></text>购物车
       </navigator>
@@ -259,8 +270,8 @@ onShow(() => {
   </uni-popup>
 </template>
 
-<style lang="scss">
-page {
+<style lang="scss" scoped>
+:global(page) {
   height: 100%;
   overflow: hidden;
   display: flex;
@@ -313,11 +324,13 @@ page {
 .goods {
   background-color: rgba(20, 30, 50, 0.75);
   .preview {
-    height: 750rpx;
+    width: 100%;
     position: relative;
-    .image {
-      width: 750rpx;
-      height: 750rpx;
+
+    .preview-image {
+      display: block;
+      width: 100%;
+      height: 100%;
     }
     .indicator {
       height: 40rpx;
@@ -410,8 +423,10 @@ page {
   padding-left: 20rpx;
   .content {
     margin-left: -20rpx;
-    .image {
+    .detail-image {
+      display: block;
       width: 100%;
+      height: auto;
     }
   }
   .properties {

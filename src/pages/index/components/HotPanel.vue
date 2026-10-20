@@ -20,7 +20,7 @@ defineProps<{
   </view>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 /* 热门推荐 */
 .hot {
   display: flex;

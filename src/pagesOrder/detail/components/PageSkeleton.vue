@@ -154,7 +154,7 @@
     </scroll-view>
   </view>
 </template>
-<style>
+<style scoped>
 /*
 此文件为开发者工具生成，生成时间: 2026/10/16 16:37:17
 

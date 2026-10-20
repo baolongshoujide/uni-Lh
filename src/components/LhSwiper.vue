@@ -32,18 +32,24 @@ const swiperChange: UniHelper.SwiperOnChange = (e) => {
   </view>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 :host {
   display: block;
   height: 280rpx;
 }
-/* 轮播图 */
+
 .carousel {
-  height: 100%;
   position: relative;
+  width: 100%;
+  height: 280rpx;
   overflow: hidden;
-  transform: translateY(0);
   background-color: #080c18;
+
+  swiper {
+    width: 100%;
+    height: 100%;
+  }
+
   .indicator {
     position: absolute;
     left: 0;
@@ -51,6 +57,7 @@ const swiperChange: UniHelper.SwiperOnChange = (e) => {
     bottom: 16rpx;
     display: flex;
     justify-content: center;
+
     .dot {
       width: 30rpx;
       height: 6rpx;
@@ -58,12 +65,15 @@ const swiperChange: UniHelper.SwiperOnChange = (e) => {
       border-radius: 6rpx;
       background-color: rgba(255, 255, 255, 0.4);
     }
+
     .active {
       background-color: rgba(20, 30, 50, 0.75);
     }
   }
+
   .navigator,
   .image {
+    display: block;
     width: 100%;
     height: 100%;
   }

@@ -82,8 +82,8 @@ onShow(() => {
   </view>
 </template>
 
-<style lang="scss">
-page {
+<style lang="scss" scoped>
+:global(page) {
   height: 100%;
   overflow: hidden;
 }

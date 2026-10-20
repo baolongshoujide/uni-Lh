@@ -40,8 +40,8 @@ const { guessRef, OnScrolltolower } = useGuessList()
   </scroll-view>
 </template>
 
-<style lang="scss">
-page {
+<style lang="scss" scoped>
+:global(page) {
   display: flex;
   flex-direction: column;
   height: 100%;

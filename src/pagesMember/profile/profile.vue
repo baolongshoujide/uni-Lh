@@ -178,8 +178,8 @@ onLoad(() => {
   </view>
 </template>
 
-<style lang="scss">
-page {
+<style lang="scss" scoped>
+:global(page) {
   background-color: #080c18;
 }
 

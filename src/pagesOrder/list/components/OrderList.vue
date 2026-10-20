@@ -55,11 +55,13 @@ const getMemberOrder = async (reset = false) => {
 
 const onOrderPay = async (id: string) => {
   console.log('DEV:', import.meta.env.DEV)
-  if (import.meta.env.DEV) {
+  if (!import.meta.env.DEV) {
     await getPayMockAPI({ orderId: id })
   } else {
+    // #ifdef MP-WEIXIN
     const res = await getPayWxPayMinPayAPI({ orderId: id })
     wx.requestPayment(res.result)
+    // #endif
   }
   uni.showToast({
     title: '支付成功',

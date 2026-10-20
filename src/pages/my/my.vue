@@ -77,7 +77,6 @@ const { OnScrolltolower, guessRef } = useGuessList()
           {{ item.text }}
         </navigator>
         <!-- 客服 -->
-        <button class="contact icon-handset" open-type="contact">售后</button>
       </view>
     </view>
     <!-- 猜你喜欢 -->
@@ -87,8 +86,8 @@ const { OnScrolltolower, guessRef } = useGuessList()
   </scroll-view>
 </template>
 
-<style lang="scss">
-page {
+<style lang="scss" scoped>
+:global(page) {
   height: 100%;
   overflow: hidden;
   background-color: #080c18;

@@ -68,7 +68,7 @@ getAddressList()
   </view>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .address-panel {
   padding: 0 30rpx;
   border-radius: 10rpx 10rpx 0 0;

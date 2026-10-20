@@ -152,7 +152,7 @@
     </view>
   </view>
 </template>
-<style>
+<style scoped>
 .sk-transparent {
   color: transparent !important;
 }

@@ -35,7 +35,7 @@ const emit = defineEmits<{
   </view>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .service-panel {
   padding: 0 30rpx;
   border-radius: 10rpx 10rpx 0 0;

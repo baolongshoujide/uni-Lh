@@ -3,6 +3,7 @@ import { getLoginWxMinSimpleAPI } from '@/services/login'
 import type { LoginResult } from '@/types/member'
 import { useMemberStore } from '@/stores'
 
+// #ifdef MP-WEIXIN
 // 企业级登录（个人用户不开放）
 const onGetPhoneNumber: UniHelper.ButtonOnGetphonenumber = () => {
   uni.showModal({
@@ -11,6 +12,7 @@ const onGetPhoneNumber: UniHelper.ButtonOnGetphonenumber = () => {
     showCancel: false,
   })
 }
+// #endif
 // 模拟接口
 const onGetPhoneNumberSimple = async () => {
   const res = await getLoginWxMinSimpleAPI('13000000000')
@@ -37,16 +39,21 @@ const ToLogin = (memberDetail: LoginResult) => {
     </view>
     <view class="login">
       <!-- 网页端表单登录 -->
-      <!-- <input class="input" type="text" placeholder="请输入用户名/手机号码" /> -->
-      <!-- <input class="input" type="text" password placeholder="请输入密码" /> -->
-      <!-- <button class="button phone">登录</button> -->
+      <!-- #ifdef H5 -->
+      <input class="input" type="text" placeholder="请输入用户名/手机号码" />
+      <input class="input" type="text" password placeholder="请输入密码" />
+      <button class="button phone">登录</button>
+      <!-- #endif -->
 
       <!-- 小程序端授权登录 -->
       <!-- 需要正常使用时，在button后加上open-type="getPhoneNumber" @getphonenumber="onGetPhoneNumber"两个事件 -->
+      <!-- #ifdef MP-WEIXIN -->
       <button class="button phone" @tap="onGetPhoneNumber">
         <text class="icon icon-phone"></text>
         手机号快捷登录
       </button>
+      <!-- #endif -->
+
       <view class="extra">
         <view class="caption">
           <text>其他登录方式</text>
@@ -58,13 +65,13 @@ const ToLogin = (memberDetail: LoginResult) => {
           </button>
         </view>
       </view>
-      <view class="tips">登录/注册即视为你同意《服务条款》和《小兔鲜儿隐私协议》</view>
+      <view class="tips">登录/注册即视为你同意《服务条款》和《龙核商城隐私协议》</view>
     </view>
   </view>
 </template>
 
-<style lang="scss">
-page {
+<style lang="scss" scoped>
+:global(page) {
   height: 100%;
 }
 

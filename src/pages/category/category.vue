@@ -2,7 +2,7 @@
 import { getHomeBannerAPI } from '@/services/home'
 import { computed, ref } from 'vue'
 import type { BannerItem } from '@/types/home'
-import { onLoad } from '@dcloudio/uni-app'
+import { onLoad, onShow } from '@dcloudio/uni-app'
 import { getCategoryTopAPI } from '@/services/category'
 import type { CategoryTopItem } from '@/types/category'
 import PageSkeleton from './components/PageSkeleton.vue'
@@ -105,17 +105,42 @@ const getBannerList = async () => {
 }
 
 const categoryTopList = ref<CategoryTopItem[]>([])
+const activeIndex = ref(0)
+const selectedCategoryKey = 'index-selected-category-name'
+
+const applySelectedCategory = () => {
+  const selectedName = uni.getStorageSync(selectedCategoryKey) as string
+  if (!selectedName || categoryTopList.value.length === 0) return
+
+  const normalizedName = selectedName.replace(/\s+/g, '')
+  let selectedIndex = categoryTopList.value.findIndex(
+    (item) => item.name.replace(/\s+/g, '') === normalizedName,
+  )
+  if (selectedIndex < 0) {
+    selectedIndex = categoryTopList.value.findIndex((item) => {
+      const categoryName = item.name.replace(/\s+/g, '')
+      return categoryName.includes(normalizedName) || normalizedName.includes(categoryName)
+    })
+  }
+  if (selectedIndex >= 0) activeIndex.value = selectedIndex
+  uni.removeStorageSync(selectedCategoryKey)
+}
+
 const getCategoryTopList = async () => {
   const res = await getCategoryTopAPI()
   categoryTopList.value = res.result
+  applySelectedCategory()
 }
 
-const activeIndex = ref(0)
 const isPageSkeleton = ref(true)
 
 onLoad(async () => {
   await Promise.all([getBannerList(), getCategoryTopList()])
   isPageSkeleton.value = false
+})
+
+onShow(() => {
+  applySelectedCategory()
 })
 </script>
 
@@ -220,8 +245,8 @@ onLoad(async () => {
   </view>
 </template>
 
-<style lang="scss">
-page {
+<style lang="scss" scoped>
+:global(page) {
   height: 100%;
   overflow: hidden;
 }

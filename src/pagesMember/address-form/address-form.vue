@@ -131,8 +131,8 @@ onLoad(() => {
   <button @tap="OnSubmit" class="button">保存并使用</button>
 </template>
 
-<style lang="scss">
-page {
+<style lang="scss" scoped>
+:global(page) {
   background-color: #080c18;
 }
 
@@ -143,7 +143,7 @@ page {
   background-color: rgba(20, 30, 50, 0.75);
 
   .form-item,
-  .uni-forms-item {
+  :deep(.uni-forms-item) {
     display: flex;
     align-items: center;
     min-height: 96rpx;
@@ -155,11 +155,11 @@ page {
     margin-bottom: 0;
 
     // 调整 uni-forms 样式
-    .uni-forms-item__content {
+    :deep(.uni-forms-item__content) {
       display: flex;
     }
 
-    .uni-forms-item__error {
+    :deep(.uni-forms-item__error) {
       margin-left: 200rpx;
     }
 

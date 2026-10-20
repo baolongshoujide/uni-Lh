@@ -87,14 +87,16 @@ const onTimeUp = () => {
 }
 
 const onOrderPay = async () => {
-  console.log('DEV:', import.meta.env.DEV)
+  console.log('确认是否是开发环境', import.meta.env.DEV)
   if (import.meta.env.DEV) {
     await getPayMockAPI({ orderId: query.id })
     uni.redirectTo({ url: `/pagesOrder/payment/payment?id=${query.id}` })
   } else {
+    // #ifdef MP-WEIXIN
     const res = await getPayWxPayMinPayAPI({ orderId: query.id })
     wx.requestPayment(res.result)
     uni.redirectTo({ url: `/pagesOrder/payment/payment?id=${query.id}` })
+    // #endif
   }
 }
 
@@ -371,8 +373,8 @@ onLoad(() => {
   </uni-popup>
 </template>
 
-<style lang="scss">
-page {
+<style lang="scss" scoped>
+:global(page) {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -429,7 +431,7 @@ page {
   line-height: 1;
   padding-bottom: 30rpx;
   color: #fff;
-  background-image: url(https://pcapi-xiaotuxian-front-devtest.itheima.net/miniapp/images/order_bg.png);
+  background-image: url('@/static/images/navigator_bg.png');
   background-size: cover;
 
   .status {
