@@ -59,7 +59,7 @@ page {
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: #fff;
+  background-color: rgba(20, 30, 50, 0.75);
 }
 
 // tabs
@@ -68,8 +68,8 @@ page {
   justify-content: space-around;
   line-height: 60rpx;
   margin: 0 10rpx;
-  background-color: #fff;
-  box-shadow: 0 4rpx 6rpx rgba(240, 240, 240, 0.6);
+  background-color: rgba(20, 30, 50, 0.75);
+  box-shadow: 0 4rpx 6rpx rgba(0, 184, 255, 0.12);
   position: relative;
   z-index: 9;
 
@@ -78,7 +78,7 @@ page {
     text-align: center;
     padding: 20rpx;
     font-size: 28rpx;
-    color: #262626;
+    color: #e8f2ff;
   }
 
   .cursor {
@@ -88,7 +88,7 @@ page {
     width: 20%;
     height: 6rpx;
     padding: 0 50rpx;
-    background-color: #27ba9b;
+    background-color: #00b8ff;
     /* 过渡效果 */
     transition: all 0.4s;
   }
@@ -96,6 +96,8 @@ page {
 
 // swiper
 .swiper {
-  background-color: #f7f7f8;
+  flex: 1;
+  min-height: 0;
+  background-color: #080c18;
 }
 </style>

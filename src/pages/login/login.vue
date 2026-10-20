@@ -48,9 +48,7 @@ onLoad(async () => {
 <template>
   <view class="viewport">
     <view class="logo">
-      <image
-        src="https://pcapi-xiaotuxian-front-devtest.itheima.net/miniapp/images/logo_icon.png"
-      ></image>
+      <image src="../../static/assets/images/login-background-dragon-hidden.png"></image>
     </view>
     <view class="login">
       <!-- 网页端表单登录 -->
@@ -96,8 +94,7 @@ page {
   flex: 1;
   text-align: center;
   image {
-    width: 220rpx;
-    height: 220rpx;
+    height: 350rpx;
     margin-top: 15vh;
   }
 }
@@ -113,7 +110,7 @@ page {
     height: 80rpx;
     font-size: 28rpx;
     border-radius: 72rpx;
-    border: 1px solid #ddd;
+    border: 1px solid rgba(0, 184, 255, 0.2);
     padding-left: 30rpx;
     margin-bottom: 20rpx;
   }
@@ -134,11 +131,11 @@ page {
   }
 
   .phone {
-    background-color: #28bb9c;
+    background-color: #00b8ff;
   }
 
   .wechat {
-    background-color: #06c05f;
+    background-color: #00b8ff;
   }
 
   .extra {
@@ -147,13 +144,13 @@ page {
     .caption {
       width: 440rpx;
       line-height: 1;
-      border-top: 1rpx solid #ddd;
+      border-top: 1rpx solid rgba(0, 184, 255, 0.2);
       font-size: 26rpx;
-      color: #999;
+      color: #96a8c2;
       position: relative;
       text {
         transform: translate(-40%);
-        background-color: #fff;
+        background-color: rgba(20, 30, 50, 0.75);
         position: absolute;
         top: -12rpx;
         left: 50%;
@@ -173,7 +170,7 @@ page {
 
     .icon {
       font-size: 24rpx;
-      color: #444;
+      color: #e8f2ff;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -191,8 +188,8 @@ page {
       }
     }
     .icon-weixin::before {
-      border-color: #06c05f;
-      color: #06c05f;
+      border-color: #00b8ff;
+      color: #00b8ff;
     }
   }
 }
@@ -203,7 +200,7 @@ page {
   left: 20rpx;
   right: 20rpx;
   font-size: 22rpx;
-  color: #999;
+  color: #96a8c2;
   text-align: center;
 }
 </style>

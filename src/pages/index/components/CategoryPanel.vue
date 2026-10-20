@@ -43,7 +43,7 @@ defineProps<{
     }
     .text {
       font-size: 26rpx;
-      color: #666;
+      color: #96a8c2;
     }
   }
 }

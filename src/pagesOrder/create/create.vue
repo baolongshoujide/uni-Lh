@@ -182,7 +182,7 @@ page {
   flex-direction: column;
   height: 100%;
   overflow: hidden;
-  background-color: #f4f4f4;
+  background-color: #080c18;
 }
 
 .symbol::before {
@@ -197,12 +197,12 @@ page {
   font-size: 26rpx;
   border-radius: 10rpx;
   background: url(https://pcapi-xiaotuxian-front-devtest.itheima.net/miniapp/images/locate.png)
-    20rpx center / 50rpx no-repeat #fff;
+    20rpx center / 50rpx no-repeat rgba(20, 30, 50, 0.75);
   position: relative;
 
   .icon {
     font-size: 36rpx;
-    color: #333;
+    color: #e8f2ff;
     transform: translateY(-50%);
     position: absolute;
     top: 50%;
@@ -210,12 +210,12 @@ page {
   }
 
   .user {
-    color: #333;
+    color: #e8f2ff;
     margin-bottom: 5rpx;
   }
 
   .address {
-    color: #666;
+    color: #96a8c2;
   }
 }
 
@@ -223,12 +223,12 @@ page {
   margin: 20rpx;
   padding: 0 20rpx;
   border-radius: 10rpx;
-  background-color: #fff;
+  background-color: rgba(20, 30, 50, 0.75);
 
   .item {
     display: flex;
     padding: 30rpx 0;
-    border-top: 1rpx solid #eee;
+    border-top: 1rpx solid rgba(0, 184, 255, 0.2);
 
     &:first-child {
       border-top: none;
@@ -252,7 +252,7 @@ page {
     .name {
       height: 80rpx;
       font-size: 26rpx;
-      color: #444;
+      color: #e8f2ff;
     }
 
     .attrs {
@@ -262,8 +262,8 @@ page {
       font-size: 24rpx;
       align-self: flex-start;
       border-radius: 4rpx;
-      color: #888;
-      background-color: #f7f7f8;
+      color: #96a8c2;
+      background-color: #080c18;
     }
 
     .prices {
@@ -274,12 +274,12 @@ page {
 
       .pay-price {
         margin-right: 10rpx;
-        color: #cf4444;
+        color: #ff3344;
       }
 
       .price {
         font-size: 24rpx;
-        color: #999;
+        color: #96a8c2;
         text-decoration: line-through;
       }
     }
@@ -289,7 +289,7 @@ page {
       bottom: 0;
       right: 0;
       font-size: 26rpx;
-      color: #444;
+      color: #e8f2ff;
     }
   }
 }
@@ -298,7 +298,7 @@ page {
   margin: 20rpx;
   padding: 0 20rpx;
   border-radius: 10rpx;
-  background-color: #fff;
+  background-color: rgba(20, 30, 50, 0.75);
 
   .item {
     display: flex;
@@ -306,7 +306,7 @@ page {
     align-items: center;
     min-height: 80rpx;
     font-size: 26rpx;
-    color: #333;
+    color: #e8f2ff;
   }
 
   .input {
@@ -315,7 +315,7 @@ page {
     margin: 20rpx 0;
     padding-right: 20rpx;
     font-size: 26rpx;
-    color: #999;
+    color: #96a8c2;
   }
 
   .item .text {
@@ -323,7 +323,7 @@ page {
   }
 
   .picker {
-    color: #666;
+    color: #96a8c2;
   }
 
   .picker::after {
@@ -336,7 +336,7 @@ page {
   margin: 20rpx;
   padding: 0 20rpx;
   border-radius: 10rpx;
-  background-color: #fff;
+  background-color: rgba(20, 30, 50, 0.75);
 
   .item {
     display: flex;
@@ -344,11 +344,11 @@ page {
     justify-content: space-between;
     height: 80rpx;
     font-size: 26rpx;
-    color: #333;
+    color: #e8f2ff;
   }
 
   .danger {
-    color: #cf4444;
+    color: #ff3344;
   }
 }
 
@@ -360,10 +360,10 @@ page {
   bottom: calc(var(--window-bottom));
   z-index: 1;
 
-  background-color: #fff;
+  background-color: rgba(20, 30, 50, 0.75);
   height: 100rpx;
   padding: 0 20rpx;
-  border-top: 1rpx solid #eaeaea;
+  border-top: 1rpx solid rgba(0, 184, 255, 0.2);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -371,7 +371,7 @@ page {
 
   .total-pay {
     font-size: 40rpx;
-    color: #cf4444;
+    color: #ff3344;
 
     .decimal {
       font-size: 75%;
@@ -385,7 +385,7 @@ page {
     font-size: 26rpx;
     color: #fff;
     border-radius: 72rpx;
-    background-color: #27ba9b;
+    background-color: #00b8ff;
   }
 
   .disabled {

@@ -391,25 +391,25 @@ export default {
 			themeColor: {
 				// 默认主题
 				default: {
-					priceColor: 'rgb(254, 86, 10)',
+					priceColor: 'rgb(0, 184, 255)',
 					buyNowColor: '#ffffff',
-					buyNowBackgroundColor: 'rgb(254, 86, 10)',
+					buyNowBackgroundColor: 'rgb(0, 184, 255)',
 					addCartColor: '#ffffff',
-					addCartBackgroundColor: 'rgb(255, 148, 2)',
+					addCartBackgroundColor: 'rgb(0, 184, 255)',
 					btnStyle: {
-						color: '#333333',
-						borderColor: '#f4f4f4',
-						backgroundColor: '#ffffff'
+						color: '#e8f2ff',
+						borderColor: 'rgba(0, 184, 255, 0.2)',
+						backgroundColor: 'rgba(20, 30, 50, 0.75)'
 					},
 					activedStyle: {
-						color: 'rgb(254, 86, 10)',
-						borderColor: 'rgb(254, 86, 10)',
-						backgroundColor: 'rgba(254,86,10,0.1)'
+						color: 'rgb(0, 184, 255)',
+						borderColor: 'rgb(0, 184, 255)',
+						backgroundColor: 'rgba(0, 184, 255, 0.1)'
 					},
 					disableStyle: {
-						color: '#c3c3c3',
-						borderColor: '#f6f6f6',
-						backgroundColor: '#f6f6f6'
+						color: '#64758e',
+						borderColor: 'rgba(0, 184, 255, 0.1)',
+						backgroundColor: 'rgba(8, 12, 24, 0.75)'
 					}
 				},
 				// 红黑主题
@@ -456,17 +456,17 @@ export default {
 						backgroundColor: 'rgba(195, 167, 105,0.1)'
 					}
 				},
-				// 浅绿色主题
+				// 蓝色主题配色（保留 green 键名以兼容原有调用）
 				green: {
-					priceColor: 'rgb(99, 190, 114)',
+					priceColor: 'rgb(0, 184, 255)',
 					buyNowColor: '#ffffff',
-					buyNowBackgroundColor: 'rgb(99, 190, 114)',
-					addCartColor: 'rgb(99, 190, 114)',
-					addCartBackgroundColor: 'rgb(225, 244, 227)',
+					buyNowBackgroundColor: 'rgb(0, 184, 255)',
+					addCartColor: 'rgb(0, 184, 255)',
+					addCartBackgroundColor: 'rgb(225, 243, 255)',
 					activedStyle: {
-						color: 'rgb(99, 190, 114)',
-						borderColor: 'rgb(99, 190, 114)',
-						backgroundColor: 'rgba(99, 190, 114,0.1)'
+						color: 'rgb(0, 184, 255)',
+						borderColor: 'rgb(0, 184, 255)',
+						backgroundColor: 'rgba(0, 184, 255, 0.1)'
 					}
 				}
 			}
@@ -1154,7 +1154,7 @@ export default {
 		z-index: 99;
 		bottom: 0;
 		border-radius: 10rpx 10rpx 0 0;
-		background-color: #fff;
+		background-color: rgba(20, 30, 50, 0.75);
 
 		.specification-wrapper {
 			width: 100%;
@@ -1197,7 +1197,7 @@ export default {
 						font-weight: 500;
 
 						.price-content {
-							color: #fe560a;
+							color: #00b8ff;
 							margin-bottom: 20rpx;
 
 							.sign {
@@ -1216,13 +1216,13 @@ export default {
 
 						.inventory {
 							font-size: 24rpx;
-							color: #999999;
+							color: #96a8c2;
 							margin-bottom: 14rpx;
 						}
 
 						.choose {
 							font-size: 28rpx;
-							color: #333333;
+							color: #e8f2ff;
 						}
 					}
 				}
@@ -1240,7 +1240,7 @@ export default {
 						.item-title {
 							margin-bottom: 20rpx;
 							font-size: 28rpx;
-							color: #999999;
+							color: #96a8c2;
 						}
 
 						.item-wrapper {
@@ -1253,20 +1253,20 @@ export default {
 								padding: 10rpx 35rpx;
 								font-size: 24rpx;
 								border-radius: 10rpx;
-								background-color: #ffffff;
-								color: #333333;
+								background-color: rgba(20, 30, 50, 0.75);
+								color: #e8f2ff;
 								margin-right: 20rpx;
 								margin-bottom: 16rpx;
-								border: 1px solid #f4f4f4;
+								border: 1px solid rgba(0, 184, 255, 0.2);
 								box-sizing: border-box;
 								&.actived {
-									border-color: #fe560a;
-									color: #fe560a;
+									border-color: #00b8ff;
+									color: #00b8ff;
 								}
 
 								&.noactived {
-									background-color: #f6f6f6;
-									border-color: #f6f6f6;
+									background-color: #080c18;
+									border-color: #1c2c46;
 									color: #c3c3c3;
 								}
 							}
@@ -1312,11 +1312,11 @@ export default {
 				font-size: 28rpx;
 
 				&.add-cart {
-					background: #ffbe46;
+					background: #ffb547;
 				}
 
 				&.buy {
-					background: #fe560a;
+					background: #00b8ff;
 				}
 			}
 			.sure {
@@ -1328,10 +1328,10 @@ export default {
 				text-align: center;
 				font-weight: 500;
 				font-size: 28rpx;
-				background: #fe560a;
+				background: #00b8ff;
 			}
 			.sure.add-cart {
-				background: #ff9402;
+				background: #00b8ff;
 			}
 		}
 		.btn-wrapper.safe-area-inset-bottom{

@@ -40,7 +40,7 @@ const emit = defineEmits<{
   padding: 0 30rpx;
   border-radius: 10rpx 10rpx 0 0;
   position: relative;
-  background-color: #fff;
+  background-color: rgba(20, 30, 50, 0.75);
 }
 
 .title {
@@ -49,8 +49,8 @@ const emit = defineEmits<{
   text-align: center;
   font-size: 32rpx;
   font-weight: normal;
-  border-bottom: 1rpx solid #ddd;
-  color: #444;
+  border-bottom: 1rpx solid rgba(0, 184, 255, 0.2);
+  color: #e8f2ff;
 }
 
 .close {
@@ -69,7 +69,7 @@ const emit = defineEmits<{
   .dt {
     margin-bottom: 10rpx;
     font-size: 28rpx;
-    color: #333;
+    color: #e8f2ff;
     font-weight: 500;
     position: relative;
 
@@ -89,7 +89,7 @@ const emit = defineEmits<{
   .dd {
     line-height: 1.6;
     font-size: 26rpx;
-    color: #999;
+    color: #96a8c2;
   }
 }
 </style>

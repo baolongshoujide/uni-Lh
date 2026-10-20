@@ -16,7 +16,7 @@ import cartdetail from './components/cartdetail.vue'
   right: 0;
   bottom: 0;
   height: calc(var(--window-bottom) + 25rpx);
-  background: #f7f7f8;
+  background: #080c18;
   z-index: 2;
   pointer-events: none;
 }

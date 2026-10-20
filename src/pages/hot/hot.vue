@@ -113,7 +113,7 @@ onLoad(() => {
 <style lang="scss">
 page {
   height: 100%;
-  background-color: #f4f4f4;
+  background-color: #080c18;
 }
 .viewport {
   display: flex;
@@ -142,9 +142,9 @@ page {
   margin: 0 20rpx;
   font-size: 28rpx;
   border-radius: 10rpx;
-  box-shadow: 0 4rpx 5rpx rgba(200, 200, 200, 0.3);
-  color: #333;
-  background-color: #fff;
+  box-shadow: 0 4rpx 5rpx rgba(0, 184, 255, 0.12);
+  color: #e8f2ff;
+  background-color: rgba(20, 30, 50, 0.75);
   position: relative;
   z-index: 9;
   .text {
@@ -157,7 +157,7 @@ page {
       width: 40rpx;
       height: 4rpx;
       transform: translate(-50%);
-      background-color: #27ba9b;
+      background-color: #00b8ff;
       position: absolute;
       left: 50%;
       bottom: 24rpx;
@@ -174,7 +174,7 @@ page {
     padding: 20rpx;
     margin-top: 20rpx;
     border-radius: 10rpx;
-    background-color: #fff;
+    background-color: rgba(20, 30, 50, 0.75);
   }
   .thumb {
     width: 305rpx;
@@ -186,7 +186,7 @@ page {
   }
   .price {
     line-height: 1;
-    color: #cf4444;
+    color: #ff3344;
     font-size: 30rpx;
   }
   .symbol {
@@ -200,7 +200,7 @@ page {
 .loading-text {
   text-align: center;
   font-size: 28rpx;
-  color: #666;
+  color: #96a8c2;
   padding: 20rpx 0 50rpx;
 }
 </style>

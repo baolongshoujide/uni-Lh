@@ -21,6 +21,8 @@ const onAvatorChange = () => {
     count: 1,
     mediaType: ['image'],
     success: (res) => {
+      console.log()
+
       const { tempFilePath } = res.tempFiles[0]
       uni.uploadFile({
         url: 'http://pcapi-xiaotuxian-front-devtest.itheima.net/member/profile/avatar',
@@ -38,7 +40,7 @@ const onAvatorChange = () => {
             })
           } else {
             uni.showToast({
-              title: '功能未上线，敬请期待~',
+              title: '服务器更新中，功能暂停使用~',
               icon: 'none',
               duration: 3000,
             })
@@ -127,11 +129,11 @@ onLoad(() => {
           <text class="label">性别</text>
           <radio-group @change="OnGenderChange">
             <label class="radio">
-              <radio value="男" color="#27ba9b" :checked="memberProfile?.gender === '男'" />
+              <radio value="男" color="#00b8ff" :checked="memberProfile?.gender === '男'" />
               男
             </label>
             <label class="radio">
-              <radio value="女" color="#27ba9b" :checked="memberProfile?.gender === '女'" />
+              <radio value="女" color="#00b8ff" :checked="memberProfile?.gender === '女'" />
               女
             </label>
           </radio-group>
@@ -180,14 +182,14 @@ onLoad(() => {
 
 <style lang="scss">
 page {
-  background-color: #f4f4f4;
+  background-color: #080c18;
 }
 
 .viewport {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-image: url(https://pcapi-xiaotuxian-front-devtest.itheima.net/miniapp/images/order_bg.png);
+  background-image: url('@/static/images/navigator_bg.png');
   background-size: auto 420rpx;
   background-repeat: no-repeat;
 }
@@ -233,7 +235,7 @@ page {
     width: 160rpx;
     height: 160rpx;
     border-radius: 50%;
-    background-color: #eee;
+    background-color: #1c2c46;
   }
 
   .text {
@@ -247,13 +249,13 @@ page {
 
 // 表单
 .form {
-  background-color: #f4f4f4;
+  background-color: #080c18;
 
   &-content {
     margin: 20rpx 20rpx 0;
     padding: 0 20rpx;
     border-radius: 10rpx;
-    background-color: #fff;
+    background-color: rgba(20, 30, 50, 0.75);
   }
 
   &-item {
@@ -261,9 +263,9 @@ page {
     height: 96rpx;
     line-height: 46rpx;
     padding: 25rpx 10rpx;
-    background-color: #fff;
+    background-color: rgba(20, 30, 50, 0.75);
     font-size: 28rpx;
-    border-bottom: 1rpx solid #ddd;
+    border-bottom: 1rpx solid rgba(0, 184, 255, 0.2);
 
     &:last-child {
       border: none;
@@ -271,11 +273,11 @@ page {
 
     .label {
       width: 180rpx;
-      color: #333;
+      color: #e8f2ff;
     }
 
     .account {
-      color: #666;
+      color: #96a8c2;
     }
 
     .input {
@@ -292,7 +294,7 @@ page {
       flex: 1;
     }
     .placeholder {
-      color: #808080;
+      color: #96a8c2;
     }
   }
 
@@ -304,7 +306,7 @@ page {
     color: #fff;
     border-radius: 80rpx;
     font-size: 30rpx;
-    background-color: #27ba9b;
+    background-color: #00b8ff;
   }
 }
 </style>

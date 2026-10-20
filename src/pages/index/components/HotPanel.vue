@@ -28,18 +28,19 @@ defineProps<{
   min-height: 508rpx;
   margin: 20rpx 20rpx 0;
   border-radius: 10rpx;
-  background-color: #fff;
+  background-color: rgba(20, 30, 50, 0.75);
+  border: 1rpx solid rgba(0, 184, 255, 0.2);
 
   .title {
     display: flex;
     align-items: center;
     padding: 24rpx 24rpx 0;
     font-size: 32rpx;
-    color: #262626;
+    color: #e8f2ff;
     position: relative;
     .title-desc {
       font-size: 24rpx;
-      color: #7f7f7f;
+      color: #96a8c2;
       margin-left: 18rpx;
     }
   }
@@ -49,8 +50,8 @@ defineProps<{
     flex-direction: column;
     width: 50%;
     height: 254rpx;
-    border-right: 1rpx solid #eee;
-    border-top: 1rpx solid #eee;
+    border-right: 1rpx solid rgba(0, 184, 255, 0.15);
+    border-top: 1rpx solid rgba(0, 184, 255, 0.15);
     .title {
       justify-content: start;
     }

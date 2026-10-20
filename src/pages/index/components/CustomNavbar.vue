@@ -5,7 +5,7 @@ import { useGoodsStore } from '@/stores/modules/goods'
 const { safeAreaInsets } = uni.getSystemInfoSync()
 const goodsStore = useGoodsStore()
 
-const search = ref('')
+const search = ref('关')
 // 使用 category 页相同的本地搜索记录，两个页面可以看到同一份记录。
 const searchHistoryKey = 'category-search-history'
 const savedSearchHistory = uni.getStorageSync(searchHistoryKey)
@@ -101,7 +101,7 @@ const onSearchBlur = () => {
   <view class="navbar" :style="{ paddingTop: safeAreaInsets?.top + 'px' }">
     <!-- logo文字 -->
     <view class="logo">
-      <image class="logo-image" src="@/static/images/logo.png"></image>
+      <image class="logo-image" src="@/static/assets/images/logo.png"></image>
       <text class="logo-text">新鲜 · 亲民 · 快捷</text>
     </view>
     <!-- 搜索条 -->
@@ -163,8 +163,8 @@ const onSearchBlur = () => {
 /* 自定义导航条 */
 .navbar {
   z-index: 1000;
-  background-image: url(@/static/images/navigator_bg.png);
-  background-size: cover;
+  background-color: #080c18;
+  border-bottom: 1rpx solid rgba(0, 184, 255, 0.25);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -176,8 +176,9 @@ const onSearchBlur = () => {
     padding-left: 30rpx;
     padding-top: 20rpx;
     .logo-image {
-      width: 166rpx;
-      height: 39rpx;
+      width: 300rpx;
+      height: 80rpx;
+      margin: -50rpx;
     }
     .logo-text {
       flex: 1;
@@ -200,19 +201,19 @@ const onSearchBlur = () => {
       height: 72rpx;
       padding: 0 24rpx;
       border-radius: 36rpx;
-      background-color: #f5f5f5;
+      background-color: rgba(20, 30, 50, 0.75);
     }
     .icon-search {
       flex: none;
       margin-right: 14rpx;
-      color: #999;
+      color: #96a8c2;
       font-size: 30rpx;
     }
     .search-input {
       flex: 1;
       min-width: 0;
       height: 100%;
-      color: #333;
+      color: #e8f2ff;
       font-size: 26rpx;
     }
   }
@@ -224,8 +225,9 @@ const onSearchBlur = () => {
   right: 30rpx;
   padding: 22rpx 24rpx 24rpx;
   border-radius: 0 0 16rpx 16rpx;
-  background-color: #fff;
-  box-shadow: 0 12rpx 24rpx rgba(0, 0, 0, 0.1);
+  border: 1rpx solid rgba(0, 184, 255, 0.25);
+  background-color: rgba(20, 30, 50, 0.96);
+  box-shadow: 0 12rpx 24rpx rgba(0, 0, 0, 0.3);
   z-index: 1001;
 }
 .history-header {
@@ -235,12 +237,12 @@ const onSearchBlur = () => {
   margin-bottom: 18rpx;
 }
 .history-title {
-  color: #333;
+  color: #e8f2ff;
   font-size: 26rpx;
   font-weight: 600;
 }
 .history-clear {
-  color: #999;
+  color: #00b8ff;
   font-size: 24rpx;
 }
 .history-items {
@@ -257,8 +259,8 @@ const onSearchBlur = () => {
   padding: 10rpx 20rpx;
   overflow: hidden;
   border-radius: 24rpx;
-  background-color: #f5f5f5;
-  color: #666;
+  background-color: rgba(8, 12, 24, 0.75);
+  color: #96a8c2;
   font-size: 24rpx;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -270,11 +272,11 @@ const onSearchBlur = () => {
 }
 .history-empty {
   padding: 12rpx 0;
-  color: #999;
+  color: #96a8c2;
   font-size: 24rpx;
 }
 .search-placeholder {
-  color: #999;
+  color: #96a8c2;
   font-size: 26rpx;
 }
 </style>

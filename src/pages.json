@@ -62,17 +62,17 @@
 		}
 	],
 	"globalStyle": {
-		"navigationBarTextStyle": "black",
+		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"navigationBarBackgroundColor": "#080c18",
+		"backgroundColor": "#080c18"
 	},
 	// 设置 TabBar
 	"tabBar": {
-		"color": "#333",
-		"selectedColor": "#27ba9b",
-		"backgroundColor": "#fff",
-		"borderStyle": "white",
+		"color": "#96a8c2",
+		"selectedColor": "#00b8ff",
+		"backgroundColor": "#080c18",
+		"borderStyle": "black",
 		"list": [
 			{
 				"text": "首页",

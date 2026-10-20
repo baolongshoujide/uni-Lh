@@ -49,14 +49,14 @@ page {
 }
 
 .viewport {
-  background-color: #f7f7f8;
+  background-color: #080c18;
 }
 
 .overview {
   line-height: 1;
   padding: 50rpx 0;
   color: #fff;
-  background-color: #27ba9b;
+  background-color: #00b8ff;
 
   .status {
     font-size: 36rpx;

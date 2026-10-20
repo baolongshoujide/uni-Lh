@@ -229,11 +229,12 @@ page {
   height: 100%;
   display: flex;
   flex-direction: column;
+  background-color: #080c18;
 }
 .search {
   position: relative;
   padding: 16rpx 30rpx 20rpx;
-  background-color: #fff;
+  background-color: #080c18;
   z-index: 100;
   .search-box {
     display: flex;
@@ -241,19 +242,19 @@ page {
     height: 72rpx;
     padding: 0 24rpx;
     border-radius: 36rpx;
-    background-color: #f5f5f5;
+    background-color: rgba(20, 30, 50, 0.75);
   }
   .icon-search {
     flex: none;
     margin-right: 14rpx;
-    color: #999;
+    color: #96a8c2;
     font-size: 30rpx;
   }
   .search-input {
     flex: 1;
     min-width: 0;
     height: 100%;
-    color: #333;
+    color: #e8f2ff;
     font-size: 26rpx;
   }
 }
@@ -264,8 +265,9 @@ page {
   right: 30rpx;
   padding: 22rpx 24rpx 24rpx;
   border-radius: 0 0 16rpx 16rpx;
-  background-color: #fff;
-  box-shadow: 0 12rpx 24rpx rgba(0, 0, 0, 0.1);
+  border: 1rpx solid rgba(0, 184, 255, 0.25);
+  background-color: rgba(20, 30, 50, 0.96);
+  box-shadow: 0 12rpx 24rpx rgba(0, 0, 0, 0.3);
   z-index: 99;
 }
 .history-header {
@@ -275,12 +277,12 @@ page {
   margin-bottom: 18rpx;
 }
 .history-title {
-  color: #333;
+  color: #e8f2ff;
   font-size: 26rpx;
   font-weight: 600;
 }
 .history-clear {
-  color: #999;
+  color: #00b8ff;
   font-size: 24rpx;
 }
 .history-items {
@@ -297,8 +299,8 @@ page {
   padding: 10rpx 20rpx;
   overflow: hidden;
   border-radius: 24rpx;
-  background-color: #f5f5f5;
-  color: #666;
+  background-color: rgba(8, 12, 24, 0.75);
+  color: #96a8c2;
   font-size: 24rpx;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -310,11 +312,11 @@ page {
 }
 .history-empty {
   padding: 12rpx 0;
-  color: #999;
+  color: #96a8c2;
   font-size: 24rpx;
 }
 .search-placeholder {
-  color: #999;
+  color: #96a8c2;
   font-size: 26rpx;
 }
 /* 分类 */
@@ -329,14 +331,14 @@ page {
   overflow: hidden;
   width: 180rpx;
   flex: none;
-  background-color: #f6f6f6;
+  background-color: rgba(20, 30, 50, 0.75);
   .item {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 96rpx;
     font-size: 26rpx;
-    color: #595c63;
+    color: #96a8c2;
     position: relative;
     &::after {
       content: '';
@@ -344,11 +346,11 @@ page {
       left: 42rpx;
       bottom: 0;
       width: 96rpx;
-      border-top: 1rpx solid #e3e4e7;
+      border-top: 1rpx solid rgba(0, 184, 255, 0.15);
     }
   }
   .active {
-    background-color: #fff;
+    background-color: rgba(0, 184, 255, 0.14);
     &::before {
       content: '';
       position: absolute;
@@ -356,7 +358,7 @@ page {
       top: 0;
       width: 8rpx;
       height: 100%;
-      background-color: #27ba9b;
+      background-color: #00b8ff;
     }
   }
 }
@@ -366,7 +368,7 @@ page {
 }
 /* 二级分类 */
 .secondary {
-  background-color: #fff;
+  background-color: #080c18;
   .carousel {
     height: 200rpx;
     margin: 0 30rpx 20rpx;
@@ -379,14 +381,14 @@ page {
   .title {
     height: 60rpx;
     line-height: 60rpx;
-    color: #333;
+    color: #e8f2ff;
     font-size: 28rpx;
-    border-bottom: 1rpx solid #f7f7f8;
+    border-bottom: 1rpx solid rgba(0, 184, 255, 0.2);
     .more {
       float: right;
       padding-left: 20rpx;
       font-size: 24rpx;
-      color: #999;
+      color: #96a8c2;
     }
   }
   .more {
@@ -413,12 +415,12 @@ page {
       .name {
         padding: 5rpx;
         font-size: 22rpx;
-        color: #333;
+        color: #e8f2ff;
       }
       .price {
         padding: 5rpx;
         font-size: 18rpx;
-        color: #cf4444;
+        color: #ff3344;
       }
       .number {
         font-size: 24rpx;

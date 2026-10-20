@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { OrderState, orderStateList } from '@/services/constants'
-import { getMemberOrderAPI } from '@/services/order'
-import type { OrderItem, OrderListParams, OrderListResult } from '@/types/order'
+import { deleteMemberOrderAPI, getMemberOrderAPI } from '@/services/order'
+import type { OrderItem, OrderListParams } from '@/types/order'
 import { onMounted, ref } from 'vue'
 import { getPayMockAPI, getPayWxPayMinPayAPI } from '@/services/pay'
 // 获取屏幕边界到安全区域距离
@@ -18,9 +18,39 @@ const queryParams: OrderListParams = {
 }
 
 const orderList = ref<OrderItem[]>([])
-const getMemberOrder = async () => {
-  const res = await getMemberOrderAPI(queryParams)
-  orderList.value = res.result.items
+const isLoading = ref(false)
+const hasMore = ref(true)
+let currentOrderRequest: Promise<void> | undefined
+
+const getMemberOrder = async (reset = false) => {
+  if (isLoading.value) {
+    // 刷新和删除后的重载不能被正在进行的分页请求吞掉。
+    if (reset && currentOrderRequest) {
+      await currentOrderRequest.catch(() => undefined)
+      return getMemberOrder(true)
+    }
+    return
+  }
+  if (!reset && !hasMore.value) return
+
+  const page = reset ? 1 : queryParams!.page! + 1
+  isLoading.value = true
+  const request = (async () => {
+    try {
+      const res = await getMemberOrderAPI({ ...queryParams, page })
+      orderList.value = reset ? res.result.items : [...orderList.value, ...res.result.items]
+      queryParams.page = page
+      hasMore.value = res.result.items.length > 0 && page < res.result.pages
+    } finally {
+      isLoading.value = false
+    }
+  })()
+  currentOrderRequest = request
+  try {
+    await request
+  } finally {
+    if (currentOrderRequest === request) currentOrderRequest = undefined
+  }
 }
 
 const onOrderPay = async (id: string) => {
@@ -34,7 +64,24 @@ const onOrderPay = async (id: string) => {
   uni.showToast({
     title: '支付成功',
   })
-  getMemberOrder()
+  getMemberOrder(true)
+}
+
+const onOrderDelete = (id: string) => {
+  uni.showModal({
+    content: '确认删除该订单吗？',
+    success: async ({ confirm }) => {
+      if (!confirm) return
+
+      try {
+        await deleteMemberOrderAPI({ ids: [id] })
+        orderList.value = orderList.value.filter((item) => item.id !== id)
+        uni.showToast({ title: '删除成功' })
+      } catch {
+        uni.showToast({ title: '删除失败，请重试', icon: 'none' })
+      }
+    },
+  })
 }
 
 const isRefreshing = ref(false)
@@ -44,7 +91,7 @@ const onRefresherRefresh = async () => {
 
   isRefreshing.value = true
   try {
-    await getMemberOrder()
+    await getMemberOrder(true)
   } catch {
     uni.showToast({ title: '刷新失败，请重试', icon: 'none' })
   } finally {
@@ -52,8 +99,19 @@ const onRefresherRefresh = async () => {
   }
 }
 
+const onScrollToLower = async () => {
+  if (isLoading.value || !hasMore.value) return
+  try {
+    await getMemberOrder()
+  } catch {
+    uni.showToast({ title: '加载失败，请重试', icon: 'none' })
+  }
+}
+
 onMounted(() => {
-  getMemberOrder()
+  getMemberOrder(true).catch(() => {
+    uni.showToast({ title: '加载失败，请重试', icon: 'none' })
+  })
 })
 </script>
 
@@ -62,8 +120,11 @@ onMounted(() => {
     scroll-y
     class="orders"
     refresher-enabled
+    refresher-default-style="white"
+    refresher-background="#080c18"
     :refresher-triggered="isRefreshing"
     @refresherrefresh="onRefresherRefresh"
+    @scrolltolower="onScrollToLower"
   >
     <view class="card" v-for="item in orderList" :key="item.id">
       <!-- 订单信息 -->
@@ -72,7 +133,11 @@ onMounted(() => {
         <!-- 订单状态文字 -->
         <text>{{ orderStateList[item.orderState].text }}</text>
         <!-- 待评价/已完成/已取消 状态: 展示删除订单 -->
-        <text class="icon-delete" v-if="item.orderState >= OrderState?.DaiPingJia"></text>
+        <text
+          class="icon-delete"
+          v-if="item.orderState >= OrderState.DaiPingJia"
+          @tap.stop="onOrderDelete(item.id)"
+        ></text>
       </view>
       <!-- 商品信息，点击商品跳转到订单详情，不是商品详情 -->
       <navigator
@@ -117,8 +182,12 @@ onMounted(() => {
       </view>
     </view>
     <!-- 底部提示文字 -->
-    <view class="loading-text" :style="{ paddingBottom: safeAreaInsets?.bottom + 'px' }">
-      {{ true ? '没有更多数据~' : '正在加载...' }}
+    <view
+      v-if="isLoading || !hasMore"
+      class="loading-text"
+      :style="{ paddingBottom: safeAreaInsets?.bottom + 'px' }"
+    >
+      {{ isLoading ? '正在加载...' : orderList.length ? '没有更多数据了' : '暂无订单' }}
     </view>
   </scroll-view>
 </template>
@@ -126,12 +195,14 @@ onMounted(() => {
 <style lang="scss" scoped>
 // 订单列表
 .orders {
+  height: 100%;
+
   .card {
     min-height: 100rpx;
     padding: 20rpx;
     margin: 20rpx 20rpx 0;
     border-radius: 10rpx;
-    background-color: #fff;
+    background-color: rgba(20, 30, 50, 0.75);
 
     &:last-child {
       padding-bottom: 40rpx;
@@ -143,16 +214,16 @@ onMounted(() => {
     align-items: center;
     justify-content: space-between;
     font-size: 28rpx;
-    color: #999;
+    color: #96a8c2;
     margin-bottom: 15rpx;
 
     .date {
-      color: #666;
+      color: #96a8c2;
       flex: 1;
     }
 
     .primary {
-      color: #ff9240;
+      color: #ffb547;
     }
 
     .icon-delete {
@@ -198,7 +269,7 @@ onMounted(() => {
     .name {
       height: 80rpx;
       font-size: 26rpx;
-      color: #444;
+      color: #e8f2ff;
     }
 
     .type {
@@ -208,8 +279,8 @@ onMounted(() => {
       font-size: 24rpx;
       align-self: flex-start;
       border-radius: 4rpx;
-      color: #888;
-      background-color: #f7f7f8;
+      color: #96a8c2;
+      background-color: #080c18;
     }
 
     .more {
@@ -218,7 +289,7 @@ onMounted(() => {
       align-items: center;
       justify-content: center;
       font-size: 22rpx;
-      color: #333;
+      color: #e8f2ff;
     }
   }
 
@@ -229,9 +300,9 @@ onMounted(() => {
     line-height: 1;
     padding: 20rpx 0;
     text-align: right;
-    color: #999;
+    color: #96a8c2;
     font-size: 28rpx;
-    border-bottom: 1rpx solid #eee;
+    border-bottom: 1rpx solid rgba(0, 184, 255, 0.2);
 
     .quantity {
       font-size: 24rpx;
@@ -239,7 +310,7 @@ onMounted(() => {
     }
 
     .amount {
-      color: #444;
+      color: #e8f2ff;
       margin-left: 6rpx;
     }
 
@@ -262,26 +333,26 @@ onMounted(() => {
       align-items: center;
       margin-left: 20rpx;
       border-radius: 60rpx;
-      border: 1rpx solid #ccc;
+      border: 1rpx solid rgba(0, 184, 255, 0.2);
       font-size: 26rpx;
-      color: #444;
+      color: #e8f2ff;
     }
 
     .secondary {
-      color: #27ba9b;
-      border-color: #27ba9b;
+      color: #00b8ff;
+      border-color: #00b8ff;
     }
 
     .primary {
       color: #fff;
-      background-color: #27ba9b;
+      background-color: #00b8ff;
     }
   }
 
   .loading-text {
     text-align: center;
     font-size: 28rpx;
-    color: #666;
+    color: #96a8c2;
     padding: 20rpx 0;
   }
 }

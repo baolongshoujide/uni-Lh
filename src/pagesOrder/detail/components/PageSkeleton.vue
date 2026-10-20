@@ -171,8 +171,8 @@
 .sk-text-14-2857-686 {
   background-image: linear-gradient(
     transparent 14.2857%,
-    #eeeeee 0%,
-    #eeeeee 85.7143%,
+    #1c2c46 0%,
+    #1c2c46 85.7143%,
     transparent 0%
   ) !important;
   background-size: 100% 43.0769rpx;
@@ -188,8 +188,8 @@
 .sk-text-0-0000-650 {
   background-image: linear-gradient(
     transparent 0%,
-    #eeeeee 0%,
-    #eeeeee 100%,
+    #1c2c46 0%,
+    #1c2c46 100%,
     transparent 0%
   ) !important;
   background-size: 100% 34.6154rpx;
@@ -198,8 +198,8 @@
 .sk-text-0-0000-985 {
   background-image: linear-gradient(
     transparent 0%,
-    #eeeeee 0%,
-    #eeeeee 100%,
+    #1c2c46 0%,
+    #1c2c46 100%,
     transparent 0%
   ) !important;
   background-size: 100% 26.9231rpx;
@@ -208,8 +208,8 @@
 .sk-text-0-0000-253 {
   background-image: linear-gradient(
     transparent 0%,
-    #eeeeee 0%,
-    #eeeeee 100%,
+    #1c2c46 0%,
+    #1c2c46 100%,
     transparent 0%
   ) !important;
   background-size: 100% 26.9231rpx;
@@ -218,8 +218,8 @@
 .sk-text-28-7879-739 {
   background-image: linear-gradient(
     transparent 28.7879%,
-    #eeeeee 0%,
-    #eeeeee 71.2121%,
+    #1c2c46 0%,
+    #1c2c46 71.2121%,
     transparent 0%
   ) !important;
   background-size: 100% 63.4615rpx;
@@ -228,8 +228,8 @@
 .sk-text-14-2857-580 {
   background-image: linear-gradient(
     transparent 14.2857%,
-    #eeeeee 0%,
-    #eeeeee 85.7143%,
+    #1c2c46 0%,
+    #1c2c46 85.7143%,
     transparent 0%
   ) !important;
   background-size: 100% 35rpx;
@@ -238,8 +238,8 @@
 .sk-text-14-2857-904 {
   background-image: linear-gradient(
     transparent 14.2857%,
-    #eeeeee 0%,
-    #eeeeee 85.7143%,
+    #1c2c46 0%,
+    #1c2c46 85.7143%,
     transparent 0%
   ) !important;
   background-size: 100% 32.3077rpx;
@@ -248,8 +248,8 @@
 .sk-text-14-2857-200 {
   background-image: linear-gradient(
     transparent 14.2857%,
-    #eeeeee 0%,
-    #eeeeee 85.7143%,
+    #1c2c46 0%,
+    #1c2c46 85.7143%,
     transparent 0%
   ) !important;
   background-size: 100% 35rpx;
@@ -258,8 +258,8 @@
 .sk-text-14-2857-96 {
   background-image: linear-gradient(
     transparent 14.2857%,
-    #eeeeee 0%,
-    #eeeeee 85.7143%,
+    #1c2c46 0%,
+    #1c2c46 85.7143%,
     transparent 0%
   ) !important;
   background-size: 100% 32.3077rpx;
@@ -268,8 +268,8 @@
 .sk-text-14-2857-110 {
   background-image: linear-gradient(
     transparent 14.2857%,
-    #eeeeee 0%,
-    #eeeeee 85.7143%,
+    #1c2c46 0%,
+    #1c2c46 85.7143%,
     transparent 0%
   ) !important;
   background-size: 100% 35rpx;
@@ -278,8 +278,8 @@
 .sk-text-22-2222-582 {
   background-image: linear-gradient(
     transparent 22.2222%,
-    #eeeeee 0%,
-    #eeeeee 77.7778%,
+    #1c2c46 0%,
+    #1c2c46 77.7778%,
     transparent 0%
   ) !important;
   background-size: 100% 41.5385rpx;
@@ -291,8 +291,8 @@
 .sk-text-14-2857-949 {
   background-image: linear-gradient(
     transparent 14.2857%,
-    #eeeeee 0%,
-    #eeeeee 85.7143%,
+    #1c2c46 0%,
+    #1c2c46 85.7143%,
     transparent 0%
   ) !important;
   background-size: 100% 32.3077rpx;
@@ -301,8 +301,8 @@
 .sk-text-14-2857-741 {
   background-image: linear-gradient(
     transparent 14.2857%,
-    #eeeeee 0%,
-    #eeeeee 85.7143%,
+    #1c2c46 0%,
+    #1c2c46 85.7143%,
     transparent 0%
   ) !important;
   background-size: 100% 35rpx;
@@ -311,8 +311,8 @@
 .sk-text-22-2222-670 {
   background-image: linear-gradient(
     transparent 22.2222%,
-    #eeeeee 0%,
-    #eeeeee 77.7778%,
+    #1c2c46 0%,
+    #1c2c46 77.7778%,
     transparent 0%
   ) !important;
   background-size: 100% 41.5385rpx;
@@ -321,8 +321,8 @@
 .sk-text-14-2857-642 {
   background-image: linear-gradient(
     transparent 14.2857%,
-    #eeeeee 0%,
-    #eeeeee 85.7143%,
+    #1c2c46 0%,
+    #1c2c46 85.7143%,
     transparent 0%
   ) !important;
   background-size: 100% 32.3077rpx;
@@ -331,8 +331,8 @@
 .sk-text-29-0323-942 {
   background-image: linear-gradient(
     transparent 29.0323%,
-    #eeeeee 0%,
-    #eeeeee 70.9677%,
+    #1c2c46 0%,
+    #1c2c46 70.9677%,
     transparent 0%
   ) !important;
   background-size: 100% 59.6154rpx;
@@ -341,8 +341,8 @@
 .sk-text-29-0323-300 {
   background-image: linear-gradient(
     transparent 29.0323%,
-    #eeeeee 0%,
-    #eeeeee 70.9677%,
+    #1c2c46 0%,
+    #1c2c46 70.9677%,
     transparent 0%
   ) !important;
   background-size: 100% 59.6154rpx;
@@ -351,8 +351,8 @@
 .sk-text-0-0000-892 {
   background-image: linear-gradient(
     transparent 0%,
-    #eeeeee 0%,
-    #eeeeee 100%,
+    #1c2c46 0%,
+    #1c2c46 100%,
     transparent 0%
   ) !important;
   background-size: 100% 25rpx;
@@ -361,8 +361,8 @@
 .sk-text-0-0000-247 {
   background-image: linear-gradient(
     transparent 0%,
-    #eeeeee 0%,
-    #eeeeee 100%,
+    #1c2c46 0%,
+    #1c2c46 100%,
     transparent 0%
   ) !important;
   background-size: 100% 25rpx;
@@ -371,8 +371,8 @@
 .sk-text-0-0000-690 {
   background-image: linear-gradient(
     transparent 0%,
-    #eeeeee 0%,
-    #eeeeee 100%,
+    #1c2c46 0%,
+    #1c2c46 100%,
     transparent 0%
   ) !important;
   background-size: 100% 25rpx;
@@ -381,8 +381,8 @@
 .sk-text-0-0000-39 {
   background-image: linear-gradient(
     transparent 0%,
-    #eeeeee 0%,
-    #eeeeee 100%,
+    #1c2c46 0%,
+    #1c2c46 100%,
     transparent 0%
   ) !important;
   background-size: 100% 25rpx;
@@ -391,8 +391,8 @@
 .sk-text-0-0000-18 {
   background-image: linear-gradient(
     transparent 0%,
-    #eeeeee 0%,
-    #eeeeee 100%,
+    #1c2c46 0%,
+    #1c2c46 100%,
     transparent 0%
   ) !important;
   background-size: 100% 25rpx;
@@ -401,8 +401,8 @@
 .sk-text-0-0000-301 {
   background-image: linear-gradient(
     transparent 0%,
-    #eeeeee 0%,
-    #eeeeee 100%,
+    #1c2c46 0%,
+    #1c2c46 100%,
     transparent 0%
   ) !important;
   background-size: 100% 34.6154rpx;
@@ -411,8 +411,8 @@
 .sk-text-0-0000-195 {
   background-image: linear-gradient(
     transparent 0%,
-    #eeeeee 0%,
-    #eeeeee 100%,
+    #1c2c46 0%,
+    #1c2c46 100%,
     transparent 0%
   ) !important;
   background-size: 100% 28.8462rpx;
@@ -421,8 +421,8 @@
 .sk-text-0-0000-436 {
   background-image: linear-gradient(
     transparent 0%,
-    #eeeeee 0%,
-    #eeeeee 100%,
+    #1c2c46 0%,
+    #1c2c46 100%,
     transparent 0%
   ) !important;
   background-size: 100% 19.2308rpx;
@@ -431,8 +431,8 @@
 .sk-text-0-0000-839 {
   background-image: linear-gradient(
     transparent 0%,
-    #eeeeee 0%,
-    #eeeeee 100%,
+    #1c2c46 0%,
+    #1c2c46 100%,
     transparent 0%
   ) !important;
   background-size: 100% 25rpx;
@@ -441,8 +441,8 @@
 .sk-text-14-2857-126 {
   background-image: linear-gradient(
     transparent 14.2857%,
-    #eeeeee 0%,
-    #eeeeee 85.7143%,
+    #1c2c46 0%,
+    #1c2c46 85.7143%,
     transparent 0%
   ) !important;
   background-size: 100% 35rpx;
@@ -451,19 +451,19 @@
 .sk-text-14-2857-489 {
   background-image: linear-gradient(
     transparent 14.2857%,
-    #eeeeee 0%,
-    #eeeeee 85.7143%,
+    #1c2c46 0%,
+    #1c2c46 85.7143%,
     transparent 0%
   ) !important;
   background-size: 100% 35rpx;
   position: relative !important;
 }
 .sk-image {
-  background: #efefef !important;
+  background: #1c2c46 !important;
 }
 .sk-pseudo::before,
 .sk-pseudo::after {
-  background: #efefef !important;
+  background: #1c2c46 !important;
   background-image: none !important;
   color: transparent !important;
   border-color: transparent !important;

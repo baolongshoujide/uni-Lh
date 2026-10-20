@@ -120,7 +120,7 @@ onLoad(() => {
         <label class="label">设为默认地址</label>
         <switch
           class="switch"
-          color="#27ba9b"
+          color="#00b8ff"
           @change="OnSwitchChange"
           :checked="form.isDefault === 1"
         />
@@ -133,14 +133,14 @@ onLoad(() => {
 
 <style lang="scss">
 page {
-  background-color: #f4f4f4;
+  background-color: #080c18;
 }
 
 .content {
   margin: 20rpx 20rpx 0;
   padding: 0 20rpx;
   border-radius: 10rpx;
-  background-color: #fff;
+  background-color: rgba(20, 30, 50, 0.75);
 
   .form-item,
   .uni-forms-item {
@@ -148,9 +148,9 @@ page {
     align-items: center;
     min-height: 96rpx;
     padding: 25rpx 10rpx 40rpx;
-    background-color: #fff;
+    background-color: rgba(20, 30, 50, 0.75);
     font-size: 28rpx;
-    border-bottom: 1rpx solid #ddd;
+    border-bottom: 1rpx solid rgba(0, 184, 255, 0.2);
     position: relative;
     margin-bottom: 0;
 
@@ -169,7 +169,7 @@ page {
 
     .label {
       width: 200rpx;
-      color: #333;
+      color: #e8f2ff;
     }
 
     .input {
@@ -189,7 +189,7 @@ page {
     }
 
     .placeholder {
-      color: #808080;
+      color: #96a8c2;
     }
   }
 }
@@ -200,6 +200,6 @@ page {
   color: #fff;
   border-radius: 80rpx;
   font-size: 30rpx;
-  background-color: #27ba9b;
+  background-color: #00b8ff;
 }
 </style>

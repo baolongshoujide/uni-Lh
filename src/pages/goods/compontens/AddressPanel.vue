@@ -73,7 +73,7 @@ getAddressList()
   padding: 0 30rpx;
   border-radius: 10rpx 10rpx 0 0;
   position: relative;
-  background-color: #fff;
+  background-color: rgba(20, 30, 50, 0.75);
 }
 
 .title {
@@ -82,8 +82,8 @@ getAddressList()
   text-align: center;
   font-size: 32rpx;
   font-weight: normal;
-  border-bottom: 1rpx solid #ddd;
-  color: #444;
+  border-bottom: 1rpx solid rgba(0, 184, 255, 0.2);
+  color: #e8f2ff;
 }
 
 .close {
@@ -106,7 +106,7 @@ getAddressList()
     position: relative;
   }
   .icon {
-    color: #999;
+    color: #96a8c2;
     font-size: 40rpx;
     transform: translateY(-50%);
     position: absolute;
@@ -114,27 +114,27 @@ getAddressList()
     right: 0;
   }
   .icon-checked {
-    color: #27ba9b;
+    color: #00b8ff;
   }
   .icon-ring {
-    color: #444;
+    color: #e8f2ff;
   }
   .edit {
     position: absolute;
     top: 50%;
     right: 50rpx;
     transform: translateY(-50%);
-    color: #27ba9b;
+    color: #00b8ff;
     font-size: 26rpx;
   }
   .user {
     font-size: 28rpx;
-    color: #444;
+    color: #e8f2ff;
     font-weight: 500;
   }
   .address {
     font-size: 26rpx;
-    color: #666;
+    color: #96a8c2;
   }
 }
 
@@ -143,7 +143,7 @@ getAddressList()
   justify-content: space-between;
   padding: 20rpx 0 40rpx;
   font-size: 28rpx;
-  color: #444;
+  color: #e8f2ff;
 
   .button {
     flex: 1;
@@ -157,11 +157,11 @@ getAddressList()
 
   .primary {
     color: #fff;
-    background-color: #27ba9b;
+    background-color: #00b8ff;
   }
 
   .secondary {
-    background-color: #ffa868;
+    background-color: #00b8ff;
   }
 }
 </style>

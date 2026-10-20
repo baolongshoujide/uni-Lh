@@ -129,12 +129,13 @@ onShow(() => {
     v-model="isShowSku"
     :mode="mode"
     ref="skuPopupRef"
-    add-cart-background-color="#faa96b"
-    buy-now-background-color="#3dba9a"
+    price-color="#ff3344"
+    add-cart-background-color="#00b8ff"
+    buy-now-background-color="#00b8ff"
     :actived-style="{
-      color: '#4bba99',
-      borderColor: '#4bba99',
-      background: '#e9f6f5,',
+      color: '#00b8ff',
+      borderColor: '#00b8ff',
+      background: 'rgba(0, 184, 255, 0.12)',
     }"
     @add-cart="OnAddCart"
     @buy-now="OnBuyNow"
@@ -249,7 +250,7 @@ onShow(() => {
       <view @tap="OpenSkuPopup(3)" class="buynow"> 立即购买 </view>
     </view>
   </view>
-  <uni-popup ref="popup" text="white" background-color="#fff" type="bottom">
+  <uni-popup ref="popup" text="white" background-color="#080c18" type="bottom">
     <AddressPanel
       :refValue="refValue"
       v-if="popupName === 'address'"
@@ -268,12 +269,12 @@ page {
 }
 
 .viewport {
-  background-color: #f4f4f4;
+  background-color: #080c18;
 }
 
 .panel {
   margin-top: 20rpx;
-  background-color: #fff;
+  background-color: rgba(20, 30, 50, 0.75);
   .title {
     display: flex;
     justify-content: space-between;
@@ -285,13 +286,13 @@ page {
     text {
       padding-left: 10rpx;
       font-size: 28rpx;
-      color: #333;
+      color: #e8f2ff;
       font-weight: 600;
-      border-left: 4rpx solid #27ba9b;
+      border-left: 4rpx solid #00b8ff;
     }
     navigator {
       font-size: 24rpx;
-      color: #666;
+      color: #96a8c2;
     }
   }
 }
@@ -311,7 +312,7 @@ page {
 
 /* 商品信息 */
 .goods {
-  background-color: #fff;
+  background-color: rgba(20, 30, 50, 0.75);
   .preview {
     height: 750rpx;
     position: relative;
@@ -344,14 +345,14 @@ page {
   }
   .meta {
     position: relative;
-    border-bottom: 1rpx solid #eaeaea;
+    border-bottom: 1rpx solid rgba(0, 184, 255, 0.2);
     .price {
       height: 130rpx;
       padding: 25rpx 30rpx 0;
       color: #fff;
       font-size: 34rpx;
       box-sizing: border-box;
-      background-color: #35c8a9;
+      background-color: #00b8ff;
     }
     .number {
       font-size: 56rpx;
@@ -369,13 +370,13 @@ page {
       line-height: 1.4;
       margin: 20rpx;
       font-size: 32rpx;
-      color: #333;
+      color: #e8f2ff;
     }
     .desc {
       line-height: 1;
       padding: 0 20rpx 30rpx;
       font-size: 24rpx;
-      color: #cf4444;
+      color: #ff3344;
     }
   }
   .action {
@@ -383,9 +384,9 @@ page {
     .item {
       height: 90rpx;
       padding-right: 60rpx;
-      border-bottom: 1rpx solid #eaeaea;
+      border-bottom: 1rpx solid rgba(0, 184, 255, 0.2);
       font-size: 26rpx;
-      color: #333;
+      color: #e8f2ff;
       position: relative;
       display: flex;
       align-items: center;
@@ -422,8 +423,8 @@ page {
       line-height: 2;
       padding: 10rpx;
       font-size: 26rpx;
-      color: #333;
-      border-bottom: 1rpx dashed #ccc;
+      color: #e8f2ff;
+      border-bottom: 1rpx dashed rgba(0, 184, 255, 0.2);
     }
     .label {
       width: 200rpx;
@@ -438,7 +439,7 @@ page {
 .similar {
   .content {
     padding: 0 20rpx 200rpx;
-    background-color: #f4f4f4;
+    background-color: #080c18;
     display: flex;
     flex-wrap: wrap;
     .goods {
@@ -446,7 +447,7 @@ page {
       padding: 24rpx 20rpx 20rpx;
       margin: 20rpx 7rpx;
       border-radius: 10rpx;
-      background-color: #fff;
+      background-color: rgba(20, 30, 50, 0.75);
     }
     .image {
       width: 300rpx;
@@ -456,12 +457,12 @@ page {
       height: 80rpx;
       margin: 10rpx 0;
       font-size: 26rpx;
-      color: #262626;
+      color: #e8f2ff;
     }
     .price {
       line-height: 1;
       font-size: 20rpx;
-      color: #cf4444;
+      color: #ff3344;
     }
     .number {
       font-size: 26rpx;
@@ -482,10 +483,10 @@ page {
   right: 0;
   bottom: 0;
   z-index: 1;
-  background-color: #fff;
+  background-color: rgba(20, 30, 50, 0.75);
   height: 100rpx;
   padding: 0 20rpx var(--window-bottom);
-  border-top: 1rpx solid #eaeaea;
+  border-top: 1rpx solid rgba(0, 184, 255, 0.2);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -501,11 +502,11 @@ page {
       border-radius: 72rpx;
     }
     .addcart {
-      background-color: #ffa868;
+      background-color: #00b8ff;
     }
     .buynow,
     .payment {
-      background-color: #27ba9b;
+      background-color: #00b8ff;
       margin-left: 20rpx;
     }
   }
@@ -522,8 +523,8 @@ page {
       margin: 0;
       border-radius: 0;
       font-size: 20rpx;
-      color: #333;
-      background-color: #fff;
+      color: #e8f2ff;
+      background-color: rgba(20, 30, 50, 0.75);
       &::after {
         border: none;
       }

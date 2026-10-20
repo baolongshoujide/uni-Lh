@@ -42,7 +42,7 @@ const { OnScrolltolower, guessRef } = useGuessList()
           <image
             class="avatar gray"
             mode="aspectFill"
-            src="http://yjy-xiaotuxian-dev.oss-cn-beijing.aliyuncs.com/picture/2021-04-06/db628d42-88a7-46e7-abb8-659448c33081.png"
+            src="../../static/assets/images/Lhlogo.png"
           ></image>
         </navigator>
         <view class="meta">
@@ -93,14 +93,12 @@ const { OnScrolltolower, guessRef } = useGuessList()
 page {
   height: 100%;
   overflow: hidden;
-  background-color: #f7f7f8;
+  background-color: #080c18;
 }
 
 .viewport {
   height: 100%;
-  background-repeat: no-repeat;
-  background-image: url(https://pcapi-xiaotuxian-front-devtest.itheima.net/miniapp/images/center_bg.png);
-  background-size: 100% auto;
+  background: linear-gradient(180deg, rgba(0, 136, 204, 0.2), #080c18 320rpx);
 }
 
 /* 用户信息 */
@@ -119,7 +117,7 @@ page {
     width: 120rpx;
     height: 120rpx;
     border-radius: 50%;
-    background-color: #eee;
+    background-color: #1c2c46;
   }
 
   .gray {
@@ -178,19 +176,20 @@ page {
   z-index: 99;
   padding: 30rpx;
   margin: 50rpx 20rpx 0;
-  background-color: #fff;
+  background-color: rgba(20, 30, 50, 0.75);
+  border: 1rpx solid rgba(0, 184, 255, 0.2);
   border-radius: 10rpx;
-  box-shadow: 0 4rpx 6rpx rgba(240, 240, 240, 0.6);
+  box-shadow: 0 4rpx 6rpx rgba(0, 184, 255, 0.12);
 
   .title {
     height: 40rpx;
     line-height: 40rpx;
     font-size: 28rpx;
-    color: #1e1e1e;
+    color: #e8f2ff;
 
     .navigator {
       font-size: 24rpx;
-      color: #939393;
+      color: #96a8c2;
       float: right;
     }
   }
@@ -204,11 +203,11 @@ page {
     .contact {
       text-align: center;
       font-size: 24rpx;
-      color: #333;
+      color: #e8f2ff;
       &::before {
         display: block;
         font-size: 60rpx;
-        color: #ff9545;
+        color: #00b8ff;
       }
     }
     .contact {
@@ -223,7 +222,7 @@ page {
 
 /* 猜你喜欢 */
 .guess {
-  background-color: #f7f7f8;
+  background-color: #080c18;
   margin-top: 20rpx;
 }
 </style>

@@ -13,6 +13,11 @@ scroll-view {
   box-sizing: border-box;
 }
 
+page {
+  background-color: #080c18;
+  color: #e8f2ff;
+}
+
 button::after {
   border: none;
 }

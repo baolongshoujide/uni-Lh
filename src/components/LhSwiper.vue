@@ -43,7 +43,7 @@ const swiperChange: UniHelper.SwiperOnChange = (e) => {
   position: relative;
   overflow: hidden;
   transform: translateY(0);
-  background-color: #efefef;
+  background-color: #080c18;
   .indicator {
     position: absolute;
     left: 0;
@@ -59,7 +59,7 @@ const swiperChange: UniHelper.SwiperOnChange = (e) => {
       background-color: rgba(255, 255, 255, 0.4);
     }
     .active {
-      background-color: #fff;
+      background-color: rgba(20, 30, 50, 0.75);
     }
   }
   .navigator,

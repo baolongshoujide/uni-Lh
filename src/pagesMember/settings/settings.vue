@@ -44,7 +44,7 @@ const OnLogout = () => {
 
 <style lang="scss">
 page {
-  background-color: #f4f4f4;
+  background-color: #080c18;
 }
 
 .viewport {
@@ -54,19 +54,19 @@ page {
 /* 列表 */
 .list {
   padding: 0 20rpx;
-  background-color: #fff;
+  background-color: rgba(20, 30, 50, 0.75);
   margin-bottom: 20rpx;
   border-radius: 10rpx;
   .item {
     line-height: 90rpx;
     padding-left: 10rpx;
     font-size: 30rpx;
-    color: #333;
-    border-top: 1rpx solid #ddd;
+    color: #e8f2ff;
+    border-top: 1rpx solid rgba(0, 184, 255, 0.2);
     position: relative;
     text-align: left;
     border-radius: 0;
-    background-color: #fff;
+    background-color: rgba(20, 30, 50, 0.75);
     &::after {
       width: auto;
       height: auto;
@@ -97,9 +97,9 @@ page {
   line-height: 90rpx;
   margin-top: 40rpx;
   font-size: 32rpx;
-  color: #333;
+  color: #e8f2ff;
   .button {
-    background-color: #fff;
+    background-color: rgba(20, 30, 50, 0.75);
     margin-bottom: 20rpx;
     border-radius: 10rpx;
   }

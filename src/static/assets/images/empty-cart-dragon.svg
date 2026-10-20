@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 128" fill="none">
+  <defs>
+    <linearGradient id="armor" x1="45" y1="25" x2="131" y2="103" gradientUnits="userSpaceOnUse"><stop stop-color="#9BB6D0"/><stop offset=".45" stop-color="#45617F"/><stop offset="1" stop-color="#1A2C45"/></linearGradient>
+    <linearGradient id="belly" x1="78" y1="61" x2="109" y2="100" gradientUnits="userSpaceOnUse"><stop stop-color="#6BE4FF"/><stop offset="1" stop-color="#148BCC"/></linearGradient>
+    <filter id="glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <path d="M25 36h14l11 46h78l14-34H55" stroke="#5B7897" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="m60 52 10-18 22-8 18 8 12 17-6 13-12 5 7 14-13 18-25-3-13-15 5-16-9-15Z" fill="url(#armor)" stroke="#B4C8DB" stroke-width="2" stroke-linejoin="round"/>
+  <path d="m71 38 4-17 13 12m20-1 12-14-2 23" fill="#829DB8" stroke="#D2E2EF" stroke-width="2" stroke-linejoin="round"/>
+  <path d="m112 43 17 4 15 13-12 10-21-3-8-11 9-13Z" fill="#273E59" stroke="#9AB1C9" stroke-width="2" stroke-linejoin="round"/>
+  <path d="m117 50 12 4 6 5-13 2-8-5 3-6Z" fill="#FF4357" filter="url(#glow)"/>
+  <path d="m107 68 20 9 6 14-16 4-14-7-9 8-19-4-7-12 8-12 15-3 16 3Z" fill="#263C56" stroke="#9AB1C9" stroke-width="2" stroke-linejoin="round"/>
+  <path d="m83 72 21-3-2 31-12 12-15-11 8-29Z" fill="url(#belly)" stroke="#86E9FF" stroke-width="2"/>
+  <path d="m82 81 16 1m-18 8 18 1m-20 8 15 1" stroke="#D5F8FF" stroke-opacity=".8" stroke-width="2" stroke-linecap="round"/>
+  <path d="m76 79-12 4-15-9 4 18 17 10m55-24 12 4 10-8-2 17-16 11" stroke="#7894B0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="m61 98-6 10m12-7-3 10m55-12 7 9m-13-7 3 10" stroke="#D9E5EF" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="51" cy="88" r="5" fill="#00B8FF" filter="url(#glow)"/>
+  <circle cx="132" cy="88" r="5" fill="#00B8FF" filter="url(#glow)"/>
+  <path d="M37 119h111" stroke="#285174" stroke-width="2" stroke-linecap="round"/>
+  <path d="M61 119h15m25 0h9" stroke="#00B8FF" stroke-width="2" stroke-linecap="round"/>
+</svg>

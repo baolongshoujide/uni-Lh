@@ -76,7 +76,7 @@ const Onrefresherrefresh = async () => {
 <style lang="scss">
 //
 page {
-  background-color: #f7f7f7;
+  background-color: #080c18;
   height: 100%;
   display: flex;
   flex-direction: column;

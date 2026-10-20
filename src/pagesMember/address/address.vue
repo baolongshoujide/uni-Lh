@@ -99,14 +99,14 @@ page {
   color: #fff;
   border-radius: 0;
   padding: 0;
-  background-color: #cf4444;
+  background-color: #ff3344;
 }
 
 .viewport {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: #f4f4f4;
+  background-color: #080c18;
 
   .scroll-view {
     padding-top: 20rpx;
@@ -117,12 +117,12 @@ page {
   padding: 0 20rpx;
   margin: 0 20rpx;
   border-radius: 10rpx;
-  background-color: #fff;
+  background-color: rgba(20, 30, 50, 0.75);
 
   .item-content {
     line-height: 1;
     padding: 40rpx 10rpx 38rpx;
-    border-bottom: 1rpx solid #ddd;
+    border-bottom: 1rpx solid rgba(0, 184, 255, 0.2);
     position: relative;
 
     .edit {
@@ -132,7 +132,7 @@ page {
       padding: 2rpx 0 2rpx 20rpx;
       border-left: 1rpx solid #666;
       font-size: 26rpx;
-      color: #666;
+      color: #96a8c2;
       line-height: 1;
     }
   }
@@ -144,10 +144,10 @@ page {
   .user {
     font-size: 28rpx;
     margin-bottom: 20rpx;
-    color: #333;
+    color: #e8f2ff;
 
     .contact {
-      color: #666;
+      color: #96a8c2;
     }
 
     .badge {
@@ -155,16 +155,16 @@ page {
       padding: 4rpx 10rpx 2rpx 14rpx;
       margin: 2rpx 0 0 10rpx;
       font-size: 26rpx;
-      color: #27ba9b;
+      color: #00b8ff;
       border-radius: 6rpx;
-      border: 1rpx solid #27ba9b;
+      border: 1rpx solid #00b8ff;
     }
   }
 
   .locate {
     line-height: 1.6;
     font-size: 26rpx;
-    color: #333;
+    color: #e8f2ff;
   }
 }
 
@@ -172,7 +172,7 @@ page {
   margin-top: 300rpx;
   text-align: center;
   font-size: 32rpx;
-  color: #888;
+  color: #96a8c2;
 }
 
 .add-btn {
@@ -183,6 +183,6 @@ page {
   color: #fff;
   border-radius: 80rpx;
   font-size: 30rpx;
-  background-color: #27ba9b;
+  background-color: #00b8ff;
 }
 </style>

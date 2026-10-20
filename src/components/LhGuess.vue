@@ -73,7 +73,7 @@ defineExpose({
   line-height: 1;
   padding: 36rpx 0 40rpx;
   font-size: 32rpx;
-  color: #262626;
+  color: #e8f2ff;
   .text {
     display: flex;
     justify-content: center;
@@ -104,7 +104,8 @@ defineExpose({
     margin-bottom: 20rpx;
     border-radius: 10rpx;
     overflow: hidden;
-    background-color: #fff;
+    background-color: rgba(20, 30, 50, 0.75);
+    border: 1rpx solid rgba(0, 184, 255, 0.2);
   }
   .image {
     width: 304rpx;
@@ -114,7 +115,7 @@ defineExpose({
     height: 75rpx;
     margin: 10rpx 0;
     font-size: 26rpx;
-    color: #262626;
+    color: #e8f2ff;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -124,7 +125,7 @@ defineExpose({
   .price {
     line-height: 1;
     padding-top: 4rpx;
-    color: #cf4444;
+    color: #ff3344;
     font-size: 26rpx;
   }
   .small {
@@ -135,7 +136,7 @@ defineExpose({
 .loading-text {
   text-align: center;
   font-size: 28rpx;
-  color: #666;
+  color: #96a8c2;
   padding: 20rpx 0;
 }
 </style>

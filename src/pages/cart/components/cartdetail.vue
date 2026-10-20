@@ -18,7 +18,7 @@ const getCartList = async () => {
 const onDelete = async (id: string) => {
   uni.showModal({
     content: '确认删除',
-    confirmColor: '#3dba9a',
+    confirmColor: '#00b8ff',
     showCancel: true,
     success: async (success) => {
       if (success.confirm) {
@@ -192,7 +192,7 @@ onShow(() => {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background-color: #f7f7f8;
+  background-color: #080c18;
 }
 
 // 滚动容器
@@ -211,14 +211,14 @@ onShow(() => {
     line-height: 1;
     margin: 30rpx 10rpx;
     font-size: 26rpx;
-    color: #666;
+    color: #96a8c2;
 
     .label {
       color: #fff;
       padding: 7rpx 15rpx 5rpx;
       border-radius: 4rpx;
       font-size: 24rpx;
-      background-color: #27ba9b;
+      background-color: #00b8ff;
       margin-right: 10rpx;
     }
   }
@@ -228,7 +228,8 @@ onShow(() => {
     display: flex;
     padding: 20rpx 20rpx 20rpx 80rpx;
     border-radius: 10rpx;
-    background-color: #fff;
+    background-color: rgba(20, 30, 50, 0.75);
+    border: 1rpx solid rgba(0, 184, 255, 0.2);
     position: relative;
 
     .navigator {
@@ -250,12 +251,12 @@ onShow(() => {
         content: '\e6cd';
         font-family: 'erabbit' !important;
         font-size: 40rpx;
-        color: #444;
+        color: #96a8c2;
       }
 
       &.checked::before {
         content: '\e6cc';
-        color: #27ba9b;
+        color: #00b8ff;
       }
     }
 
@@ -275,7 +276,7 @@ onShow(() => {
     .name {
       height: 72rpx;
       font-size: 26rpx;
-      color: #444;
+      color: #e8f2ff;
     }
 
     .attrsText {
@@ -284,16 +285,16 @@ onShow(() => {
       font-size: 24rpx;
       align-self: flex-start;
       border-radius: 4rpx;
-      color: #888;
-      background-color: #f7f7f8;
+      color: #96a8c2;
+      background-color: rgba(8, 12, 24, 0.75);
     }
 
     .price {
       line-height: 1;
       font-size: 26rpx;
-      color: #444;
+      color: #e8f2ff;
       margin-bottom: 2rpx;
-      color: #cf4444;
+      color: #ff3344;
 
       &::before {
         content: '￥';
@@ -317,7 +318,7 @@ onShow(() => {
         height: 100%;
         padding: 0 20rpx;
         font-size: 32rpx;
-        color: #444;
+        color: #e8f2ff;
       }
 
       .input {
@@ -325,8 +326,8 @@ onShow(() => {
         text-align: center;
         border-radius: 4rpx;
         font-size: 24rpx;
-        color: #444;
-        background-color: #f6f6f6;
+        color: #e8f2ff;
+        background-color: rgba(8, 12, 24, 0.75);
       }
     }
   }
@@ -353,7 +354,7 @@ onShow(() => {
     }
 
     .delete-button {
-      background-color: #cf4444;
+      background-color: #ff3344;
     }
   }
 }
@@ -371,7 +372,7 @@ onShow(() => {
     height: 281rpx;
   }
   .text {
-    color: #444;
+    color: #e8f2ff;
     font-size: 26rpx;
     margin: 20rpx 0;
   }
@@ -383,7 +384,7 @@ onShow(() => {
     font-size: 26rpx;
     border-radius: 60rpx;
     color: #fff;
-    background-color: #27ba9b;
+    background-color: #00b8ff;
   }
 }
 
@@ -399,15 +400,15 @@ onShow(() => {
   padding: 0 20rpx;
   display: flex;
   align-items: center;
-  border-top: 1rpx solid #ededed;
-  border-bottom: 1rpx solid #ededed;
-  background-color: #fff;
+  border-top: 1rpx solid rgba(0, 184, 255, 0.2);
+  border-bottom: 1rpx solid rgba(0, 184, 255, 0.2);
+  background-color: rgba(20, 30, 50, 0.96);
   box-sizing: content-box;
 
   .all {
     margin-left: 25rpx;
     font-size: 14px;
-    color: #444;
+    color: #e8f2ff;
     display: flex;
     align-items: center;
   }
@@ -421,19 +422,19 @@ onShow(() => {
 
   .checked::before {
     content: '\e6cc';
-    color: #27ba9b;
+    color: #00b8ff;
   }
 
   .text {
     margin-right: 8rpx;
     margin-left: 32rpx;
-    color: #444;
+    color: #e8f2ff;
     font-size: 14px;
   }
 
   .amount {
     font-size: 20px;
-    color: #cf4444;
+    color: #ff3344;
 
     .decimal {
       font-size: 12px;
@@ -461,7 +462,7 @@ onShow(() => {
     }
 
     .payment-button {
-      background-color: #27ba9b;
+      background-color: #00b8ff;
 
       &.disabled {
         opacity: 0.6;

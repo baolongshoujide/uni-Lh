@@ -150,7 +150,7 @@ const onOrderCancel = () => {
 onReady(() => {
   pageInstance.animate(
     '.navbar', // 选择器
-    [{ backgroundColor: 'transparent' }, { backgroundColor: '#f8f8f8' }], // 关键帧信息
+    [{ backgroundColor: 'transparent' }, { backgroundColor: '#080c18' }], // 关键帧信息
     1000, // 动画持续时长
     {
       scrollSource: '#scroller', // scroll-view 的选择器
@@ -160,14 +160,14 @@ onReady(() => {
     },
   )
   // 动画效果,导航栏标题
-  pageInstance.animate('.navbar .title', [{ color: 'transparent' }, { color: '#000' }], 1000, {
+  pageInstance.animate('.navbar .title', [{ color: 'transparent' }, { color: '#e8f2ff' }], 1000, {
     scrollSource: '#scroller',
     timeRange: 1000,
     startScrollOffset: 0,
     endScrollOffset: 50,
   })
   // 动画效果,导航栏返回按钮
-  pageInstance.animate('.navbar .back', [{ color: '#fff' }, { color: '#000' }], 1000, {
+  pageInstance.animate('.navbar .back', [{ color: '#e8f2ff' }, { color: '#e8f2ff' }], 1000, {
     scrollSource: '#scroller',
     timeRange: 1000,
     startScrollOffset: 0,
@@ -353,7 +353,7 @@ onLoad(() => {
     </template>
   </scroll-view>
   <!-- 取消订单弹窗 -->
-  <uni-popup ref="popup" type="bottom" background-color="#fff">
+  <uni-popup ref="popup" type="bottom" background-color="#080c18">
     <view class="popup-root">
       <view class="title">订单取消</view>
       <view class="description">
@@ -381,12 +381,12 @@ page {
 
 .navbar {
   width: 750rpx;
-  color: #000;
+  color: #e8f2ff;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 9;
-  /* background-color: #f8f8f8; */
+  /* background-color: #080c18; */
   background-color: transparent;
 
   .wrap {
@@ -398,7 +398,7 @@ page {
       justify-content: center;
       align-items: center;
       font-size: 32rpx;
-      /* color: #000; */
+      /* color: #e8f2ff; */
       color: transparent;
     }
 
@@ -411,14 +411,14 @@ page {
       display: flex;
       align-items: center;
       justify-content: center;
-      /* color: #000; */
+      /* color: #e8f2ff; */
       color: #fff;
     }
   }
 }
 
 .viewport {
-  background-color: #f7f7f8;
+  background-color: #080c18;
 }
 
 .overview {
@@ -466,9 +466,9 @@ page {
     text-align: center;
     line-height: 64rpx;
     font-size: 28rpx;
-    color: #27ba9b;
+    color: #00b8ff;
     border-radius: 68rpx;
-    background-color: #fff;
+    background-color: rgba(20, 30, 50, 0.75);
   }
 }
 
@@ -477,7 +477,7 @@ page {
   padding: 0 20rpx;
   margin: 20rpx 20rpx 0;
   border-radius: 10rpx;
-  background-color: #fff;
+  background-color: rgba(20, 30, 50, 0.75);
 
   .locate,
   .item {
@@ -493,28 +493,28 @@ page {
 
     .user {
       font-size: 26rpx;
-      color: #444;
+      color: #e8f2ff;
     }
 
     .address {
       font-size: 24rpx;
-      color: #666;
+      color: #96a8c2;
     }
   }
 
   .item {
     background-image: url(https://pcapi-xiaotuxian-front-devtest.itheima.net/miniapp/images/car.png);
-    border-bottom: 1rpx solid #eee;
+    border-bottom: 1rpx solid rgba(0, 184, 255, 0.2);
     position: relative;
 
     .message {
       font-size: 26rpx;
-      color: #444;
+      color: #e8f2ff;
     }
 
     .date {
       font-size: 24rpx;
-      color: #666;
+      color: #96a8c2;
     }
   }
 }
@@ -523,11 +523,11 @@ page {
   margin: 20rpx 20rpx 0;
   padding: 0 20rpx;
   border-radius: 10rpx;
-  background-color: #fff;
+  background-color: rgba(20, 30, 50, 0.75);
 
   .item {
     padding: 30rpx 0;
-    border-bottom: 1rpx solid #eee;
+    border-bottom: 1rpx solid rgba(0, 184, 255, 0.2);
 
     .navigator {
       display: flex;
@@ -552,7 +552,7 @@ page {
     .name {
       height: 80rpx;
       font-size: 26rpx;
-      color: #444;
+      color: #e8f2ff;
     }
 
     .type {
@@ -562,8 +562,8 @@ page {
       font-size: 24rpx;
       align-self: flex-start;
       border-radius: 4rpx;
-      color: #888;
-      background-color: #f7f7f8;
+      color: #96a8c2;
+      background-color: #080c18;
     }
 
     .price {
@@ -577,13 +577,13 @@ page {
     }
 
     .original {
-      color: #999;
+      color: #96a8c2;
       text-decoration: line-through;
     }
 
     .actual {
       margin-left: 10rpx;
-      color: #444;
+      color: #e8f2ff;
     }
 
     .text {
@@ -595,7 +595,7 @@ page {
       bottom: 0;
       right: 0;
       font-size: 24rpx;
-      color: #444;
+      color: #e8f2ff;
     }
 
     .action {
@@ -612,14 +612,14 @@ page {
         line-height: 60rpx;
         margin-left: 20rpx;
         border-radius: 60rpx;
-        border: 1rpx solid #ccc;
+        border: 1rpx solid rgba(0, 184, 255, 0.2);
         font-size: 26rpx;
-        color: #444;
+        color: #e8f2ff;
       }
 
       .primary {
-        color: #27ba9b;
-        border-color: #27ba9b;
+        color: #00b8ff;
+        border-color: #00b8ff;
       }
     }
   }
@@ -628,7 +628,7 @@ page {
     line-height: 1;
     font-size: 26rpx;
     padding: 20rpx 0;
-    color: #666;
+    color: #96a8c2;
 
     .row {
       display: flex;
@@ -644,7 +644,7 @@ page {
     }
 
     .primary {
-      color: #cf4444;
+      color: #ff3344;
       font-size: 36rpx;
     }
   }
@@ -655,13 +655,13 @@ page {
   padding: 30rpx 20rpx 0;
   margin: 20rpx 20rpx 0;
   font-size: 26rpx;
-  color: #666;
+  color: #96a8c2;
   border-radius: 10rpx;
-  background-color: #fff;
+  background-color: rgba(20, 30, 50, 0.75);
 
   .title {
     font-size: 30rpx;
-    color: #444;
+    color: #e8f2ff;
   }
 
   .row {
@@ -676,7 +676,7 @@ page {
     .copy {
       border-radius: 20rpx;
       font-size: 20rpx;
-      border: 1px solid #ccc;
+      border: 1px solid rgba(0, 184, 255, 0.2);
       padding: 5rpx 10rpx;
       margin-left: 10rpx;
     }
@@ -700,9 +700,9 @@ page {
   display: flex;
   align-items: center;
   flex-direction: row-reverse;
-  border-top: 1rpx solid #ededed;
-  border-bottom: 1rpx solid #ededed;
-  background-color: #fff;
+  border-top: 1rpx solid rgba(0, 184, 255, 0.2);
+  border-bottom: 1rpx solid rgba(0, 184, 255, 0.2);
+  background-color: rgba(20, 30, 50, 0.75);
   box-sizing: content-box;
 
   .button {
@@ -715,8 +715,8 @@ page {
     margin-left: 15rpx;
     font-size: 26rpx;
     border-radius: 72rpx;
-    border: 1rpx solid #ccc;
-    color: #444;
+    border: 1rpx solid rgba(0, 184, 255, 0.2);
+    color: #e8f2ff;
   }
 
   .delete {
@@ -729,14 +729,14 @@ page {
 
   .secondary {
     order: 2;
-    color: #27ba9b;
-    border-color: #27ba9b;
+    color: #00b8ff;
+    border-color: #00b8ff;
   }
 
   .primary {
     order: 1;
     color: #fff;
-    background-color: #27ba9b;
+    background-color: #00b8ff;
   }
 }
 
@@ -756,7 +756,7 @@ page {
     padding: 0 20rpx;
 
     .tips {
-      color: #444;
+      color: #e8f2ff;
       margin-bottom: 12rpx;
     }
 
@@ -765,20 +765,20 @@ page {
       justify-content: space-between;
       align-items: center;
       padding: 15rpx 0;
-      color: #666;
+      color: #96a8c2;
     }
 
     .icon::before {
       content: '\e6cd';
       font-family: 'erabbit' !important;
       font-size: 38rpx;
-      color: #999;
+      color: #96a8c2;
     }
 
     .icon.checked::before {
       content: '\e6cc';
       font-size: 38rpx;
-      color: #27ba9b;
+      color: #00b8ff;
     }
   }
 
@@ -787,7 +787,7 @@ page {
     justify-content: space-between;
     padding: 30rpx 0 40rpx;
     font-size: 28rpx;
-    color: #444;
+    color: #e8f2ff;
 
     .button {
       flex: 1;
@@ -795,14 +795,14 @@ page {
       text-align: center;
       line-height: 72rpx;
       margin: 0 20rpx;
-      color: #444;
+      color: #e8f2ff;
       border-radius: 72rpx;
-      border: 1rpx solid #ccc;
+      border: 1rpx solid rgba(0, 184, 255, 0.2);
     }
 
     .primary {
       color: #fff;
-      background-color: #27ba9b;
+      background-color: #00b8ff;
       border: none;
     }
   }
