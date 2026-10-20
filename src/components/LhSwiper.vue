@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { BannerItem } from '@/types/home'
 import { ref } from 'vue'
-const props = defineProps<{
+defineProps<{
   list: BannerItem[]
 }>()
 

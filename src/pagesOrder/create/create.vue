@@ -6,7 +6,6 @@ import {
   postMemberOrderAPI,
 } from '@/services/order'
 import { useAddressStore } from '@/stores/modules/address'
-import type { AddressItem } from '@/types/address'
 import type { OrderPreResult } from '@/types/order'
 import { onLoad } from '@dcloudio/uni-app'
 import { computed, ref } from 'vue'

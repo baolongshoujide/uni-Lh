@@ -127,7 +127,7 @@ const onOrderDelete = () => {
     content: '是否删除订单',
     success: async (success) => {
       if (success.confirm) {
-        const res = await deleteMemberOrderAPI({ ids: [query.id] })
+        await deleteMemberOrderAPI({ ids: [query.id] })
         uni.redirectTo({ url: '/pagesOrder/list/list' })
       }
     },
@@ -139,7 +139,7 @@ const onOrderCancel = () => {
     content: '是否取消订单',
     success: async (success) => {
       if (success.confirm) {
-        const res = await putMemberOrderIdCancelAPI(query.id, { cancelReason: reason.value })
+        await putMemberOrderIdCancelAPI(query.id, { cancelReason: reason.value })
         uni.showToast({ title: '取消成功' })
         uni.redirectTo({ url: '/pagesOrder/list/list' })
       }

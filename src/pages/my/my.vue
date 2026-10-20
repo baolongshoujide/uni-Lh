@@ -2,8 +2,6 @@
 import { useGuessList } from '@/composables'
 import { useMemberStore } from '@/stores'
 
-import { ref } from 'vue'
-
 const memberStore = useMemberStore()
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
@@ -42,7 +40,7 @@ const { OnScrolltolower, guessRef } = useGuessList()
           <image
             class="avatar gray"
             mode="aspectFill"
-            src="../../static/assets/images/Lhlogo.png"
+            src="../../static/assets/images/Lhlogo.jpg"
           ></image>
         </navigator>
         <view class="meta">

@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import { onLaunch, onShow, onHide } from '@dcloudio/uni-app'
-</script>
-
 <style lang="scss">
 // 字体图标
 @import '@/styles/fonts.scss';

@@ -22,7 +22,7 @@ const onDelete = async (id: string) => {
     showCancel: true,
     success: async (success) => {
       if (success.confirm) {
-        const res = await deleteCartAPI({ ids: [id] })
+        await deleteCartAPI({ ids: [id] })
         getCartList()
       }
     },
@@ -32,7 +32,7 @@ let timeOut: ReturnType<typeof setTimeout> | undefined
 const onChangeCount = (ev: any) => {
   clearTimeout(timeOut)
   timeOut = setTimeout(async () => {
-    const res = await putCartAPI(ev.index, { count: ev.value })
+    await putCartAPI(ev.index, { count: ev.value })
   }, 1000)
 }
 

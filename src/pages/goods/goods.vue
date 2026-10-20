@@ -11,7 +11,6 @@ import type {
   SkuPopupInstanceType,
 } from '@/components/vk-data-goods-sku-popup/vk-data-goods-sku-popup.js'
 import { addCartAPI } from '@/services/cart.ts'
-import { getMenberOrderPreNowAPI } from '@/services/order.ts'
 import { useAddressStore } from '@/stores/modules/address.ts'
 
 const query = defineProps<{
@@ -93,7 +92,7 @@ const selectArr = computed(() => {
 
 const OnAddCart = async (ev: SkuPopupEvent) => {
   console.log(ev)
-  const res = await addCartAPI({
+  await addCartAPI({
     skuId: ev._id,
     count: ev.buy_num,
   })

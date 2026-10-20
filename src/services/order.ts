@@ -1,4 +1,3 @@
-import type { GoodsResult } from '@/types/goods'
 import type {
   OrderCreateParams,
   OrderListParams,

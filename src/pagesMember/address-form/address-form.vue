@@ -47,9 +47,9 @@ const OnSubmit = async () => {
   try {
     await formRef.value?.validate?.()
     if (props.id) {
-      const res = await putMemberAddressIdAPI(props.id, form.value)
+      await putMemberAddressIdAPI(props.id, form.value)
     } else {
-      const res = await addMemberAddressAPI(form.value)
+      await addMemberAddressAPI(form.value)
     }
     uni.showToast({
       icon: 'success',

@@ -21,8 +21,6 @@ const onAvatorChange = () => {
     count: 1,
     mediaType: ['image'],
     success: (res) => {
-      console.log()
-
       const { tempFilePath } = res.tempFiles[0]
       uni.uploadFile({
         url: 'http://pcapi-xiaotuxian-front-devtest.itheima.net/member/profile/avatar',

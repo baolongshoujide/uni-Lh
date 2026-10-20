@@ -1,20 +1,10 @@
 <script setup lang="ts">
-import { getLoginWxMinAPI, getLoginWxMinSimpleAPI } from '@/services/login'
+import { getLoginWxMinSimpleAPI } from '@/services/login'
 import type { LoginResult } from '@/types/member'
 import { useMemberStore } from '@/stores'
-import { onLoad } from '@dcloudio/uni-app'
 
-let code = ''
 // 企业级登录（个人用户不开放）
-const onGetPhoneNumber: UniHelper.ButtonOnGetphonenumber = async (ev) => {
-  // const iv = ev.detail!.iv!
-  // const encryptedData = ev.detail!.encryptedData!
-  // await getLoginWxMinAPI({
-  //   code,
-  //   iv,
-  //   encryptedData,
-  // })
-  // ToLogin(res.result)
+const onGetPhoneNumber: UniHelper.ButtonOnGetphonenumber = () => {
   uni.showModal({
     title: '提示',
     content: '个人开发者无法开发手机号登录。\n请点击下方模拟登录试试吧~',
@@ -38,17 +28,12 @@ const ToLogin = (memberDetail: LoginResult) => {
     uni.switchTab({ url: '/pages/my/my' })
   }, 500)
 }
-
-onLoad(async () => {
-  const res = await wx.login()
-  code = res.code
-})
 </script>
 
 <template>
   <view class="viewport">
     <view class="logo">
-      <image src="../../static/assets/images/login-background-dragon-hidden.png"></image>
+      <image src="../../static/assets/images/login-background-dragon-hidden.jpg"></image>
     </view>
     <view class="login">
       <!-- 网页端表单登录 -->
@@ -131,10 +116,6 @@ page {
   }
 
   .phone {
-    background-color: #00b8ff;
-  }
-
-  .wechat {
     background-color: #00b8ff;
   }
 
