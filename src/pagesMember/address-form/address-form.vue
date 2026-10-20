@@ -6,6 +6,7 @@ import {
 } from '@/services/address'
 import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
+import PageSkeleton from './components/PageSkeleton.vue'
 
 // 表单数据
 const isChecked = ref(false)
@@ -21,6 +22,7 @@ const form = ref({
 })
 
 const props = defineProps<{ id?: string }>()
+const isLoading = ref(!!props.id)
 
 uni.setNavigationBarTitle({ title: props.id ? '修改地址' : '新建地址' })
 
@@ -83,52 +85,56 @@ const rules: UniHelper.UniFormsRules = {
 }
 const formRef = ref<UniHelper.UniFormsInstance>()
 
-onLoad(() => {
-  getMemberAddressDetail()
+onLoad(async () => {
+  await getMemberAddressDetail().catch(() => undefined)
+  isLoading.value = false
 })
 </script>
 
 <template>
-  <view class="content">
-    <uni-forms :rules="rules" ref="formRef" :model="form">
-      <!-- 表单内容 -->
-      <uni-forms-item name="receiver" class="form-item">
-        <text class="label">收货人</text>
-        <input class="input" placeholder="请填写收货人姓名" v-model="form.receiver" />
-      </uni-forms-item>
-      <uni-forms-item name="contact" class="form-item">
-        <text class="label">手机号码</text>
-        <input class="input" placeholder="请填写收货人手机号码" v-model="form.contact" />
-      </uni-forms-item>
-      <uni-forms-item name="fullLocation" class="form-item">
-        <text class="label">所在地区</text>
-        <picker
-          @change="OnRegionChange"
-          class="picker"
-          mode="region"
-          :value="form.fullLocation.split(' ')"
-        >
-          <view v-if="form.fullLocation">{{ form.fullLocation }}</view>
-          <view v-else class="placeholder">请选择省/市/区(县)</view>
-        </picker>
-      </uni-forms-item>
-      <uni-forms-item name="address" class="form-item">
-        <text class="label">详细地址</text>
-        <input class="input" placeholder="街道、楼牌号等信息" v-model="form.address" />
-      </uni-forms-item>
-      <view class="form-item">
-        <label class="label">设为默认地址</label>
-        <switch
-          class="switch"
-          color="#00b8ff"
-          @change="OnSwitchChange"
-          :checked="form.isDefault === 1"
-        />
-      </view>
-    </uni-forms>
-  </view>
-  <!-- 提交按钮 -->
-  <button @tap="OnSubmit" class="button">保存并使用</button>
+  <PageSkeleton v-if="isLoading"></PageSkeleton>
+  <template v-else>
+    <view class="content">
+      <uni-forms :rules="rules" ref="formRef" :model="form">
+        <!-- 表单内容 -->
+        <uni-forms-item name="receiver" class="form-item">
+          <text class="label">收货人</text>
+          <input class="input" placeholder="请填写收货人姓名" v-model="form.receiver" />
+        </uni-forms-item>
+        <uni-forms-item name="contact" class="form-item">
+          <text class="label">手机号码</text>
+          <input class="input" placeholder="请填写收货人手机号码" v-model="form.contact" />
+        </uni-forms-item>
+        <uni-forms-item name="fullLocation" class="form-item">
+          <text class="label">所在地区</text>
+          <picker
+            @change="OnRegionChange"
+            class="picker"
+            mode="region"
+            :value="form.fullLocation.split(' ')"
+          >
+            <view v-if="form.fullLocation">{{ form.fullLocation }}</view>
+            <view v-else class="placeholder">请选择省/市/区(县)</view>
+          </picker>
+        </uni-forms-item>
+        <uni-forms-item name="address" class="form-item">
+          <text class="label">详细地址</text>
+          <input class="input" placeholder="街道、楼牌号等信息" v-model="form.address" />
+        </uni-forms-item>
+        <view class="form-item">
+          <label class="label">设为默认地址</label>
+          <switch
+            class="switch"
+            color="#00b8ff"
+            @change="OnSwitchChange"
+            :checked="form.isDefault === 1"
+          />
+        </view>
+      </uni-forms>
+    </view>
+    <!-- 提交按钮 -->
+    <button @tap="OnSubmit" class="button">保存并使用</button>
+  </template>
 </template>
 
 <style lang="scss" scoped>

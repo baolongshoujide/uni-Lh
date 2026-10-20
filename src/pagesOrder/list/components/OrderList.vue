@@ -4,6 +4,7 @@ import { deleteMemberOrderAPI, getMemberOrderAPI } from '@/services/order'
 import type { OrderItem, OrderListParams } from '@/types/order'
 import { onMounted, ref } from 'vue'
 import { getPayMockAPI, getPayWxPayMinPayAPI } from '@/services/pay'
+import PageSkeleton from './PageSkeleton.vue'
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
 
@@ -18,6 +19,7 @@ const queryParams: OrderListParams = {
 }
 
 const orderList = ref<OrderItem[]>([])
+const isInitialLoading = ref(true)
 const isLoading = ref(false)
 const hasMore = ref(true)
 let currentOrderRequest: Promise<void> | undefined
@@ -110,15 +112,21 @@ const onScrollToLower = async () => {
   }
 }
 
-onMounted(() => {
-  getMemberOrder(true).catch(() => {
+onMounted(async () => {
+  try {
+    await getMemberOrder(true)
+  } catch {
     uni.showToast({ title: '加载失败，请重试', icon: 'none' })
-  })
+  } finally {
+    isInitialLoading.value = false
+  }
 })
 </script>
 
 <template>
+  <PageSkeleton v-if="isInitialLoading"></PageSkeleton>
   <scroll-view
+    v-else
     scroll-y
     class="orders"
     refresher-enabled

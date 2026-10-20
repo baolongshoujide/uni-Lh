@@ -13,12 +13,14 @@ import type {
 } from '@/components/vk-data-goods-sku-popup/vk-data-goods-sku-popup.js'
 import { addCartAPI } from '@/services/cart.ts'
 import { useAddressStore } from '@/stores/modules/address.ts'
+import PageSkeleton from './compontens/PageSkeleton.vue'
 
 const query = defineProps<{
   id: string
 }>()
 // 获取数据
 const goodsList = ref<GoodsResult>()
+const isLoading = ref(true)
 const getGoodsList = async () => {
   const res = await getGoodsAPI(query.id || '4001877')
   goodsList.value = res.result
@@ -118,8 +120,9 @@ const OnBuyNow = async (ev: SkuPopupEvent) => {
   console.log(ev)
 }
 
-onLoad(() => {
-  getGoodsList()
+onLoad(async () => {
+  await getGoodsList().catch(() => undefined)
+  isLoading.value = false
 })
 const refValue = ref(0)
 onShow(() => {
@@ -128,9 +131,11 @@ onShow(() => {
 </script>
 
 <template>
+  <PageSkeleton v-if="isLoading"></PageSkeleton>
   <!-- SKU弹窗组件.两个很长的一个是修改购物车的背景颜色，一个是立即购买的背景颜色 -->
   <!-- 最后那个是设置按钮颜色，主要是贴合主题，必须动态 -->
   <vk-data-goods-sku-popup
+    v-if="!isLoading"
     :localdata="localdata"
     v-model="isShowSku"
     :mode="mode"
@@ -146,7 +151,7 @@ onShow(() => {
     @add-cart="OnAddCart"
     @buy-now="OnBuyNow"
   ></vk-data-goods-sku-popup>
-  <scroll-view scroll-y class="viewport">
+  <scroll-view v-if="!isLoading" scroll-y class="viewport">
     <!-- 基本信息 -->
     <view class="goods">
       <!-- 商品主图 -->
@@ -248,7 +253,7 @@ onShow(() => {
   </scroll-view>
 
   <!-- 用户操作 -->
-  <view class="toolbar" :style="{ paddingBottom: safeAreaInsets?.bottom + 'px' }">
+  <view v-if="!isLoading" class="toolbar" :style="{ paddingBottom: safeAreaInsets?.bottom + 'px' }">
     <view class="icons">
       <button class="icons-button"><text class="icon-heart"></text>收藏</button>
       <navigator class="icons-button" url="/pages/cart/cart2" open-type="navigate">
@@ -260,7 +265,7 @@ onShow(() => {
       <view @tap="OpenSkuPopup(3)" class="buynow"> 立即购买 </view>
     </view>
   </view>
-  <uni-popup ref="popup" text="white" background-color="#080c18" type="bottom">
+  <uni-popup v-if="!isLoading" ref="popup" text="white" background-color="#080c18" type="bottom">
     <AddressPanel
       :refValue="refValue"
       v-if="popupName === 'address'"

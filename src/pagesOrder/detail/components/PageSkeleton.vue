@@ -483,6 +483,6 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background-color: transparent;
+  background-color: #080c18;
 }
 </style>

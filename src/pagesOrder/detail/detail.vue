@@ -47,21 +47,26 @@ const query = defineProps<{
 console.log(query.id)
 
 const order = ref<OrderResult>()
+// 订单详情及必要的物流信息请求完成后，再移除骨架屏。
+const isLoading = ref(true)
 const getMemberOrderId = async () => {
-  const res = await getMemberOrderIdAPI(query.id)
-  order.value = res.result
-  console.log(order.value.orderState)
+  try {
+    const res = await getMemberOrderIdAPI(query.id)
+    order.value = res.result
+    console.log(order.value.orderState)
 
-  if (
-    [OrderState.DaiShouHuo, OrderState.DaiPingJia, OrderState.YiWanCheng].includes(
-      order.value.orderState,
-    )
-  ) {
-    console.log('可以')
-
-    await getMemberOrderIdLogistics()
-  } else {
-    console.log('条件不成立')
+    if (
+      [OrderState.DaiShouHuo, OrderState.DaiPingJia, OrderState.YiWanCheng].includes(
+        order.value.orderState,
+      )
+    ) {
+      console.log('可以')
+      await getMemberOrderIdLogistics()
+    } else {
+      console.log('条件不成立')
+    }
+  } finally {
+    isLoading.value = false
   }
 }
 const logisticList = ref<LogisticItem[]>([])
@@ -177,7 +182,8 @@ onReady(() => {
   })
 })
 onLoad(() => {
-  getMemberOrderId()
+  // 请求层已负责提示网络错误，这里接住异常，让骨架屏按时退出。
+  getMemberOrderId().catch(() => undefined)
 })
 </script>
 
@@ -197,7 +203,8 @@ onLoad(() => {
   </view>
   <!--  -->
   <scroll-view scroll-y class="viewport" id="scroller" @scrolltolower="OnScrolltolower">
-    <template v-if="order">
+    <PageSkeleton v-if="isLoading"></PageSkeleton>
+    <template v-else-if="order">
       <!-- 订单状态 -->
       <view class="overview" :style="{ paddingTop: safeAreaInsets!.top + 20 + 'px' }">
         <!-- 待付款状态:展示去支付按钮和倒计时   -->
@@ -349,10 +356,7 @@ onLoad(() => {
         </template>
       </view>
     </template>
-    <template v-else>
-      <!-- 骨架屏组件 -->
-      <PageSkeleton></PageSkeleton>
-    </template>
+    <view v-else class="load-error">订单信息加载失败，请返回后重试</view>
   </scroll-view>
   <!-- 取消订单弹窗 -->
   <uni-popup ref="popup" type="bottom" background-color="#080c18">
@@ -421,6 +425,12 @@ onLoad(() => {
 
 .viewport {
   background-color: #080c18;
+}
+
+.load-error {
+  padding: 80rpx 30rpx;
+  color: #96a8c2;
+  text-align: center;
 }
 
 .overview {

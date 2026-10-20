@@ -9,6 +9,7 @@ import { useAddressStore } from '@/stores/modules/address'
 import type { OrderPreResult } from '@/types/order'
 import { onLoad } from '@dcloudio/uni-app'
 import { computed, ref } from 'vue'
+import PageSkeleton from './components/PageSkeleton.vue'
 
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
@@ -39,6 +40,7 @@ const query = defineProps<{
 console.log(query.orderId)
 
 const orderPre = ref<OrderPreResult>()
+const isLoading = ref(true)
 const getMemberOrderPre = async () => {
   if (query.count && query.skuId) {
     const res = await getMenberOrderPreNowAPI({
@@ -78,13 +80,16 @@ const OnSubmit = async () => {
 }
 uni.showModal({ title: '温馨提示', content: '部分商品数据有误，您可以尝试其他商品' })
 
-onLoad(() => {
-  getMemberOrderPre()
+onLoad(async () => {
+  await getMemberOrderPre().catch(() => undefined)
+  isLoading.value = false
 })
 </script>
 
 <template>
+  <PageSkeleton v-if="isLoading"></PageSkeleton>
   <scroll-view
+    v-else
     scroll-y
     class="viewport"
     :style="{
@@ -167,7 +172,7 @@ onLoad(() => {
   </scroll-view>
 
   <!-- 吸底工具栏 -->
-  <view class="toolbar" :style="{ paddingBottom: safeAreaInsets?.bottom + 'px' }">
+  <view v-if="!isLoading" class="toolbar" :style="{ paddingBottom: safeAreaInsets?.bottom + 'px' }">
     <view class="total-pay symbol">
       <text class="number">{{ orderPre?.summary.totalPayPrice.toFixed(2) }}</text>
     </view>

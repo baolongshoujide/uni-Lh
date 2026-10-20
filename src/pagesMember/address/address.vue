@@ -4,12 +4,20 @@ import { useAddressStore } from '@/stores/modules/address'
 import type { AddressItem } from '@/types/address'
 import { onShow } from '@dcloudio/uni-app'
 import { ref } from 'vue'
+import PageSkeleton from './components/PageSkeleton.vue'
 
 const addressList = ref<AddressItem[]>([])
+const isInitialLoading = ref(false)
+let hasLoadedAddresses = false
 const getMemberAdress = async () => {
-  const res = await getMemberAddressAPI()
-  console.log(res)
-  addressList.value = res.result
+  if (!hasLoadedAddresses) isInitialLoading.value = true
+  try {
+    const res = await getMemberAddressAPI()
+    addressList.value = res.result
+  } finally {
+    hasLoadedAddresses = true
+    isInitialLoading.value = false
+  }
 }
 
 const OnDelete = async (id: string) => {
@@ -37,12 +45,13 @@ const OnAddressChange = (item: AddressItem) => {
   uni.navigateBack()
 }
 onShow(() => {
-  getMemberAdress()
+  getMemberAdress().catch(() => undefined)
 })
 </script>
 
 <template>
-  <view class="viewport">
+  <PageSkeleton v-if="isInitialLoading"></PageSkeleton>
+  <view v-else class="viewport">
     <!-- 地址列表 -->
     <scroll-view class="scroll-view" scroll-y>
       <view v-if="addressList.length" class="address">

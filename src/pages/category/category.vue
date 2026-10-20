@@ -135,8 +135,11 @@ const getCategoryTopList = async () => {
 const isPageSkeleton = ref(true)
 
 onLoad(async () => {
-  await Promise.all([getBannerList(), getCategoryTopList()])
-  isPageSkeleton.value = false
+  try {
+    await Promise.allSettled([getBannerList(), getCategoryTopList()])
+  } finally {
+    isPageSkeleton.value = false
+  }
 })
 
 onShow(() => {

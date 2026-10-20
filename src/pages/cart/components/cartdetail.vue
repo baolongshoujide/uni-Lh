@@ -4,15 +4,24 @@ import { useMemberStore } from '@/stores'
 import type { CartItem } from '@/types/cart'
 import { useGuessList } from '@/composables'
 import { onShow } from '@dcloudio/uni-app'
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 const memberStore = useMemberStore()
 const { guessRef, OnScrolltolower } = useGuessList()
 
 const cartList = ref<CartItem[]>()
+let cartRequest: Promise<void> | undefined
 const getCartList = async () => {
-  const res = await getCartAPI()
-  cartList.value = res.result
+  if (cartRequest) return cartRequest
+  cartRequest = (async () => {
+    const res = await getCartAPI()
+    cartList.value = res.result
+  })()
+  try {
+    await cartRequest
+  } finally {
+    cartRequest = undefined
+  }
 }
 
 const onDelete = async (id: string) => {
@@ -23,7 +32,7 @@ const onDelete = async (id: string) => {
     success: async (success) => {
       if (success.confirm) {
         await deleteCartAPI({ ids: [id] })
-        getCartList()
+        getCartList().catch(() => undefined)
       }
     },
   })
@@ -87,7 +96,13 @@ const gotoPay = () => {
 
 onShow(() => {
   if (memberStore.profile) {
-    getCartList()
+    getCartList().catch(() => undefined)
+  }
+})
+
+onMounted(() => {
+  if (memberStore.profile) {
+    getCartList().catch(() => undefined)
   }
 })
 </script>
