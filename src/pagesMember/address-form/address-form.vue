@@ -6,7 +6,6 @@ import {
 } from '@/services/address'
 import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
-import PageSkeleton from './components/PageSkeleton.vue'
 
 // 表单数据
 const isChecked = ref(false)
@@ -92,120 +91,118 @@ onLoad(async () => {
 </script>
 
 <template>
-  <PageSkeleton v-if="isLoading"></PageSkeleton>
-  <template v-else>
-    <view class="content">
-      <uni-forms :rules="rules" ref="formRef" :model="form">
-        <!-- 表单内容 -->
-        <uni-forms-item name="receiver" class="form-item">
-          <text class="label">收货人</text>
-          <input class="input" placeholder="请填写收货人姓名" v-model="form.receiver" />
-        </uni-forms-item>
-        <uni-forms-item name="contact" class="form-item">
-          <text class="label">手机号码</text>
-          <input class="input" placeholder="请填写收货人手机号码" v-model="form.contact" />
-        </uni-forms-item>
-        <uni-forms-item name="fullLocation" class="form-item">
-          <text class="label">所在地区</text>
-          <picker
-            @change="OnRegionChange"
-            class="picker"
-            mode="region"
-            :value="form.fullLocation.split(' ')"
-          >
-            <view v-if="form.fullLocation">{{ form.fullLocation }}</view>
-            <view v-else class="placeholder">请选择省/市/区(县)</view>
-          </picker>
-        </uni-forms-item>
-        <uni-forms-item name="address" class="form-item">
-          <text class="label">详细地址</text>
-          <input class="input" placeholder="街道、楼牌号等信息" v-model="form.address" />
-        </uni-forms-item>
-        <view class="form-item">
-          <label class="label">设为默认地址</label>
-          <switch
-            class="switch"
-            color="#00b8ff"
-            @change="OnSwitchChange"
-            :checked="form.isDefault === 1"
-          />
-        </view>
-      </uni-forms>
-    </view>
-    <!-- 提交按钮 -->
-    <button @tap="OnSubmit" class="button">保存并使用</button>
-  </template>
+  <view class="content">
+    <uni-forms :rules="rules" ref="formRef" :model="form">
+      <!-- 表单内容 -->
+      <uni-forms-item name="receiver" class="form-item">
+        <text class="label">收货人</text>
+        <input class="input" placeholder="请填写收货人姓名" v-model="form.receiver" />
+      </uni-forms-item>
+      <uni-forms-item name="contact" class="form-item">
+        <text class="label">手机号码</text>
+        <nput class="input" placeholder="请填写收货人手机号码" v-model="form.contact" />
+      </uni-forms-item>
+      <uni-forms-item name="fullLocation" class="form-item">
+        <text class="label">所在地区</text>
+        <picker
+          @change="OnRegionChange"
+          ass="picker"
+          mde="region"
+          :alue="form.fullLocation.split(' ')"
+        >
+          <view v-if="form.fullLocation">{{ form.fullLocation }}</view>
+          <view v-else class="placeholder">请选择省/市/区(县)</view>
+        </picker>
+      </uni-forms-item>
+      <uni-forms-item name="address" class="form-item">
+        <text class="label">详细地址</text>
+        <nput class="input" placeholder="街道、楼牌号等信息" v-model="form.address" />
+      </uni-forms-item>
+      <view class="form-item">
+        <label class="label">设为默认地址</label>
+        <witch
+          cass="switch"
+          color="#00b8ff"
+          hange="OnSwitchChange"
+          :hecked="form.isDefault === 1"
+        />
+      </view>
+    </uni-forms>
+  </view>
+  <!-- 提交按钮 -->
+  <button @tap="OnSubmit" class="button">保存并使用</button>
+  /template>
+
+  <style lang="scss" scoped>
+    :global(page) {
+      background-color: #080c18;
+    }
+
+    .content {
+      margin: 20rpx 20rpx 0;
+      padding: 0 20rpx;
+      border-radius: 10rpx;
+      background-color: rgba(20, 30, 50, 0.75);
+
+      .form-item,
+      :deep(.uni-forms-item) {
+        display: flex;
+        align-items: center;
+        min-height: 96rpx;
+        padding: 25rpx 10rpx 40rpx;
+        background-color: rgba(20, 30, 50, 0.75);
+        font-size: 28rpx;
+        border-bottom: 1rpx solid rgba(0, 184, 255, 0.2);
+        position: relative;
+        margin-bottom: 0;
+
+        // 调整 uni-forms 样式
+        :deep(.uni-forms-item__content) {
+          display: flex;
+        }
+
+        :deep(.uni-forms-item__error) {
+          margin-left: 200rpx;
+        }
+
+        &:last-child {
+          border: none;
+        }
+
+        .label {
+          width: 200rpx;
+          color: #e8f2ff;
+        }
+
+        .input {
+          flex: 1;
+          display: block;
+          height: 46rpx;
+        }
+
+        .switch {
+          position: absolute;
+          right: -20rpx;
+          transform: scale(0.8);
+        }
+
+        .picker {
+          flex: 1;
+        }
+
+        .placeholder {
+          color: #96a8c2;
+        }
+      }
+    }
+
+    .button {
+      height: 80rpx;
+      margin: 30rpx 20rpx;
+      color: #fff;
+      border-radius: 80rpx;
+      font-size: 30rpx;
+      background-color: #00b8ff;
+    }
+  </style>
 </template>
-
-<style lang="scss" scoped>
-:global(page) {
-  background-color: #080c18;
-}
-
-.content {
-  margin: 20rpx 20rpx 0;
-  padding: 0 20rpx;
-  border-radius: 10rpx;
-  background-color: rgba(20, 30, 50, 0.75);
-
-  .form-item,
-  :deep(.uni-forms-item) {
-    display: flex;
-    align-items: center;
-    min-height: 96rpx;
-    padding: 25rpx 10rpx 40rpx;
-    background-color: rgba(20, 30, 50, 0.75);
-    font-size: 28rpx;
-    border-bottom: 1rpx solid rgba(0, 184, 255, 0.2);
-    position: relative;
-    margin-bottom: 0;
-
-    // 调整 uni-forms 样式
-    :deep(.uni-forms-item__content) {
-      display: flex;
-    }
-
-    :deep(.uni-forms-item__error) {
-      margin-left: 200rpx;
-    }
-
-    &:last-child {
-      border: none;
-    }
-
-    .label {
-      width: 200rpx;
-      color: #e8f2ff;
-    }
-
-    .input {
-      flex: 1;
-      display: block;
-      height: 46rpx;
-    }
-
-    .switch {
-      position: absolute;
-      right: -20rpx;
-      transform: scale(0.8);
-    }
-
-    .picker {
-      flex: 1;
-    }
-
-    .placeholder {
-      color: #96a8c2;
-    }
-  }
-}
-
-.button {
-  height: 80rpx;
-  margin: 30rpx 20rpx;
-  color: #fff;
-  border-radius: 80rpx;
-  font-size: 30rpx;
-  background-color: #00b8ff;
-}
-</style>

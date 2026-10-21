@@ -4,7 +4,6 @@ import { useAddressStore } from '@/stores/modules/address'
 import type { AddressItem } from '@/types/address'
 import { onShow } from '@dcloudio/uni-app'
 import { ref } from 'vue'
-import PageSkeleton from './components/PageSkeleton.vue'
 
 const addressList = ref<AddressItem[]>([])
 const isInitialLoading = ref(false)
@@ -50,8 +49,7 @@ onShow(() => {
 </script>
 
 <template>
-  <PageSkeleton v-if="isInitialLoading"></PageSkeleton>
-  <view v-else class="viewport">
+  <view class="viewport">
     <!-- 地址列表 -->
     <scroll-view class="scroll-view" scroll-y>
       <view v-if="addressList.length" class="address">

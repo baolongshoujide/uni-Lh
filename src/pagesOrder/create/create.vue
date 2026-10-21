@@ -9,7 +9,6 @@ import { useAddressStore } from '@/stores/modules/address'
 import type { OrderPreResult } from '@/types/order'
 import { onLoad } from '@dcloudio/uni-app'
 import { computed, ref } from 'vue'
-import PageSkeleton from './components/PageSkeleton.vue'
 
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
@@ -87,9 +86,7 @@ onLoad(async () => {
 </script>
 
 <template>
-  <PageSkeleton v-if="isLoading"></PageSkeleton>
   <scroll-view
-    v-else
     scroll-y
     class="viewport"
     :style="{
