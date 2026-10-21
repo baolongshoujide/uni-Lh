@@ -6,7 +6,7 @@ import CategoryPanel from './components/CategoryPanel.vue'
 import HotPanel from './components/HotPanel.vue'
 import { getHomeBannerAPI, getHomeHotAPI, getHomeCategoryAPI } from '@/services/home'
 import type { BannerItem, HotItem, CategoryItem } from '@/types/home'
-import PageSkeleton from '@/components/PageSkeleton.vue'
+import PageSkeleton from './components/PageSkeleton.vue'
 import { useGuessList } from '@/composables/index.ts'
 // 轮播图数据
 const bannerList = ref<BannerItem[]>([])

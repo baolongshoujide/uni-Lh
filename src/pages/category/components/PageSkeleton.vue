@@ -153,6 +153,9 @@
   </view>
 </template>
 <style scoped>
+@import '@/components/style/LhSwiper.scss';
+@import './category.scss';
+
 .sk-transparent {
   color: transparent !important;
 }

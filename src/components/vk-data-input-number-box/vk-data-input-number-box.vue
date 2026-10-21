@@ -9,7 +9,7 @@
         height: inputHeight + 'rpx',
         color: color,
         fontSize: size + 'rpx',
-        minHeight: '1.,4em',
+        minHeight: '1.4em',
       }"
       @click="emptyClick"
       @touchstart.prevent="btnTouchStart('minus')"
@@ -29,10 +29,10 @@
         fontSize: size + 'rpx',
         background: bgColor,
         height: inputHeight + 'rpx',
-        width: inputWidth + ',rpx',
+        width: inputWidth + 'rpx',
       }"
       @blur="onBlur"
-      @click="showIn p ut = true"
+      @click="showInput = true"
     />
     <view
       class="u-icon-plus"
@@ -42,7 +42,7 @@
         height: inputHeight + 'rpx',
         color: color,
         fontSize: size + 'rpx',
-        minHeight: '1.,4em',
+        minHeight: '1.4em',
       }"
       @click="emptyClick"
       @touchstart.prevent="btnTouchStart('plus')"
@@ -98,7 +98,7 @@ export default {
     // 背景颜色
     bgColor: {
       type: String,
-      default: '#FFFFFF',
+      default: '#1c2c46',
     },
     // 最小值
     min: {
@@ -138,7 +138,7 @@ export default {
     // 加减图标的颜色
     color: {
       type: String,
-      default: '#323233',
+      default: '#e8f2ff',
     },
     // input宽度，单位rpx
     inputWidth: {
@@ -244,9 +244,7 @@ export default {
   },
   computed: {
     valueCom() {
-      // #ifdef VUE2
-      return this.value
-      // #endif
+      return this.modelValue
     },
     getCursorSpacing() {
       // 先将值转为px单位，再转为数值
@@ -429,7 +427,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2rpx solid #f4f4f4;
+  border: 2rpx solid rgba(0, 184, 255, 0.2);
   border-left: 0;
   border-right: 0;
   box-sizing: border-box;
@@ -441,7 +439,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2rpx solid #f4f4f4;
+  border: 2rpx solid rgba(0, 184, 255, 0.2);
   box-sizing: border-box;
 }
 
@@ -455,12 +453,12 @@ export default {
 
 .u-icon-disabled {
   color: #c8c9cc !important;
-  background-color: #f2f3f5 !important;
+  background-color: #1c2c46 !important;
 }
 
 .u-input-disabled {
   color: #c8c9cc !important;
-  background-color: #f2f3f5 !important;
+  background-color: #1c2c46 !important;
 }
 
 .num-btn {

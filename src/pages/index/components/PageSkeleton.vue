@@ -173,6 +173,12 @@
   </view>
 </template>
 <style scoped>
+/* #ifdef H5 || APP-PLUS */
+@import '@/components/style/LhSwiper.scss';
+@import './style/CategoryPanel.scss';
+@import './style/HotPanel.scss';
+@import '@/components/style/LhGuess.scss';
+/* #endif */
 .sk-transparent {
   color: transparent !important;
 }
