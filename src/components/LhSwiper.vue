@@ -33,49 +33,5 @@ const swiperChange: UniHelper.SwiperOnChange = (e) => {
 </template>
 
 <style lang="scss" scoped>
-:host {
-  display: block;
-  height: 280rpx;
-}
-
-.carousel {
-  position: relative;
-  width: 100%;
-  height: 280rpx;
-  overflow: hidden;
-  background-color: #080c18;
-
-  swiper {
-    width: 100%;
-    height: 100%;
-  }
-
-  .indicator {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 16rpx;
-    display: flex;
-    justify-content: center;
-
-    .dot {
-      width: 30rpx;
-      height: 6rpx;
-      margin: 0 8rpx;
-      border-radius: 6rpx;
-      background-color: rgba(255, 255, 255, 0.4);
-    }
-
-    .active {
-      background-color: rgba(20, 30, 50, 0.75);
-    }
-  }
-
-  .navigator,
-  .image {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-}
+@import '@/components/style/LhSwiper.scss';
 </style>

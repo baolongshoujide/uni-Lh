@@ -8,6 +8,9 @@ import PageSkeleton from './PageSkeleton.vue'
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
 
+// 样式调试时使用静态订单，调试完成后改为 false 即恢复接口数据。
+const isStaticStylePreview = false
+
 const props = defineProps<{
   orderState: number
 }>()
@@ -19,10 +22,37 @@ const queryParams: OrderListParams = {
 }
 
 const orderList = ref<OrderItem[]>([])
-const isInitialLoading = ref(true)
+const isInitialLoading = ref(!isStaticStylePreview)
 const isLoading = ref(false)
 const hasMore = ref(true)
 let currentOrderRequest: Promise<void> | undefined
+
+// 单条本地模拟订单：不调用接口，专门用于调整订单卡片样式。
+const staticOrder: OrderItem = {
+  id: 'style-preview-order',
+  orderState: OrderState.DaiShouHuo,
+  countdown: -1,
+  skus: [
+    {
+      id: 'style-preview-sku',
+      spuId: 'style-preview-goods',
+      name: '朱炳仁 · 铜忠义千秋关公风水摆件',
+      attrsText: '忠义千秋（大）',
+      quantity: 1,
+      curPrice: 14897,
+      // 使用项目已有占位图，便于同时调整图片区域尺寸。
+      image: '/static/images/blank.png',
+    },
+  ],
+  receiverContact: '模拟收货人',
+  receiverMobile: '13800000000',
+  receiverAddress: '静态样式调试地址',
+  createTime: '2026-10-21 00:08:49',
+  totalMoney: 14897,
+  postFee: 0,
+  payMoney: 14897,
+  totalNum: 1,
+}
 
 const getMemberOrder = async (reset = false) => {
   if (isLoading.value) {
@@ -91,6 +121,7 @@ const onOrderDelete = (id: string) => {
 const isRefreshing = ref(false)
 
 const onRefresherRefresh = async () => {
+  if (isStaticStylePreview) return
   if (isRefreshing.value) return
 
   isRefreshing.value = true
@@ -104,6 +135,7 @@ const onRefresherRefresh = async () => {
 }
 
 const onScrollToLower = async () => {
+  if (isStaticStylePreview) return
   if (isLoading.value || !hasMore.value) return
   try {
     await getMemberOrder()
@@ -113,6 +145,13 @@ const onScrollToLower = async () => {
 }
 
 onMounted(async () => {
+  if (isStaticStylePreview) {
+    orderList.value = [staticOrder]
+    hasMore.value = false
+    isInitialLoading.value = false
+    return
+  }
+
   try {
     await getMemberOrder(true)
   } catch {
@@ -204,166 +243,5 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 // 订单列表
-.orders {
-  height: 100%;
-
-  .card {
-    min-height: 100rpx;
-    padding: 20rpx;
-    margin: 20rpx 20rpx 0;
-    border-radius: 10rpx;
-    background-color: rgba(20, 30, 50, 0.75);
-
-    &:last-child {
-      padding-bottom: 40rpx;
-    }
-  }
-
-  .status {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 28rpx;
-    color: #96a8c2;
-    margin-bottom: 15rpx;
-
-    .date {
-      color: #96a8c2;
-      flex: 1;
-    }
-
-    .primary {
-      color: #ffb547;
-    }
-
-    .icon-delete {
-      line-height: 1;
-      margin-left: 10rpx;
-      padding-left: 10rpx;
-      border-left: 1rpx solid #e3e3e3;
-    }
-  }
-
-  .goods {
-    display: flex;
-    margin-bottom: 20rpx;
-
-    .cover {
-      width: 170rpx;
-      height: 170rpx;
-      margin-right: 20rpx;
-      border-radius: 10rpx;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .quantity {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      line-height: 1;
-      padding: 6rpx 4rpx 6rpx 8rpx;
-      font-size: 24rpx;
-      color: #fff;
-      border-radius: 10rpx 0 0 0;
-      background-color: rgba(0, 0, 0, 0.6);
-    }
-
-    .meta {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .name {
-      height: 80rpx;
-      font-size: 26rpx;
-      color: #e8f2ff;
-    }
-
-    .type {
-      line-height: 1.8;
-      padding: 0 15rpx;
-      margin-top: 10rpx;
-      font-size: 24rpx;
-      align-self: flex-start;
-      border-radius: 4rpx;
-      color: #96a8c2;
-      background-color: #080c18;
-    }
-
-    .more {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22rpx;
-      color: #e8f2ff;
-    }
-  }
-
-  .payment {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    line-height: 1;
-    padding: 20rpx 0;
-    text-align: right;
-    color: #96a8c2;
-    font-size: 28rpx;
-    border-bottom: 1rpx solid rgba(0, 184, 255, 0.2);
-
-    .quantity {
-      font-size: 24rpx;
-      margin-right: 16rpx;
-    }
-
-    .amount {
-      color: #e8f2ff;
-      margin-left: 6rpx;
-    }
-
-    .symbol {
-      font-size: 20rpx;
-    }
-  }
-
-  .action {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding-top: 20rpx;
-
-    .button {
-      width: 180rpx;
-      height: 60rpx;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-left: 20rpx;
-      border-radius: 60rpx;
-      border: 1rpx solid rgba(0, 184, 255, 0.2);
-      font-size: 26rpx;
-      color: #e8f2ff;
-    }
-
-    .secondary {
-      color: #00b8ff;
-      border-color: #00b8ff;
-    }
-
-    .primary {
-      color: #fff;
-      background-color: #00b8ff;
-    }
-  }
-
-  .loading-text {
-    text-align: center;
-    font-size: 28rpx;
-    color: #96a8c2;
-    padding: 20rpx 0;
-  }
-}
+@import './style/OrderList.scss';
 </style>

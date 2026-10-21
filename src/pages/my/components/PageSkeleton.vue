@@ -162,6 +162,8 @@
 
 更多详细信息可以参考文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/skeleton.html
 */
+@import '@/components/style/LhGuess.scss';
+@import './style/my.scss';
 .sk-transparent {
   color: transparent !important;
 }

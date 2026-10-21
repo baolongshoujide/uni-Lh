@@ -18,34 +18,6 @@
 <template name="skeleton">
   <view class="sk-container">
     <view class="viewport viewport data-v-f9a555d9 data-v-f9a555d9">
-      <view class="tabs tabs data-v-f9a555d9 data-v-f9a555d9">
-        <text
-          class="item data-v-f9a555d9 sk-transparent sk-text-27-4194-308 sk-text"
-          style="background-position-x: 50%"
-          >全部</text
-        >
-        <text
-          class="item data-v-f9a555d9 sk-transparent sk-text-27-4194-876 sk-text"
-          style="background-position-x: 50%"
-          >待付款</text
-        >
-        <text
-          class="item data-v-f9a555d9 sk-transparent sk-text-27-4194-597 sk-text"
-          style="background-position-x: 50%"
-          >待发货</text
-        >
-        <text
-          class="item data-v-f9a555d9 sk-transparent sk-text-27-4194-625 sk-text"
-          style="background-position-x: 50%"
-          >待收货</text
-        >
-        <text
-          class="item data-v-f9a555d9 sk-transparent sk-text-27-4194-15 sk-text"
-          style="background-position-x: 50%"
-          >待评价</text
-        >
-        <view class="cursor cursor data-v-f9a555d9 data-v-f9a555d9" style="left: 0%"></view>
-      </view>
       <swiper class="swiper swiper data-v-f9a555d9 data-v-f9a555d9" :current="0" :autoplay="false">
         <swiper-item
           class="data-v-f9a555d9 data-v-f9a555d9"
@@ -88,6 +60,7 @@
 
 更多详细信息可以参考文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/skeleton.html
 */
+@import './style/OrderList.scss';
 .sk-transparent {
   color: transparent !important;
 }

@@ -154,7 +154,7 @@
     </scroll-view>
   </view>
 </template>
-<style scoped>
+<style lang="scss" scoped>
 /*
 此文件为开发者工具生成，生成时间: 2026/10/16 16:37:17
 
@@ -165,6 +165,7 @@
 
 更多详细信息可以参考文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/skeleton.html
 */
+@import './detail.scss';
 .sk-transparent {
   color: transparent !important;
 }

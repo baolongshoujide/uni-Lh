@@ -4,6 +4,10 @@ import type { PageParams } from '@/types/global'
 import type { GuessItem } from '@/types/home'
 import { ref } from 'vue'
 
+const emit = defineEmits<{
+  loaded: []
+}>()
+
 const guessLike = ref<GuessItem[]>([])
 const pageParams: Required<PageParams> = {
   page: 1,
@@ -18,12 +22,17 @@ const getGuesslike = async () => {
       duration: 2000,
     })
   }
-  const res = await getHomeGuessLikeAPI(pageParams)
-  guessLike.value.push(...res.result.items)
-  if (pageParams.page < res.result.pages) {
-    pageParams.page++
-  } else {
-    finish.value = true
+  try {
+    const res = await getHomeGuessLikeAPI(pageParams)
+    guessLike.value.push(...res.result.items)
+    if (pageParams.page < res.result.pages) {
+      pageParams.page++
+    } else {
+      finish.value = true
+    }
+  } finally {
+    // 通知“我的”页首次推荐数据请求已结束（成功或失败），可以收起骨架屏。
+    emit('loaded')
   }
 }
 
@@ -32,7 +41,7 @@ const resetDate = () => {
   guessLike.value = []
   finish.value = false
 }
-getGuesslike()
+getGuesslike().catch(() => undefined)
 defineExpose({
   getGuesslike,
   resetDate,
@@ -63,80 +72,5 @@ defineExpose({
 </template>
 
 <style lang="scss" scoped>
-:host {
-  display: block;
-}
-/* 分类标题 */
-.caption {
-  display: flex;
-  justify-content: center;
-  line-height: 1;
-  padding: 36rpx 0 40rpx;
-  font-size: 32rpx;
-  color: #e8f2ff;
-  .text {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 28rpx 0 30rpx;
-
-    &::before,
-    &::after {
-      content: '';
-      width: 20rpx;
-      height: 20rpx;
-      background-image: url(@/static/images/bubble.png);
-      background-size: contain;
-      margin: 0 10rpx;
-    }
-  }
-}
-
-/* 猜你喜欢 */
-.guess {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 0 20rpx;
-  .guess-item {
-    width: 345rpx;
-    padding: 24rpx 20rpx 20rpx;
-    margin-bottom: 20rpx;
-    border-radius: 10rpx;
-    overflow: hidden;
-    background-color: rgba(20, 30, 50, 0.75);
-    border: 1rpx solid rgba(0, 184, 255, 0.2);
-  }
-  .image {
-    width: 304rpx;
-    height: 304rpx;
-  }
-  .name {
-    height: 75rpx;
-    margin: 10rpx 0;
-    font-size: 26rpx;
-    color: #e8f2ff;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-  }
-  .price {
-    line-height: 1;
-    padding-top: 4rpx;
-    color: #ff3344;
-    font-size: 26rpx;
-  }
-  .small {
-    font-size: 80%;
-  }
-}
-// 加载提示文字
-.loading-text {
-  text-align: center;
-  font-size: 28rpx;
-  color: #96a8c2;
-  padding: 20rpx 0;
-}
+@import '@/components/style/LhGuess.scss';
 </style>

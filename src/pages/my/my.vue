@@ -1,8 +1,14 @@
 <script setup lang="ts">
 import { useGuessList } from '@/composables'
 import { useMemberStore } from '@/stores'
-
+import { ref } from 'vue'
+import PageSkeleton from './components/PageSkeleton.vue'
 const memberStore = useMemberStore()
+// 猜你喜欢首次加载完成前显示骨架屏。
+const isInitialLoading = ref(true)
+const onGuessLoaded = () => {
+  isInitialLoading.value = false
+}
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
 // 订单选项
@@ -17,9 +23,16 @@ const { OnScrolltolower, guessRef } = useGuessList()
 </script>
 
 <template>
-  <scroll-view @scrolltolower="OnScrolltolower" class="viewport" scroll-y enable-back-to-top>
+  <PageSkeleton v-if="isInitialLoading"></PageSkeleton>
+  <scroll-view
+    v-show="!isInitialLoading"
+    @scrolltolower="OnScrolltolower"
+    class="viewport"
+    scroll-y
+    enable-back-to-top
+  >
     <!-- 个人资料 -->
-    <view class="profile" :style="{ paddingTop: safeAreaInsets!.top + 'px' }">
+    <view class="profile" :style="{ paddingTop: (safeAreaInsets?.top ?? 0) + 'px' }">
       <!-- 情况1：已登录 -->
       <view class="overview" v-if="memberStore.profile">
         <navigator url="/pagesMember/profile/profile" hover-class="none">
@@ -53,7 +66,7 @@ const { OnScrolltolower, guessRef } = useGuessList()
         </view>
       </view>
       <navigator class="settings" url="/pagesMember/settings/settings" hover-class="none">
-        设置
+        设置1
       </navigator>
     </view>
     <!-- 我的订单 -->
@@ -81,145 +94,11 @@ const { OnScrolltolower, guessRef } = useGuessList()
     </view>
     <!-- 猜你喜欢 -->
     <view class="guess">
-      <LhGuess ref="guessRef" />
+      <LhGuess ref="guessRef" @loaded="onGuessLoaded" />
     </view>
   </scroll-view>
 </template>
 
 <style lang="scss" scoped>
-:global(page) {
-  height: 100%;
-  overflow: hidden;
-  background-color: #080c18;
-}
-
-.viewport {
-  height: 100%;
-  background: linear-gradient(180deg, rgba(0, 136, 204, 0.2), #080c18 320rpx);
-}
-
-/* 用户信息 */
-.profile {
-  margin-top: 20rpx;
-  position: relative;
-
-  .overview {
-    display: flex;
-    height: 120rpx;
-    padding: 0 36rpx;
-    color: #fff;
-  }
-
-  .avatar {
-    width: 120rpx;
-    height: 120rpx;
-    border-radius: 50%;
-    background-color: #1c2c46;
-  }
-
-  .gray {
-    filter: grayscale(100%);
-  }
-
-  .meta {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    line-height: 30rpx;
-    padding: 16rpx 0;
-    margin-left: 20rpx;
-  }
-
-  .nickname {
-    max-width: 350rpx;
-    margin-bottom: 16rpx;
-    font-size: 30rpx;
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .extra {
-    display: flex;
-    font-size: 20rpx;
-  }
-
-  .tips {
-    font-size: 22rpx;
-  }
-
-  .update {
-    padding: 3rpx 10rpx 1rpx;
-    color: rgba(255, 255, 255, 0.8);
-    border: 1rpx solid rgba(255, 255, 255, 0.8);
-    margin-right: 10rpx;
-    border-radius: 30rpx;
-  }
-
-  .settings {
-    position: absolute;
-    bottom: 0;
-    right: 40rpx;
-    font-size: 30rpx;
-    color: #fff;
-  }
-}
-
-/* 我的订单 */
-.orders {
-  position: relative;
-  z-index: 99;
-  padding: 30rpx;
-  margin: 50rpx 20rpx 0;
-  background-color: rgba(20, 30, 50, 0.75);
-  border: 1rpx solid rgba(0, 184, 255, 0.2);
-  border-radius: 10rpx;
-  box-shadow: 0 4rpx 6rpx rgba(0, 184, 255, 0.12);
-
-  .title {
-    height: 40rpx;
-    line-height: 40rpx;
-    font-size: 28rpx;
-    color: #e8f2ff;
-
-    .navigator {
-      font-size: 24rpx;
-      color: #96a8c2;
-      float: right;
-    }
-  }
-
-  .section {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 40rpx 20rpx 10rpx;
-    .navigator,
-    .contact {
-      text-align: center;
-      font-size: 24rpx;
-      color: #e8f2ff;
-      &::before {
-        display: block;
-        font-size: 60rpx;
-        color: #00b8ff;
-      }
-    }
-    .contact {
-      padding: 0;
-      margin: 0;
-      border: 0;
-      background-color: transparent;
-      line-height: inherit;
-    }
-  }
-}
-
-/* 猜你喜欢 */
-.guess {
-  background-color: #080c18;
-  margin-top: 20rpx;
-}
+@import './components/style/my.scss';
 </style>

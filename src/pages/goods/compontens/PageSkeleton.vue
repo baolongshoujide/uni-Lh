@@ -151,6 +151,7 @@
 
 更多详细信息可以参考文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/skeleton.html
 */
+@import './style/goods.scss';
 .sk-transparent {
   color: transparent !important;
 }

@@ -237,16 +237,11 @@
   </view>
 </template>
 <style lang="scss" scoped>
-/*
-此文件为开发者工具生成，生成时间: 2026/10/21 00:16:26
+/* #ifdef H5 */
+@import '@/components/style/LhSwiper.scss';
+@import './category.scss';
 
-在 D:\VS  code\uniapp\heima-shop2\dist\dev\mp-weixin\pages\category\category.wxss 中引入样式
-```
-@import "./category.skeleton.wxss";
-```
-
-更多详细信息可以参考文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/skeleton.html
-*/
+/* #endif */
 .sk-transparent {
   color: transparent !important;
 }
